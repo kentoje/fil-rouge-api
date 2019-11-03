@@ -16,7 +16,7 @@ class VelibController extends AbstractController
      */
     public function index(VelibRepository $velibsRepo)
     {
-        $results = $velibsRepo->findAllMonuments();
+        $results = $velibsRepo->findAllVelibs();
 
         return new JsonResponse($results);
     }
@@ -29,7 +29,7 @@ class VelibController extends AbstractController
      */
     public function indexId(VelibRepository $velibsRepo, $id)
     {
-        $result = $velibsRepo->findOneMonument($id);
+        $result = $velibsRepo->findOneVelib($id);
 
         return new JsonResponse($result);
     }

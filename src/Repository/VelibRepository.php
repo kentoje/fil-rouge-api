@@ -19,7 +19,7 @@ class VelibRepository extends ServiceEntityRepository
         parent::__construct($registry, Velib::class);
     }
 
-    public function findAllMonuments()
+    public function findAllVelibs()
     {
         $response = array();
         foreach ($this->findAll() as $result) {
@@ -37,7 +37,7 @@ class VelibRepository extends ServiceEntityRepository
         return $response;
     }
 
-    public function findOneMonument(int $id)
+    public function findOneVelib(int $id)
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')

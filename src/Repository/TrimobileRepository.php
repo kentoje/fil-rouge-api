@@ -19,7 +19,7 @@ class TrimobileRepository extends ServiceEntityRepository
         parent::__construct($registry, Trimobile::class);
     }
 
-    public function findAllMonuments()
+    public function findAllTrimobiles()
     {
         $response = array();
         foreach ($this->findAll() as $result) {
@@ -38,7 +38,7 @@ class TrimobileRepository extends ServiceEntityRepository
         return $response;
     }
 
-    public function findOneMonument(int $id)
+    public function findOneTrimobile(int $id)
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')

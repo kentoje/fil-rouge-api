@@ -16,7 +16,7 @@ class TrimobileController extends AbstractController
      */
     public function index(TrimobileRepository $trimobileRepo)
     {
-        $results = $trimobileRepo->findAllMonuments();
+        $results = $trimobileRepo->findAllTrimobiles();
 
         return new JsonResponse($results);
     }
@@ -29,7 +29,7 @@ class TrimobileController extends AbstractController
      */
     public function indexId(TrimobileRepository $trimobileRepo, $id)
     {
-        $result = $trimobileRepo->findOneMonument($id);
+        $result = $trimobileRepo->findOneTrimobile($id);
 
         return new JsonResponse($result);
     }
