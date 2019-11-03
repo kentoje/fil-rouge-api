@@ -19,6 +19,50 @@ class TrimobileRepository extends ServiceEntityRepository
         parent::__construct($registry, Trimobile::class);
     }
 
+    public function findAllMonuments()
+    {
+        $response = array();
+        foreach ($this->findAll() as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'address' => $result->getAddress(),
+                'schedule' => $result->getSchedule(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'timeRange' => $result->getTimeRange(),
+                'addressSupplement' => $result->getAddressSupplement(),
+            );
+        }
+        return $response;
+    }
+
+    public function findOneMonument(int $id)
+    {
+        $results = $this->createQueryBuilder('m')
+            ->where('m.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'address' => $result->getAddress(),
+                'schedule' => $result->getSchedule(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'timeRange' => $result->getTimeRange(),
+                'addressSupplement' => $result->getAddressSupplement(),
+            );
+        }
+        return $response;
+    }
+
     // /**
     //  * @return Trimobile[] Returns an array of Trimobile objects
     //  */
