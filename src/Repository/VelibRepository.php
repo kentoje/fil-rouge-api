@@ -19,6 +19,48 @@ class VelibRepository extends ServiceEntityRepository
         parent::__construct($registry, Velib::class);
     }
 
+    public function findAllMonuments()
+    {
+        $response = array();
+        foreach ($this->findAll() as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'state' => $result->getState(),
+                'freedock' => $result->getFreedock(),
+                'creditCard' => $result->getCreditCard(),
+                'stationName' => $result->getStationName(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'bikeAvailable' => $result->getBikeAvailable(),
+            );
+        }
+        return $response;
+    }
+
+    public function findOneMonument(int $id)
+    {
+        $results = $this->createQueryBuilder('m')
+            ->where('m.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'state' => $result->getState(),
+                'freedock' => $result->getFreedock(),
+                'creditCard' => $result->getCreditCard(),
+                'stationName' => $result->getStationName(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'bikeAvailable' => $result->getBikeAvailable(),
+            );
+        }
+        return $response;
+    }
+
     // /**
     //  * @return Velib[] Returns an array of Velib objects
     //  */
