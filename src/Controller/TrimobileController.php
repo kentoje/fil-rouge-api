@@ -11,7 +11,7 @@ class TrimobileController extends AbstractController
 {
     /**
      * @Route("/trimobiles", name="trimobiles")
-     * @param TrimobileController $trimobileRepo
+     * @param TrimobileRepository $trimobileRepo
      * @return JsonResponse
      */
     public function index(TrimobileRepository $trimobileRepo)

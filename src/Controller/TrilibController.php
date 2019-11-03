@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class TrilibController extends AbstractController
 {
     /**
-     * @Route("/trilib", name="trilibs")
+     * @Route("/trilibs", name="trilibs")
      * @param TrilibRepository $trilibRepo
      * @return JsonResponse
      */
@@ -22,7 +22,7 @@ class TrilibController extends AbstractController
     }
 
     /**
-     * @Route("/trilib/{id}", name="trilib")
+     * @Route("/trilibs/{id}", name="trilib")
      * @param TrilibRepository $trilibRepo
      * @param $id
      * @return JsonResponse
