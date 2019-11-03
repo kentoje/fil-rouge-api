@@ -19,6 +19,46 @@ class TrilibRepository extends ServiceEntityRepository
         parent::__construct($registry, Trilib::class);
     }
 
+    public function findAllTrilibs()
+    {
+        $response = array();
+        foreach ($this->findAll() as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'wastetype' => $result->getWastetype(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+            );
+        }
+        return $response;
+    }
+
+    public function findOneTrilib(int $id)
+    {
+        $results = $this->createQueryBuilder('t')
+            ->where('t.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'wastetype' => $result->getWastetype(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+            );
+        }
+        return $response;
+    }
+
     // /**
     //  * @return Trilib[] Returns an array of Trilib objects
     //  */

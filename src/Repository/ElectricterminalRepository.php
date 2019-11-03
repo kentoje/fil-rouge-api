@@ -19,6 +19,56 @@ class ElectricterminalRepository extends ServiceEntityRepository
         parent::__construct($registry, Electricterminal::class);
     }
 
+    public function findAllTerminals()
+    {
+        $response = array();
+        foreach ($this->findAll() as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'schedule' => $result->getSchedule(),
+                'aftersalesPhone' => $result->getAftersalesPhone(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'electricType' => $result->getElectricType(),
+                'connectorType' => $result->getConnectorType(),
+                'city' => $result->getCity(),
+                'address' => $result->getAddress(),
+                'zipcode' => $result->getZipcode(),
+                'watt' => $result->getWatt(),
+                'stationName' => $result->getStationName(),
+            );
+        }
+        return $response;
+    }
+
+    public function findOneTerminal(int $id)
+    {
+        $results = $this->createQueryBuilder('t')
+            ->where('t.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'schedule' => $result->getSchedule(),
+                'aftersalesPhone' => $result->getAftersalesPhone(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'electricType' => $result->getElectricType(),
+                'connectorType' => $result->getConnectorType(),
+                'city' => $result->getCity(),
+                'address' => $result->getAddress(),
+                'zipcode' => $result->getZipcode(),
+                'watt' => $result->getWatt(),
+                'stationName' => $result->getStationName(),
+            );
+        }
+        return $response;
+    }
+
     // /**
     //  * @return Electricterminal[] Returns an array of Electricterminal objects
     //  */
