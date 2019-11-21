@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Trimobile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Trimobile|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +24,13 @@ class TrimobileRepository extends ServiceEntityRepository
     public function findAllTrimobiles()
     {
         $response = array();
-        foreach ($this->findAll() as $result) {
+        $results = $this->findAll();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
             $response[] = array(
                 'id' => $result->getId(),
                 'city' => $result->getCity(),
@@ -35,7 +43,7 @@ class TrimobileRepository extends ServiceEntityRepository
                 'addressSupplement' => $result->getAddressSupplement(),
             );
         }
-        return $response;
+        return new JsonResponse($response);
     }
 
     public function findOneTrimobile(int $id)
@@ -46,6 +54,10 @@ class TrimobileRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
+        }
 
         foreach ($results as $result) {
             $response = array(
@@ -60,7 +72,7 @@ class TrimobileRepository extends ServiceEntityRepository
                 'addressSupplement' => $result->getAddressSupplement(),
             );
         }
-        return $response;
+        return new JsonResponse($response);
     }
 
     // /**

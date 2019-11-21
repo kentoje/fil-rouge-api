@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class MonumentsController extends AbstractController
 {
     /**
-     * @Route("/monuments", name="monuments")
+     * @Route("/monument", name="monuments")
      * @param MonumentsRepository $monumentsRepo
      * @return JsonResponse
      */
@@ -18,11 +18,11 @@ class MonumentsController extends AbstractController
     {
         $results = $monumentsRepo->findAllMonuments();
 
-        return new JsonResponse($results);
+        return $results;
     }
 
     /**
-     * @Route("/monuments/{id}", name="monument")
+     * @Route("/monument/{id}", name="monument")
      * @param MonumentsRepository $monumentsRepo
      * @param $id
      * @return JsonResponse
@@ -31,6 +31,6 @@ class MonumentsController extends AbstractController
     {
         $result = $monumentsRepo->findOneMonument($id);
 
-        return new JsonResponse($result);
+        return $result;
     }
 }

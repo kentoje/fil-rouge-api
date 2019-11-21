@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class TrimobileController extends AbstractController
 {
     /**
-     * @Route("/trimobiles", name="trimobiles")
+     * @Route("/trimobile", name="trimobiles")
      * @param TrimobileRepository $trimobileRepo
      * @return JsonResponse
      */
@@ -18,11 +18,11 @@ class TrimobileController extends AbstractController
     {
         $results = $trimobileRepo->findAllTrimobiles();
 
-        return new JsonResponse($results);
+        return $results;
     }
 
     /**
-     * @Route("/trimobiles/{id}", name="trimobile")
+     * @Route("/trimobile/{id}", name="trimobile")
      * @param TrimobileRepository $trimobileRepo
      * @param $id
      * @return JsonResponse
@@ -31,6 +31,6 @@ class TrimobileController extends AbstractController
     {
         $result = $trimobileRepo->findOneTrimobile($id);
 
-        return new JsonResponse($result);
+        return $result;
     }
 }

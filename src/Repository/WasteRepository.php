@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Monuments;
+use App\Entity\Waste;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method Monuments|null find($id, $lockMode = null, $lockVersion = null)
- * @method Monuments|null findOneBy(array $criteria, array $orderBy = null)
- * @method Monuments[]    findAll()
- * @method Monuments[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Waste|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Waste|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Waste[]    findAll()
+ * @method Waste[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MonumentsRepository extends ServiceEntityRepository
+class WasteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Monuments::class);
+        parent::__construct($registry, Waste::class);
     }
 
-    public function findAllMonuments()
+    public function findAllWastes()
     {
         $response = array();
         $results = $this->findAll();
@@ -30,21 +30,19 @@ class MonumentsRepository extends ServiceEntityRepository
             return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
         }
 
-        foreach ($results as $result) {
+        foreach ( $results as $result) {
             $response[] = array(
                 'id' => $result->getId(),
                 'name' => $result->getName(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
+                'degradation_time' => $result->getDegradationTime(),
+                'trash_color' => $result->getTrashColor(),
             );
         }
+
         return new JsonResponse($response);
     }
 
-    public function findOneMonument(int $id)
+    public function findOneWaste(int $id)
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
@@ -54,33 +52,30 @@ class MonumentsRepository extends ServiceEntityRepository
         ;
 
         if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any monument'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
         }
 
         foreach ($results as $result) {
             $response = array(
                 'id' => $result->getId(),
                 'name' => $result->getName(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
+                'degradation_time' => $result->getDegradationTime(),
+                'trash_color' => $result->getTrashColor(),
             );
         }
         return new JsonResponse($response);
     }
 
     // /**
-    //  * @return Monuments[] Returns an array of Monuments objects
+    //  * @return Waste[] Returns an array of Waste objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
+            ->orderBy('w.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -89,10 +84,10 @@ class MonumentsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Monuments
+    public function findOneBySomeField($value): ?Waste
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

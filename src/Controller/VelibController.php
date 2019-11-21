@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class VelibController extends AbstractController
 {
     /**
-     * @Route("/velibs", name="velibs")
+     * @Route("/velib", name="velibs")
      * @param VelibRepository $velibsRepo
      * @return JsonResponse
      */
@@ -18,11 +18,11 @@ class VelibController extends AbstractController
     {
         $results = $velibsRepo->findAllVelibs();
 
-        return new JsonResponse($results);
+        return $results;
     }
 
     /**
-     * @Route("/velibs/{id}", name="velib")
+     * @Route("/velib/{id}", name="velib")
      * @param VelibRepository $velibsRepo
      * @param $id
      * @return JsonResponse
@@ -31,6 +31,6 @@ class VelibController extends AbstractController
     {
         $result = $velibsRepo->findOneVelib($id);
 
-        return new JsonResponse($result);
+        return $result;
     }
 }

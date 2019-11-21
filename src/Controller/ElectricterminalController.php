@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ElectricterminalController extends AbstractController
 {
     /**
-     * @Route("/electricterminals", name="electricterminals")
+     * @Route("/electricterminal", name="electricterminals")
      * @param ElectricterminalRepository $electricterminalRepo
      * @return JsonResponse
      */
@@ -18,11 +18,11 @@ class ElectricterminalController extends AbstractController
     {
         $results = $electricterminalRepo->findAllTerminals();
 
-        return new JsonResponse($results);
+        return $results;
     }
 
     /**
-     * @Route("/electricterminals/{id}", name="electricterminal")
+     * @Route("/electricterminal/{id}", name="electricterminal")
      * @param ElectricterminalRepository $electricterminalRepo
      * @return JsonResponse
      * @param $id
@@ -31,6 +31,6 @@ class ElectricterminalController extends AbstractController
     {
         $result = $electricterminalRepo->findOneTerminal($id);
 
-        return new JsonResponse($result);
+        return $result;
     }
 }

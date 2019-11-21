@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Electricterminal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Electricterminal|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +24,13 @@ class ElectricterminalRepository extends ServiceEntityRepository
     public function findAllTerminals()
     {
         $response = array();
-        foreach ($this->findAll() as $result) {
+        $results = $this->findAll();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
             $response[] = array(
                 'id' => $result->getId(),
                 'schedule' => $result->getSchedule(),
@@ -38,7 +46,7 @@ class ElectricterminalRepository extends ServiceEntityRepository
                 'stationName' => $result->getStationName(),
             );
         }
-        return $response;
+        return new JsonResponse($response);
     }
 
     public function findOneTerminal(int $id)
@@ -49,6 +57,10 @@ class ElectricterminalRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any electric terminal'], Response::HTTP_NOT_FOUND);
+        }
 
         foreach ($results as $result) {
             $response = array(
@@ -66,7 +78,7 @@ class ElectricterminalRepository extends ServiceEntityRepository
                 'stationName' => $result->getStationName(),
             );
         }
-        return $response;
+        return new JsonResponse($response);
     }
 
     // /**

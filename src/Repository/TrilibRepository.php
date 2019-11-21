@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Trilib;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Trilib|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +24,13 @@ class TrilibRepository extends ServiceEntityRepository
     public function findAllTrilibs()
     {
         $response = array();
-        foreach ($this->findAll() as $result) {
+        $results = $this->findAll();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
             $response[] = array(
                 'id' => $result->getId(),
                 'latitude' => $result->getLatitude(),
@@ -33,7 +41,7 @@ class TrilibRepository extends ServiceEntityRepository
                 'zipcode' => $result->getZipcode(),
             );
         }
-        return $response;
+        return new JsonResponse($response);
     }
 
     public function findOneTrilib(int $id)
@@ -44,6 +52,10 @@ class TrilibRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
+        }
 
         foreach ($results as $result) {
             $response = array(
@@ -56,7 +68,7 @@ class TrilibRepository extends ServiceEntityRepository
                 'zipcode' => $result->getZipcode(),
             );
         }
-        return $response;
+        return new JsonResponse($response);
     }
 
     // /**
