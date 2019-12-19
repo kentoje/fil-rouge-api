@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Velib
  *
  * @ORM\Table(name="velib")
- * @ORM\Entity(repositoryClass="App\Repository\VelibRepository")
+ * @ORM\Entity
  */
 class Velib
 {
@@ -69,6 +71,21 @@ class Velib
      * @ORM\Column(name="bike_available", type="integer", nullable=false)
      */
     private $bikeAvailable;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Monuments", mappedBy="idVelib")
+     */
+    private $idMonument;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idMonument = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -159,5 +176,32 @@ class Velib
         return $this;
     }
 
+    /**
+     * @return Collection|Monuments[]
+     */
+    public function getIdMonument(): Collection
+    {
+        return $this->idMonument;
+    }
+
+    public function addIdMonument(Monuments $idMonument): self
+    {
+        if (!$this->idMonument->contains($idMonument)) {
+            $this->idMonument[] = $idMonument;
+            $idMonument->addIdVelib($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdMonument(Monuments $idMonument): self
+    {
+        if ($this->idMonument->contains($idMonument)) {
+            $this->idMonument->removeElement($idMonument);
+            $idMonument->removeIdVelib($this);
+        }
+
+        return $this;
+    }
 
 }

@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Electricterminal
  *
  * @ORM\Table(name="electricterminal")
- * @ORM\Entity(repositoryClass="App\Repository\ElectricterminalRepository")
+ * @ORM\Entity
  */
 class Electricterminal
 {
@@ -97,6 +99,21 @@ class Electricterminal
      * @ORM\Column(name="station_name", type="string", length=100, nullable=false)
      */
     private $stationName;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Monuments", mappedBy="idElectricterminal")
+     */
+    private $idMonument;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idMonument = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -235,5 +252,32 @@ class Electricterminal
         return $this;
     }
 
+    /**
+     * @return Collection|Monuments[]
+     */
+    public function getIdMonument(): Collection
+    {
+        return $this->idMonument;
+    }
+
+    public function addIdMonument(Monuments $idMonument): self
+    {
+        if (!$this->idMonument->contains($idMonument)) {
+            $this->idMonument[] = $idMonument;
+            $idMonument->addIdElectricterminal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdMonument(Monuments $idMonument): self
+    {
+        if ($this->idMonument->contains($idMonument)) {
+            $this->idMonument->removeElement($idMonument);
+            $idMonument->removeIdElectricterminal($this);
+        }
+
+        return $this;
+    }
 
 }
