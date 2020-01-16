@@ -42,6 +42,13 @@ class Waste
      */
     private $trashColor;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="img_url", type="string", length=100, nullable=true)
+     */
+    private $imgUrl;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,6 +86,18 @@ class Waste
     public function setTrashColor(string $trashColor): self
     {
         $this->trashColor = $trashColor;
+
+        return $this;
+    }
+
+    public function getImgUrl(): ?string
+    {
+        return $this->imgUrl;
+    }
+
+    public function setImgUrl(?string $imgUrl): self
+    {
+        $this->imgUrl = $imgUrl;
 
         return $this;
     }

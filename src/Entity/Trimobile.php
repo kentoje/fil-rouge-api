@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -78,21 +76,6 @@ class Trimobile
      * @ORM\Column(name="address_supplement", type="string", length=100, nullable=true)
      */
     private $addressSupplement;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Monuments", mappedBy="idTrimobile")
-     */
-    private $idMonument;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idMonument = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -195,32 +178,5 @@ class Trimobile
         return $this;
     }
 
-    /**
-     * @return Collection|Monuments[]
-     */
-    public function getIdMonument(): Collection
-    {
-        return $this->idMonument;
-    }
-
-    public function addIdMonument(Monuments $idMonument): self
-    {
-        if (!$this->idMonument->contains($idMonument)) {
-            $this->idMonument[] = $idMonument;
-            $idMonument->addIdTrimobile($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdMonument(Monuments $idMonument): self
-    {
-        if ($this->idMonument->contains($idMonument)) {
-            $this->idMonument->removeElement($idMonument);
-            $idMonument->removeIdTrimobile($this);
-        }
-
-        return $this;
-    }
 
 }
