@@ -29,7 +29,7 @@ class TrimobileDistController extends AbstractController
      */
     public function indexId(TrimobileDistRepository $trimobileDistRepo, $id)
     {
-        $result = $trimobileDistRepo->findOneTrimobileDist($id);
+        $result = $trimobileDistRepo->findTrimobileDistByIdMonument($id);
 
         return $result;
     }

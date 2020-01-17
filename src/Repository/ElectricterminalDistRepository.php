@@ -42,31 +42,31 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTerminalDistByIdMonument(string $id_monument)
+    public function findTerminalDistByIdMonument(int $id_monument)
     {
         $response = array();
 
-        $results = $this->createQueryBuilder('t')
-                        ->innerJoin(
-                            't.idMonuments',
-                            'm',
-                            Expr\Join::WITH,
-                            'm.id = ' . $id_monument
-                        )
-                        ->getQuery()
-                        ->getResult();
+        $results = $this->createQueryBuilder('e')
+            ->innerJoin(
+                'e.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . (string) $id_monument
+            )
+            ->getQuery()
+            ->getResult();
 
         if (!$results) {
             return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
         }
 
         foreach ($results as $result) {
-                $response[] = array(
-                    'id' => $result->getId(),
-                    'distance_m' => $result->getDistanceKm(),
-                    'id_electricterminal' => $result->getIdElectricterminal()->getId(),
-                    'id_monuments' => $result->getIdMonuments()->getId(),
-                );
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_m' => $result->getDistanceKm(),
+                'id_electricterminal' => $result->getIdElectricterminal()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
         }
         return new JsonResponse($response);
     }
@@ -91,12 +91,12 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         }
 
         foreach ($results as $result) {
-                $response[] = array(
-                    'id' => $result->getId(),
-                    'distance_m' => $result->getDistanceKm(),
-                    'id_electricterminal' => $result->getIdElectricterminal()->getId(),
-                    'id_monuments' => $result->getIdMonuments()->getId(),
-                );
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_m' => $result->getDistanceKm(),
+                'id_electricterminal' => $result->getIdElectricterminal()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
         }
         return new JsonResponse($response);
     }

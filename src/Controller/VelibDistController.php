@@ -29,7 +29,7 @@ class VelibDistController extends AbstractController
      */
     public function indexId(VelibDistRepository $VelibDistRepo, $id)
     {
-        $result = $VelibDistRepo->findOneVelibDist($id);
+        $result = $VelibDistRepo->findTrilibDistByIdMonument($id);
 
         return $result;
     }

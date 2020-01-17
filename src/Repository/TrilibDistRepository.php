@@ -50,7 +50,7 @@ class TrilibDistRepository extends ServiceEntityRepository
                 't.idMonuments',
                 'm',
                 Expr\Join::WITH,
-                'm.id = ' . $id_monument
+                'm.id = ' . (string) $id_monument
             )
             ->getQuery()
             ->getResult();
@@ -60,14 +60,12 @@ class TrilibDistRepository extends ServiceEntityRepository
         }
 
         foreach ($results as $result) {
-            if($result->getIdMonuments()->getId() === $id_monument) {
-                $response[] = array(
-                    'id' => $result->getId(),
-                    'distance_m' => $result->getDistanceKm(),
-                    'id_trilib' => $result->getIdTrilib()->getId(),
-                    'id_monuments' => $result->getIdMonuments()->getId(),
-                );
-            }
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_m' => $result->getDistanceKm(),
+                'id_trilib' => $result->getIdTrilib()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
         }
         return new JsonResponse($response);
     }
@@ -92,12 +90,12 @@ class TrilibDistRepository extends ServiceEntityRepository
         }
 
         foreach ($results as $result) {
-                $response[] = array(
-                    'id' => $result->getId(),
-                    'distance_m' => $result->getDistanceKm(),
-                    'id_trilib' => $result->getIdTrilib()->getId(),
-                    'id_monuments' => $result->getIdMonuments()->getId(),
-                );
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_m' => $result->getDistanceKm(),
+                'id_trilib' => $result->getIdTrilib()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
         }
         return new JsonResponse($response);
     }
