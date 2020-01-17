@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrilibDistController extends AbstractController
 {
     /**
-     * @Route("/trilibDist", name="trilib_distances")
+     * @Route("/trilib-dist", name="trilib_distances")
      * @param TrilibDistRepository $trilibDistRepository
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -21,7 +21,7 @@ class TrilibDistController extends AbstractController
     }
 
     /**
-     * @Route("/trilibDist/{id}", name="trilib_distance")
+     * @Route("/trilib-dist/{id}", name="trilib_distance")
      * @param TrilibDistRepository $trilibDistRepository
      * @param $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -34,7 +34,7 @@ class TrilibDistController extends AbstractController
     }
 
     /**
-     * @Route("/trilibDist/{id}/{dist}", name="trilib_distance2")
+     * @Route("/trilib-dist/{id}/{dist}", name="trilib_distance2")
      * @param TrilibDistRepository $trilibDistRepository
      * @param $id
      * @param $dist

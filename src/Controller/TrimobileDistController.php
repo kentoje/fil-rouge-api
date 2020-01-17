@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrimobileDistController extends AbstractController
 {
     /**
-     * @Route("/trimobileDist", name="trimobile_distances")
+     * @Route("/trimobile-dist", name="trimobile_distances")
      * @param TrimobileDistRepository $trimobileDistRepo
      * @return JsonResponse
      */
@@ -22,7 +22,7 @@ class TrimobileDistController extends AbstractController
     }
 
     /**
-     * @Route("/trimobileDist/{id}", name="trimobile_distance")
+     * @Route("/trimobile-dist/{id}", name="trimobile_distance")
      * @param TrimobileDistRepository $trimobileDistRepo
      * @param $id
      * @return JsonResponse
@@ -35,7 +35,7 @@ class TrimobileDistController extends AbstractController
     }
 
      /**
-     * @Route("/trimobileDist/{id}/{dist}", name="trimobileDist_distance2")
+     * @Route("/trimobile-dist/{id}/{dist}", name="trimobileDist_distance2")
      * @param TrimobileDistRepository $trimobileDistRepo
      * @param $id
      * @param $dist

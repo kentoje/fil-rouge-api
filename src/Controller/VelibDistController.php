@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VelibDistController extends AbstractController
 {
     /**
-     * @Route("/velibDist", name="velib_distances")
+     * @Route("/velib-dist", name="velib_distances")
      * @param VelibDistRepository $VelibDistRepo
      * @return JsonResponse
      */
@@ -22,7 +22,7 @@ class VelibDistController extends AbstractController
     }
 
     /**
-     * @Route("/velibDist/{id}", name="velib_distance")
+     * @Route("/velib-dist/{id}", name="velib_distance")
      * @param VelibDistRepository $VelibDistRepo
      * @param $id
      * @return JsonResponse
@@ -35,7 +35,7 @@ class VelibDistController extends AbstractController
     }
 
          /**
-     * @Route("/velibDist/{id}/{dist}", name="velib_distance2")
+     * @Route("/velib-dist/{id}/{dist}", name="velib_distance2")
      * @param VelibDistRepository $VelibDistRepo
      * @param $id
      * @param $dist

@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ElectricterminalDistController extends AbstractController
 {
     /**
-     * @Route("/electricterminalDist", name="electricterminal_distances")
+     * @Route("/electricterminal-dist", name="electricterminal_distances")
      * @param ElectricterminalDistRepository $electricterminalDistRepo
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -21,7 +21,7 @@ class ElectricterminalDistController extends AbstractController
     }
 
     /**
-     * @Route("/electricterminalDist/{id}", name="electricterminal_distance")
+     * @Route("/electricterminal-dist/{id}", name="electricterminal_distance")
      * @param ElectricterminalDistRepository $electricterminalDistRepo
      * @param $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -34,7 +34,7 @@ class ElectricterminalDistController extends AbstractController
     }
 
     /**
-     * @Route("/electricterminalDist/{id}/{dist}", name="electricterminal_distance2")
+     * @Route("/electricterminal-dist/{id}/{dist}", name="electricterminal_distance2")
      * @param ElectricterminalDistRepository $electricterminalDistRepo
      * @param $id
      * @param $dist
