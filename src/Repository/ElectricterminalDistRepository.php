@@ -42,7 +42,7 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTerminalDistByIdMonument(string $id_monument)
+    public function findTerminalDistByIdMonument(int $id_monument)
     {
         $response = array();
 
@@ -51,7 +51,7 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
                             't.idMonuments',
                             'm',
                             Expr\Join::WITH,
-                            'm.id = ' . $id_monument
+                            'm.id = ' . (string) $id_monument
                         )
                         ->getQuery()
                         ->getResult();
@@ -82,7 +82,7 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
                 'm.id = ' . $id_monument
             )
             ->where('t.distanceKm <= :dist')
-            ->setParameter('dist', $dist)
+            ->setParameter('dist', (string) $dist)
             ->getQuery()
             ->getResult();
 

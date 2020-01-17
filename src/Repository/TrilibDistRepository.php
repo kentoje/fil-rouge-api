@@ -50,7 +50,7 @@ class TrilibDistRepository extends ServiceEntityRepository
                 't.idMonuments',
                 'm',
                 Expr\Join::WITH,
-                'm.id = ' . $id_monument
+                'm.id = ' . (string) $id_monument
             )
             ->getQuery()
             ->getResult();
@@ -80,7 +80,7 @@ class TrilibDistRepository extends ServiceEntityRepository
                 't.idMonuments',
                 'm',
                 Expr\Join::WITH,
-                'm.id = ' . $id_monument
+                'm.id = ' . (string) $id_monument
             )
             ->where('t.distanceKm <= :dist')
             ->setParameter('dist', $dist)
