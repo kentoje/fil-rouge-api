@@ -63,6 +63,28 @@ class TrilibDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
+    public function findTrilibDistByIdMonumentAndDist(int $id_monument, $dist)
+    {
+        $response = array();
+        $results = $this->findAll();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            if($result->getIdMonuments()->getId() === $id_monument and $result->getDistanceKm() <= $dist) {
+                $response[] = array(
+                    'id' => $result->getId(),
+                    'distance_m' => $result->getDistanceKm(),
+                    'id_trilib' => $result->getIdTrilib()->getId(),
+                    'id_monuments' => $result->getIdMonuments()->getId(),
+                );
+            }
+        }
+        return new JsonResponse($response);
+    }
+
     // /**
     //  * @return TrilibDistanceMonument[] Returns an array of TrilibDistanceMonument objects
     //  */

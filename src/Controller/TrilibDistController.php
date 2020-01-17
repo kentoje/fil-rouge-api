@@ -27,4 +27,14 @@ class TrilibDistController extends AbstractController
 
         return $result;
     }
+
+    /**
+     * @Route("/trilibDist/{id}/{dist}", name="trilib_distance2")
+     */
+    public function indexIdDist(TrilibDistRepository $trilibDistRepository, $id, $dist)
+    {
+        $result = $trilibDistRepository->findTrilibDistByIdMonumentAndDist($id, $dist);
+
+        return $result;
+    }
 }

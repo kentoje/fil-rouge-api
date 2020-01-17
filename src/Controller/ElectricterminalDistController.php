@@ -19,11 +19,21 @@ class ElectricterminalDistController extends AbstractController
     }
 
     /**
-     * @Route("/electricterminalDist/{id}", name="electricterminal_distance")
-     */
+ * @Route("/electricterminalDist/{id}", name="electricterminal_distance")
+ */
     public function indexId(ElectricterminalDistRepository $electricterminalDistRepo, $id)
     {
         $result = $electricterminalDistRepo->findTerminalDistByIdMonument($id);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/electricterminalDist/{id}/{dist}", name="electricterminal_distance2")
+     */
+    public function indexIdDist(ElectricterminalDistRepository $electricterminalDistRepo, $id, $dist)
+    {
+        $result = $electricterminalDistRepo->findTerminalDistByIdMonumentAndDist($id,$dist);
 
         return $result;
     }
