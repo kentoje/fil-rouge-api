@@ -53,6 +53,7 @@ class TrimobileDistRepository extends ServiceEntityRepository
                 Expr\Join::WITH,
                 'm.id = ' . (string) $id_monument
             )
+            ->orderBy('t.distanceKm')
             ->getQuery()
             ->getResult();
 
@@ -83,6 +84,7 @@ class TrimobileDistRepository extends ServiceEntityRepository
             )
             ->where('t.distanceKm <= :dist')
             ->setParameter('dist', (string) $dist)
+            ->orderBy('t.distanceKm')
             ->getQuery()
             ->getResult();
 

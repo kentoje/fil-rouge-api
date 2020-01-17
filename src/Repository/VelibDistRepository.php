@@ -53,6 +53,7 @@ class VelibDistRepository extends ServiceEntityRepository
                 Expr\Join::WITH,
                 'm.id = ' . (string) $id_monument
             )
+            ->orderBy('v.distanceKm')
             ->getQuery()
             ->getResult();
 
@@ -74,15 +75,16 @@ class VelibDistRepository extends ServiceEntityRepository
     public function findTrilibDistByIdMonumentAndDist(int $id_monument, $dist)
     {
         $response = array();
-        $results = $this->createQueryBuilder('t')
+        $results = $this->createQueryBuilder('v')
             ->innerJoin(
-                't.idMonuments',
+                'v.idMonuments',
                 'm',
                 Expr\Join::WITH,
                 'm.id = ' . $id_monument
             )
-            ->where('t.distanceKm <= :dist')
+            ->where('v.distanceKm <= :dist')
             ->setParameter('dist', (string) $dist)
+            ->orderBy('v.distanceKm')
             ->getQuery()
             ->getResult();
 
