@@ -29,7 +29,21 @@ class VelibDistController extends AbstractController
      */
     public function indexId(VelibDistRepository $VelibDistRepo, $id)
     {
-        $result = $VelibDistRepo->findOneVelibDist($id);
+        $result = $VelibDistRepo->findTrilibDistByIdMonument($id);
+
+        return $result;
+    }
+
+         /**
+     * @Route("/velibDist/{id}/{dist}", name="velib_distance2")
+     * @param VelibDistRepository $VelibDistRepo
+     * @param $id
+     * @param $dist
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function indexIdDist(VelibDistRepository $VelibDistRepo, $id, $dist)
+    {
+        $result = $VelibDistRepo->findTrilibDistByIdMonumentAndDist($id, $dist);
 
         return $result;
     }

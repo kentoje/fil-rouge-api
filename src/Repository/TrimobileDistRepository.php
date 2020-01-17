@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @method TrimobileDistanceMonument|null find($id, $lockMode = null, $lockVersion = null)
@@ -41,23 +42,58 @@ class TrimobileDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneTrimobileDist(int $id)
+    public function findTrimobileDistByIdMonument(int $id_monument)
     {
+        $response = array();
+
         $results = $this->createQueryBuilder('t')
-            ->where('t.id = :id')
-            ->setParameter('id', $id)
+            ->innerJoin(
+                't.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . (string) $id_monument
+            )
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
 
         if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any trimobile distance.'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
         }
 
         foreach ($results as $result) {
-            $response = array(
+            $response[] = array(
                 'id' => $result->getId(),
                 'distance_km' => $result->getDistanceKm(),
+                'id_trimobile' => $result->getIdTrimobile()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
+        }
+        return new JsonResponse($response);
+    }
+
+    public function findTrimobileDistByIdMonumentAndDist(int $id_monument, $dist)
+    {
+        $response = array();
+        $results = $this->createQueryBuilder('t')
+            ->innerJoin(
+                't.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . $id_monument
+            )
+            ->where('t.distanceKm <= :dist')
+            ->setParameter('dist', (string) $dist)
+            ->getQuery()
+            ->getResult();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_m' => $result->getDistanceKm(),
                 'id_trimobile' => $result->getIdTrimobile()->getId(),
                 'id_monuments' => $result->getIdMonuments()->getId(),
             );
