@@ -42,7 +42,7 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTerminalDistByIdMonument(int $id_monument)
+    public function findTerminalDistByIdMonument(string $id_monument)
     {
         $response = array();
 
@@ -51,7 +51,7 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
                             't.idMonuments',
                             'm',
                             Expr\Join::WITH,
-                            'm.id = ' . (string) $id_monument
+                            'm.id = ' . $id_monument
                         )
                         ->getQuery()
                         ->getResult();
@@ -74,21 +74,29 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
     public function findTerminalDistByIdMonumentAndDist(int $id_monument, $dist)
     {
         $response = array();
-        $results = $this->findAll();
+        $results = $this->createQueryBuilder('t')
+            ->innerJoin(
+                't.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . $id_monument
+            )
+            ->where('t.distanceKm <= :dist')
+            ->setParameter('dist', $dist)
+            ->getQuery()
+            ->getResult();
 
         if (!$results) {
             return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
         }
 
         foreach ($results as $result) {
-            if($result->getIdMonuments()->getId() === $id_monument and $result->getDistanceKm() <= $dist){
                 $response[] = array(
                     'id' => $result->getId(),
                     'distance_m' => $result->getDistanceKm(),
                     'id_electricterminal' => $result->getIdElectricterminal()->getId(),
                     'id_monuments' => $result->getIdMonuments()->getId(),
                 );
-            }
         }
         return new JsonResponse($response);
     }

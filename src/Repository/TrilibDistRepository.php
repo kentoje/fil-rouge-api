@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @method TrilibDistanceMonument|null find($id, $lockMode = null, $lockVersion = null)
@@ -44,7 +45,15 @@ class TrilibDistRepository extends ServiceEntityRepository
     public function findTrilibDistByIdMonument(int $id_monument)
     {
         $response = array();
-        $results = $this->findAll();
+        $results = $this->createQueryBuilder('t')
+            ->innerJoin(
+                't.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . $id_monument
+            )
+            ->getQuery()
+            ->getResult();
 
         if (!$results) {
             return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
@@ -66,21 +75,29 @@ class TrilibDistRepository extends ServiceEntityRepository
     public function findTrilibDistByIdMonumentAndDist(int $id_monument, $dist)
     {
         $response = array();
-        $results = $this->findAll();
+        $results = $this->createQueryBuilder('t')
+            ->innerJoin(
+                't.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . $id_monument
+            )
+            ->where('t.distanceKm <= :dist')
+            ->setParameter('dist', $dist)
+            ->getQuery()
+            ->getResult();
 
         if (!$results) {
             return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
         }
 
         foreach ($results as $result) {
-            if($result->getIdMonuments()->getId() === $id_monument and $result->getDistanceKm() <= $dist) {
                 $response[] = array(
                     'id' => $result->getId(),
                     'distance_m' => $result->getDistanceKm(),
                     'id_trilib' => $result->getIdTrilib()->getId(),
                     'id_monuments' => $result->getIdMonuments()->getId(),
                 );
-            }
         }
         return new JsonResponse($response);
     }
