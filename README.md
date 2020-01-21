@@ -7,13 +7,13 @@ API Fil rouge GROUPE 9
 * Lancez l'api avec la commande : `./bin/console server:run`
 * Vous pouvez maintenant aller sur http://127.0.0.1:8000
 
-## liste dddes routes disponibles:
+## liste des routes disponibles:
 
 ### Monuments
-* `/monument` -> Retourne tout les monuments.
+* `/monument` -> Retourne tous les monuments.
 
 ### Déchets
-* `/waste` -> Retourne tout les déchets.
+* `/waste` -> Retourne tous les déchets.
 
 ### Bornes électriques
 * `/electricterminal` -> Retourne toutes les bornes électriques.
@@ -41,7 +41,7 @@ API Fil rouge GROUPE 9
 
 ## Commandes utiles
 * mapper sur la base de données -> `./bin/console doctrine:mapping:import "App\Entity" annotation --path=src/Entity`
-* Crée une migration -> `./bin/console make:migration`
+* Créer une migration -> `./bin/console make:migration`
 * Lancer une migration -> `./bin/console doctrine:migrations:migrate``
-* Regenerer les getter et les setter -> `./bin/console make:entity --regenerate App`
+* Re-générer les getter et les setter -> `./bin/console make:entity --regenerate App`
 
