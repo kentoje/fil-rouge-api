@@ -1,5 +1,11 @@
 # fil-rouge-api
-API Fil rouge GROUPE 9 
+
+## Equipe Groupe 9
+- Amandine Donat-filliod
+- Kento Monthubert
+- Thomas Evano
+- Virgil Limongi
+- Tristan Lemire
 
 ## Installation
 * Suivre l'installation de la base de données -> https://github.com/TristanLemire/HETIC_filrouge_create_db
