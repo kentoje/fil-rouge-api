@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * VelibDistanceMonument
  *
  * @ORM\Table(name="velib_distance_monument", indexes={@ORM\Index(name="velib_distance_monument_monuments0_FK", columns={"id_monuments"}), @ORM\Index(name="velib_distance_monument_velib_FK", columns={"id_velib"})})
- * @ORM\Entity(repositoryClass="App\Repository\VelibDistRepository")
+ * @ORM\Entity
  */
 class VelibDistanceMonument
 {

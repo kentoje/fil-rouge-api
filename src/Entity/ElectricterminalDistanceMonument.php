@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ElectricterminalDistanceMonument
  *
  * @ORM\Table(name="electricterminal_distance_monument", indexes={@ORM\Index(name="electricterminal_distance_monument_monuments0_FK", columns={"id_monuments"}), @ORM\Index(name="electricterminal_distance_monument_electricterminal_FK", columns={"id_electricterminal"})})
- * @ORM\Entity(repositoryClass="App\Repository\ElectricterminalDistRepository")
+ * @ORM\Entity
  */
 class ElectricterminalDistanceMonument
 {

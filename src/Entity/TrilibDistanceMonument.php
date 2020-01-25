@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TrilibDistanceMonument
  *
  * @ORM\Table(name="trilib_distance_monument", indexes={@ORM\Index(name="trilib_distance_monument_monuments0_FK", columns={"id_monuments"}), @ORM\Index(name="trilib_distance_monument_trilib_FK", columns={"id_trilib"})})
- * @ORM\Entity(repositoryClass="App\Repository\TrilibDistRepository")
+ * @ORM\Entity
  */
 class TrilibDistanceMonument
 {
