@@ -17,9 +17,15 @@
 
 ### Monuments
 * `/monument` -> Retourne tous les monuments.
+* `/monument/1` -> Retourne le monument qui a pour id `1`.
 
 ### Déchets
 * `/waste` -> Retourne tous les déchets.
+* `/waste/1` -> Retourne le déchet qui a pour id `1`.
+
+### Enregistrements Déchets
+* `/records-waste` -> Retourne tous les enregistrements des déchets.
+* `/records-waste/1` -> Retourne l'enregistrements de déchet qui a pour id `1`.
 
 ### Bornes électriques
 * `/electricterminal` -> Retourne toutes les bornes électriques.
