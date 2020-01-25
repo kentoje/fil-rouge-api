@@ -26,6 +26,10 @@
 ### Enregistrements Déchets
 * `/records-waste` -> Retourne tous les enregistrements des déchets.
 * `/records-waste/1` -> Retourne l'enregistrements de déchet qui a pour id `1`.
+* `/records-waste-multiplicateur/2/false` -> Retourne tous les enregistrements des déchets multiplier pour `2` jours et pour la population de Paris (grace au `false`).
+* `/records-waste-multiplicateur/14/true` -> Retourne tous les enregistrements des déchets multiplier pour `14` jours et pour la population Olympique (grace au `true`).
+* `/records-waste-multiplicateur/3/false/1` -> Retourne l'enregistrements de déchet qui a pour id `1` multiplier pour `3` jours et pour la population de Paris (grace au `false`).
+* `/records-waste-multiplicateur/4/true/5` -> Retourne l'enregistrements de déchet qui a pour id `5` multiplier pour `4` jours et pour la population Olympique (grace au `true`).
 
 ### Bornes électriques
 * `/electricterminal` -> Retourne toutes les bornes électriques.
