@@ -34,7 +34,7 @@ class RecordsWasteRepository extends ServiceEntityRepository
             $response[] = array(
                 'id' => $result->getId(),
                 'name' => $result->getName(),
-                'degradation_time' => $result->getTons(),
+                'tons' => $result->getTons(),
             );
         }
 
@@ -59,11 +59,76 @@ class RecordsWasteRepository extends ServiceEntityRepository
             $response = array(
                 'id' => $result->getId(),
                 'name' => $result->getName(),
-                'degradation_time' => $result->getTons(),
+                'tons' => $result->getTons(),
             );
         }
         return new JsonResponse($response);
     }
+
+    public function findAllRecordsWastesByMultiplicateur($nbJour, $olympique)
+    {
+        $response = array();
+        $results = $this->findAll();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        if($olympique == "true"){
+            foreach ( $results as $result) {
+                $response[] = array(
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'tons' => $result->getTons() * ($nbJour * 1.23),
+                );
+            }
+        } else if ($olympique == "false") {
+            foreach ( $results as $result) {
+                $response[] = array(
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'tons' => $result->getTons() * $nbJour,
+                );
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
+    public function findOneRecodWasteByMultiplicateur($nbJour, $olympique, int $id)
+    {
+        $results = $this->createQueryBuilder('m')
+            ->where('m.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
+        }
+
+        if($olympique == "true") {
+            foreach ($results as $result) {
+                $response = array(
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'tons' => $result->getTons() * $nbJour * 1.23,
+                );
+            }
+        } else if ($olympique == "false") {
+            foreach ($results as $result) {
+                $response = array(
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'tons' => $result->getTons() * $nbJour,
+                );
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
 
     // /**
     //  * @return RecordsWaste[] Returns an array of RecordsWaste objects
