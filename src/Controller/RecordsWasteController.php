@@ -33,4 +33,33 @@ class RecordsWasteController extends AbstractController
 
         return $result;
     }
+
+    /**
+     * @Route("/records-waste-multiplicateur/{nbJour}/{olympique}", name="records_waste_multiplicateur")
+     * @param RecordsWasteRepository $recordsWastes
+     * @param $nbJour
+     * @param $olympique
+     * @return JsonResponse
+     */
+    public function indexMulti(RecordsWasteRepository $recordsWastes, $nbJour, $olympique)
+    {
+        $result = $recordsWastes->findAllRecordsWastesByMultiplicateur($nbJour, $olympique);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/records-waste-multiplicateur/{nbJour}/{olympique}/{id}", name="record_waste_multiplicateur")
+     * @param RecordsWasteRepository $recordsWastes
+     * @param $nbJour
+     * @param $olympique
+     * @param $id
+     * @return JsonResponse
+     */
+    public function indexIdMulti(RecordsWasteRepository $recordsWastes, $nbJour, $olympique, $id)
+    {
+        $result = $recordsWastes->findOneRecodWasteByMultiplicateur($nbJour, $olympique, $id);
+
+        return $result;
+    }
 }
