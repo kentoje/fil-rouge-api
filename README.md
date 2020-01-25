@@ -48,6 +48,6 @@
 ## Commandes utiles
 * mapper sur la base de données -> `./bin/console doctrine:mapping:import "App\Entity" annotation --path=src/Entity`
 * Créer une migration -> `./bin/console make:migration`
-* Lancer une migration -> `./bin/console doctrine:migrations:migrate``
+* Lancer une migration -> `./bin/console doctrine:migrations:migrate`
 * Re-générer les getter et les setter -> `./bin/console make:entity --regenerate App`
 
