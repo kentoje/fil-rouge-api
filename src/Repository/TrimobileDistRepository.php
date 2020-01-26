@@ -103,6 +103,35 @@ class TrimobileDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
+    public function countTrimobileDistByIdMonumentAndDist(int $id_monument, $dist)
+    {
+        $response = array();
+        $results = $this->createQueryBuilder('t')
+            ->innerJoin(
+                't.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . $id_monument
+            )
+            ->where('t.distanceKm <= :dist')
+            ->setParameter('dist', (string) $dist)
+            ->orderBy('t.distanceKm')
+            ->getQuery()
+            ->getResult();
+
+        if (!$results) {
+            $response[] = array(
+                'nb' => 0
+            );
+            return $response;
+        }
+
+        $response[] = array(
+            'nb' => count($results)
+        );
+        return $response;
+    }
+
     // /**
     //  * @return TrimobileDistanceMonument[] Returns an array of TrimobileDistanceMonument objects
     //  */

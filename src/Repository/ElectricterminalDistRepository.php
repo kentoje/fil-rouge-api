@@ -103,6 +103,37 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
+    public function countTerminalDistByIdMonumentAndDist(int $id_monument, $dist)
+    {
+        $response = array();
+        $results = $this->createQueryBuilder('e')
+            ->innerJoin(
+                'e.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . $id_monument
+            )
+            ->where('e.distanceKm <= :dist')
+            ->setParameter('dist', (string) $dist)
+            ->orderBy('e.distanceKm')
+            ->getQuery()
+            ->getResult();
+
+        if (!$results) {
+            $response[] = array(
+                'nb' => 0
+            );
+            return $response;
+        }
+
+            $response[] = array(
+                'nb' => count($results)
+            );
+        return $response;
+    }
+
+
+
     // /**
     //  * @return ElectricterminalDistanceMonument[] Returns an array of ElectricterminalDistanceMonument objects
     //  */

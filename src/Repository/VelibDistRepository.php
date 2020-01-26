@@ -103,6 +103,35 @@ class VelibDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
+    public function countTrilibDistByIdMonumentAndDist(int $id_monument, $dist)
+    {
+        $response = array();
+        $results = $this->createQueryBuilder('v')
+            ->innerJoin(
+                'v.idMonuments',
+                'm',
+                Expr\Join::WITH,
+                'm.id = ' . $id_monument
+            )
+            ->where('v.distanceKm <= :dist')
+            ->setParameter('dist', (string) $dist)
+            ->orderBy('v.distanceKm')
+            ->getQuery()
+            ->getResult();
+
+        if (!$results) {
+            $response[] = array(
+                'nb' => 0
+            );
+            return $response;
+        }
+
+        $response[] = array(
+            'nb' => count($results)
+        );
+        return $response;
+    }
+
     // /**
     //  * @return VelibDistanceMonument[] Returns an array of VelibDistanceMonument objects
     //  */
