@@ -17,7 +17,9 @@
 
 ### Monuments
 * `/monument` -> Retourne tous les monuments.
-* `/monument/1` -> Retourne le monument qui a pour id `1`.
+* `/monument/1` -> Retourne le monument qui a pour id `1`. 
+* `/monument-dist-all/21/8000`-> Retourne le nombres de chaque points d'interets a `8000` metres du monument qui a pour id `21`
+* `/monument-dist-all-choice/{id}/{distTrilibs}/{distElecs}/{distTrimobile}/{distVelibe}`Retourne le nombres de chaque points d'interets du monument qui a pour id `21`, mais vous pouvez choisir la distance pour chaque type de point d'interets.
 
 ### Déchets
 * `/waste` -> Retourne tous les déchets.
