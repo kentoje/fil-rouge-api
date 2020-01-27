@@ -102,4 +102,69 @@ class MonumentsController extends AbstractController
 
         return new JsonResponse($response);
     }
+
+    /**
+     * @Route("/monument-all/{id}/{dist}", name="monumentAll")
+     * @param TrilibDistRepository $trilibDist
+     * @param ElectricterminalDistRepository $elecDist
+     * @param TrimobileDistRepository $trimobileDist
+     * @param VelibDistRepository $velibesDist
+     * @param $id
+     * @param $dist
+     * @return JsonResponse
+     */
+    public function indexIdAll(TrilibDistRepository $trilibDist,
+                                   ElectricterminalDistRepository $elecDist,
+                                   TrimobileDistRepository $trimobileDist,
+                                   VelibDistRepository $velibesDist,
+                                   $id, $dist)
+    {
+        $trilibs = $trilibDist->findTrilibDistByIdMonumentAndDistNoJsoned($id,$dist);
+        $elecs = $elecDist->findTerminalDistByIdMonumentAndDistNoJsoned($id,$dist);
+        $trimobiles = $trimobileDist->findTrimobileDistByIdMonumentAndDistNoJsoned($id,$dist);
+        $velibes = $velibesDist->findTrilibDistByIdMonumentAndDistNoJsoned($id,$dist);
+
+        $response[] = array(
+            'trilibs' => $trilibs,
+            'borne' => $elecs,
+            'timobile' => $trimobiles,
+            'velibe' => $velibes,
+        );
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/monument-all-choice/{id}/{distTrilibs}/{distElecs}/{distTrimobile}/{distVelibe}", name="monumentAllChoice")
+     * @param TrilibDistRepository $trilibDist
+     * @param ElectricterminalDistRepository $elecDist
+     * @param TrimobileDistRepository $trimobileDist
+     * @param VelibDistRepository $velibesDist
+     * @param $id
+     * @param $distTrilibs
+     * @param $distElecs
+     * @param $distTrimobile
+     * @param $distVelibe
+     * @return JsonResponse
+     */
+    public function indexIdAllChoice(TrilibDistRepository $trilibDist,
+                                         ElectricterminalDistRepository $elecDist,
+                                         TrimobileDistRepository $trimobileDist,
+                                         VelibDistRepository $velibesDist,
+                                         $id, $distTrilibs, $distElecs, $distTrimobile,$distVelibe)
+    {
+        $trilibs = $trilibDist->findTrilibDistByIdMonumentAndDistNoJsoned($id,$distTrilibs);
+        $elecs = $elecDist->findTerminalDistByIdMonumentAndDistNoJsoned($id,$distElecs);
+        $trimobiles = $trimobileDist->findTrimobileDistByIdMonumentAndDistNoJsoned($id,$distTrimobile);
+        $velibes = $velibesDist->findTrilibDistByIdMonumentAndDistNoJsoned($id,$distVelibe);
+
+        $response[] = array(
+            'trilibs' => $trilibs,
+            'borne' => $elecs,
+            'timobile' => $trimobiles,
+            'velibe' => $velibes,
+        );
+
+        return new JsonResponse($response);
+    }
 }
