@@ -71,6 +71,29 @@ class MonumentsRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
+    public function findAllMonumentsNoJsoned()
+    {
+        $response = array();
+        $results = $this->findAll();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'name' => $result->getName(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+            );
+        }
+        return $response;
+    }
+
     // /**
     //  * @return Monuments[] Returns an array of Monuments objects
     //  */

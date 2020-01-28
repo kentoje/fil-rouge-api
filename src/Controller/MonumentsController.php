@@ -167,4 +167,95 @@ class MonumentsController extends AbstractController
 
         return new JsonResponse($response);
     }
+
+    /**
+     * @Route("/monument-all-dist/{dist}", name="monumentAll")
+     * @param MonumentsRepository $monumentsRepo
+     * @param TrilibDistRepository $trilibDist
+     * @param ElectricterminalDistRepository $elecDist
+     * @param TrimobileDistRepository $trimobileDist
+     * @param VelibDistRepository $velibesDist
+     * @param $dist
+     * @return JsonResponse
+     */
+    public function indexIdAllMonument(MonumentsRepository $monumentsRepo,
+                                   TrilibDistRepository $trilibDist,
+                                   ElectricterminalDistRepository $elecDist,
+                                   TrimobileDistRepository $trimobileDist,
+                                   VelibDistRepository $velibesDist,
+                                   $dist)
+    {   
+        $results = $monumentsRepo->findAllMonumentsNoJsoned();
+        $response = array();
+
+        foreach ($results as $result) {
+            $trilibs = $trilibDist->countTrilibDistByIdMonumentAndDist($result["id"],$dist);
+            $bornes = $elecDist->countTerminalDistByIdMonumentAndDist($result["id"],$dist);
+            $trimobiles = $trimobileDist->countTrimobileDistByIdMonumentAndDist($result["id"],$dist);
+            $velibs = $velibesDist->countTrilibDistByIdMonumentAndDist($result["id"],$dist);
+
+            $response[] = array(
+                'id' => $result["id"],
+                'name' => $result["name"],
+                'longitude' => $result["longitude"],
+                'latitude' => $result["latitude"],
+                'address' => $result["address"],
+                'city' => $result["city"],
+                'zipcode' => $result["zipcode"],
+                'nbTrilibs' => $trilibs[0]['nb'],
+                'nbBornes' => $bornes[0]['nb'],
+                'nbTrimobiles' => $trimobiles[0]['nb'],
+                'nbVelibs' => $velibs[0]['nb'],
+            );
+
+        }
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/monument-all-dist/{trilibDistParam}/{borneDistParam}/{trimobileDistParam}/{velibDistParam}", name="monumentAll2")
+     * @param MonumentsRepository $monumentsRepo
+     * @param TrilibDistRepository $trilibDist
+     * @param ElectricterminalDistRepository $elecDist
+     * @param TrimobileDistRepository $trimobileDist
+     * @param VelibDistRepository $velibesDist
+     * @param $trilibDistParam
+     * @param $borneDistParam
+     * @param $trimobileDistParam
+     * @param $velibDistParam
+     * @return JsonResponse
+     */
+    public function indexIdAllMonumentDist(MonumentsRepository $monumentsRepo,
+                                   TrilibDistRepository $trilibDist,
+                                   ElectricterminalDistRepository $elecDist,
+                                   TrimobileDistRepository $trimobileDist,
+                                   VelibDistRepository $velibesDist,
+                                   $trilibDistParam, $borneDistParam, $trimobileDistParam,$velibDistParam)
+    {   
+        $results = $monumentsRepo->findAllMonumentsNoJsoned();
+        $response = array();
+
+        foreach ($results as $result) {
+            $trilibs = $trilibDist->countTrilibDistByIdMonumentAndDist($result["id"],$trilibDistParam);
+            $bornes = $elecDist->countTerminalDistByIdMonumentAndDist($result["id"],$borneDistParam);
+            $trimobiles = $trimobileDist->countTrimobileDistByIdMonumentAndDist($result["id"],$trimobileDistParam);
+            $velibs = $velibesDist->countTrilibDistByIdMonumentAndDist($result["id"],$velibDistParam);
+
+            $response[] = array(
+                'id' => $result["id"],
+                'name' => $result["name"],
+                'longitude' => $result["longitude"],
+                'latitude' => $result["latitude"],
+                'address' => $result["address"],
+                'city' => $result["city"],
+                'zipcode' => $result["zipcode"],
+                'nbTrilibs' => $trilibs[0]['nb'],
+                'nbBornes' => $bornes[0]['nb'],
+                'nbTrimobiles' => $trimobiles[0]['nb'],
+                'nbVelibs' => $velibs[0]['nb'],
+            );
+
+        }
+        return new JsonResponse($response);
+    }
 }
