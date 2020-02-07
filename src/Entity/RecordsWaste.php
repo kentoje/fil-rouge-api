@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * RecordsWaste
  *
  * @ORM\Table(name="records_waste")
- * @ORM\Entity(repositoryClass="App\Repository\RecordsWasteRepository")
+ * @ORM\Entity
  */
 class RecordsWaste
 {
@@ -24,7 +24,7 @@ class RecordsWaste
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
 

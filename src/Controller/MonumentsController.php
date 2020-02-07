@@ -104,7 +104,7 @@ class MonumentsController extends AbstractController
     }
 
     /**
-     * @Route("/monument-all/{id}/{dist}", name="monumentAll")
+     * @Route("/monument-all/{id}/{dist}", name="monumentAll4")
      * @param TrilibDistRepository $trilibDist
      * @param ElectricterminalDistRepository $elecDist
      * @param TrimobileDistRepository $trimobileDist

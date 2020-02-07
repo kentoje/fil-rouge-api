@@ -36,6 +36,7 @@ class WasteRepository extends ServiceEntityRepository
                 'name' => $result->getName(),
                 'degradation_time' => $result->getDegradationTime(),
                 'trash_color' => $result->getTrashColor(),
+                'img_url' => $result->getImgUrl(),
             );
         }
 
@@ -61,6 +62,7 @@ class WasteRepository extends ServiceEntityRepository
                 'name' => $result->getName(),
                 'degradation_time' => $result->getDegradationTime(),
                 'trash_color' => $result->getTrashColor(),
+                'img_url' => $result->getImgUrl(),
             );
         }
         return new JsonResponse($response);
