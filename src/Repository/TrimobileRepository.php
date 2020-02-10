@@ -21,7 +21,7 @@ class TrimobileRepository extends ServiceEntityRepository
         parent::__construct($registry, Trimobile::class);
     }
 
-    public function findAllTrimobiles()
+    public function findAllTrimobiles(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -46,7 +46,7 @@ class TrimobileRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneTrimobile(int $id)
+    public function findOneTrimobile(int $id): JsonResponse
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')

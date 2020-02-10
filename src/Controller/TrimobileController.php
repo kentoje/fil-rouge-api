@@ -27,7 +27,7 @@ class TrimobileController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(TrimobileRepository $trimobileRepo, $id)
+    public function indexId(TrimobileRepository $trimobileRepo, int $id)
     {
         $result = $trimobileRepo->findOneTrimobile($id);
 
