@@ -21,7 +21,7 @@ class VelibRepository extends ServiceEntityRepository
         parent::__construct($registry, Velib::class);
     }
 
-    public function findAllVelibs()
+    public function findAllVelibs(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -44,7 +44,7 @@ class VelibRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneVelib(int $id)
+    public function findOneVelib(int $id): JsonResponse
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')

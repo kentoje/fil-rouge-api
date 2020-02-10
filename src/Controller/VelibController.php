@@ -27,7 +27,7 @@ class VelibController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(VelibRepository $velibsRepo, $id)
+    public function indexId(VelibRepository $velibsRepo, int $id)
     {
         $result = $velibsRepo->findOneVelib($id);
 
