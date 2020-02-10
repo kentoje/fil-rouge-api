@@ -21,7 +21,7 @@ class TrilibRepository extends ServiceEntityRepository
         parent::__construct($registry, Trilib::class);
     }
 
-    public function findAllTrilibs()
+    public function findAllTrilibs(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -44,8 +44,9 @@ class TrilibRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneTrilib(int $id)
+    public function findOneTrilib(int $id): JsonResponse
     {
+        $response = array();
         $results = $this->createQueryBuilder('t')
             ->where('t.id = :id')
             ->setParameter('id', $id)

@@ -27,7 +27,7 @@ class TrilibController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(TrilibRepository $trilibRepo, $id)
+    public function indexId(TrilibRepository $trilibRepo, int $id)
     {
         $result = $trilibRepo->findOneTrilib($id);
 
