@@ -22,7 +22,7 @@ class TrimobileDistRepository extends ServiceEntityRepository
         parent::__construct($registry, TrimobileDistanceMonument::class);
     }
 
-    public function findAllTrimobileDist()
+    public function findAllTrimobileDist(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -42,7 +42,7 @@ class TrimobileDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTrimobileDistByIdMonument(int $id_monument)
+    public function findTrimobileDistByIdMonument(int $id_monument): JsonResponse
     {
         $response = array();
 
@@ -72,7 +72,7 @@ class TrimobileDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTrimobileDistByIdMonumentAndDist(int $id_monument, $dist)
+    public function findTrimobileDistByIdMonumentAndDist(int $id_monument, int $dist): JsonResponse
     {
         $response = array();
         $results = $this->createQueryBuilder('t')

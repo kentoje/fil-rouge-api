@@ -27,7 +27,7 @@ class TrimobileDistController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(TrimobileDistRepository $trimobileDistRepo, $id)
+    public function indexId(TrimobileDistRepository $trimobileDistRepo, int $id)
     {
         $result = $trimobileDistRepo->findTrimobileDistByIdMonument($id);
 
@@ -41,7 +41,7 @@ class TrimobileDistController extends AbstractController
      * @param $dist
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexIdDist(TrimobileDistRepository $trimobileDistRepo, $id, $dist)
+    public function indexIdDist(TrimobileDistRepository $trimobileDistRepo, int $id, int $dist)
     {
         $result = $trimobileDistRepo->findTrimobileDistByIdMonumentAndDist($id, $dist);
 
