@@ -21,7 +21,7 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function findAllUsers()
+    public function findAllUsers(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -44,7 +44,7 @@ class UserRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneUser(int $id)
+    public function findOneUser(int $id): JsonResponse
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')

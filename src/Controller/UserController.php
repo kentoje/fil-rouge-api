@@ -27,7 +27,7 @@ class UserController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(UserRepository $user, $id)
+    public function indexId(UserRepository $user, int $id)
     {
         $result = $user->findOneUser($id);
 
