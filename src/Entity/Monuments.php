@@ -66,9 +66,16 @@ class Monuments
     /**
      * @var string|null
      *
-     * @ORM\Column(name="img_url", type="string", length=100, nullable=true)
+     * @ORM\Column(name="img_url", type="string", length=50, nullable=true)
      */
     private $imgUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sport", type="string", length=100, nullable=false)
+     */
+    private $sport;
 
     public function getId(): ?int
     {
@@ -155,6 +162,18 @@ class Monuments
     public function setImgUrl(?string $imgUrl): self
     {
         $this->imgUrl = $imgUrl;
+
+        return $this;
+    }
+
+    public function getSport(): ?string
+    {
+        return $this->sport;
+    }
+
+    public function setSport(string $sport): self
+    {
+        $this->sport = $sport;
 
         return $this;
     }

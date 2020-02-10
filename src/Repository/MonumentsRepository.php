@@ -39,6 +39,8 @@ class MonumentsRepository extends ServiceEntityRepository
                 'address' => $result->getAddress(),
                 'city' => $result->getCity(),
                 'zipcode' => $result->getZipcode(),
+                'sport' => $result->getSport(),
+                'img_url' => $result->getImgUrl(),
             );
         }
         return new JsonResponse($response);
@@ -66,6 +68,8 @@ class MonumentsRepository extends ServiceEntityRepository
                 'address' => $result->getAddress(),
                 'city' => $result->getCity(),
                 'zipcode' => $result->getZipcode(),
+                'sport' => $result->getSport(),
+                'img_url' => $result->getImgUrl(),
             );
         }
         return new JsonResponse($response);
@@ -89,6 +93,8 @@ class MonumentsRepository extends ServiceEntityRepository
                 'address' => $result->getAddress(),
                 'city' => $result->getCity(),
                 'zipcode' => $result->getZipcode(),
+                'sport' => $result->getSport(),
+                'img_url' => $result->getImgUrl(),
             );
         }
         return $response;
