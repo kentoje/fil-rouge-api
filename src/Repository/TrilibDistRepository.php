@@ -22,7 +22,7 @@ class TrilibDistRepository extends ServiceEntityRepository
         parent::__construct($registry, TrilibDistanceMonument::class);
     }
 
-    public function findAllTrilibDist()
+    public function findAllTrilibDist(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -42,7 +42,7 @@ class TrilibDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTrilibDistByIdMonument(int $id_monument)
+    public function findTrilibDistByIdMonument(int $id_monument): JsonResponse
     {
         $response = array();
         $results = $this->createQueryBuilder('t')
@@ -71,7 +71,7 @@ class TrilibDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTrilibDistByIdMonumentAndDist(int $id_monument, $dist)
+    public function findTrilibDistByIdMonumentAndDist(int $id_monument, int $dist): JsonResponse
     {
         $response = array();
         $results = $this->createQueryBuilder('t')

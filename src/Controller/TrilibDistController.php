@@ -26,7 +26,7 @@ class TrilibDistController extends AbstractController
      * @param $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexId(TrilibDistRepository $trilibDistRepository, $id)
+    public function indexId(TrilibDistRepository $trilibDistRepository, int $id)
     {
         $result = $trilibDistRepository->findTrilibDistByIdMonument($id);
 
@@ -40,7 +40,7 @@ class TrilibDistController extends AbstractController
      * @param $dist
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexIdDist(TrilibDistRepository $trilibDistRepository, $id, $dist)
+    public function indexIdDist(TrilibDistRepository $trilibDistRepository, int $id, int $dist)
     {
         $result = $trilibDistRepository->findTrilibDistByIdMonumentAndDist($id, $dist);
 
