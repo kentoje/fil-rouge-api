@@ -22,7 +22,7 @@ class VelibDistRepository extends ServiceEntityRepository
         parent::__construct($registry, VelibDistanceMonument::class);
     }
 
-    public function findAllVelibDist()
+    public function findAllVelibDist(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -42,7 +42,7 @@ class VelibDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTrilibDistByIdMonument(int $id_monument)
+    public function findTrilibDistByIdMonument(int $id_monument): JsonResponse
     {
         $response = array();
 
@@ -72,7 +72,7 @@ class VelibDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTrilibDistByIdMonumentAndDist(int $id_monument, $dist)
+    public function findTrilibDistByIdMonumentAndDist(int $id_monument, int $dist): JsonResponse
     {
         $response = array();
         $results = $this->createQueryBuilder('v')

@@ -27,7 +27,7 @@ class VelibDistController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(VelibDistRepository $VelibDistRepo, $id)
+    public function indexId(VelibDistRepository $VelibDistRepo, int $id)
     {
         $result = $VelibDistRepo->findTrilibDistByIdMonument($id);
 
@@ -41,7 +41,7 @@ class VelibDistController extends AbstractController
      * @param $dist
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexIdDist(VelibDistRepository $VelibDistRepo, $id, $dist)
+    public function indexIdDist(VelibDistRepository $VelibDistRepo, int $id, int $dist)
     {
         $result = $VelibDistRepo->findTrilibDistByIdMonumentAndDist($id, $dist);
 
