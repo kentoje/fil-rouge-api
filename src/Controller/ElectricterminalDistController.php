@@ -26,7 +26,7 @@ class ElectricterminalDistController extends AbstractController
      * @param $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexId(ElectricterminalDistRepository $electricterminalDistRepo, $id)
+    public function indexId(ElectricterminalDistRepository $electricterminalDistRepo, int $id)
     {
         $result = $electricterminalDistRepo->findTerminalDistByIdMonument($id);
 
@@ -40,7 +40,7 @@ class ElectricterminalDistController extends AbstractController
      * @param $dist
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexIdDist(ElectricterminalDistRepository $electricterminalDistRepo, $id, $dist)
+    public function indexIdDist(ElectricterminalDistRepository $electricterminalDistRepo, int $id, int $dist)
     {
         $result = $electricterminalDistRepo->findTerminalDistByIdMonumentAndDist($id,$dist);
 

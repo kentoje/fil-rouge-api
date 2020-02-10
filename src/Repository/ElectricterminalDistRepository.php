@@ -22,7 +22,7 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         parent::__construct($registry, ElectricterminalDistanceMonument::class);
     }
 
-    public function findAllTerminalsDist()
+    public function findAllTerminalsDist():JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -42,7 +42,7 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTerminalDistByIdMonument(int $id_monument)
+    public function findTerminalDistByIdMonument(int $id_monument): JsonResponse
     {
         $response = array();
 
@@ -72,7 +72,7 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findTerminalDistByIdMonumentAndDist(int $id_monument, $dist)
+    public function findTerminalDistByIdMonumentAndDist(int $id_monument, int $dist): JsonResponse
     {
         $response = array();
         $results = $this->createQueryBuilder('e')
