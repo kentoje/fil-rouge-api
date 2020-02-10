@@ -16,9 +16,9 @@ class RecordsWasteController extends AbstractController
      */
     public function index(RecordsWasteRepository $recordsWastesRepo)
     {
-        $result = $recordsWastesRepo->findAllRecordsWastes();
+        $results = $recordsWastesRepo->findAllRecordsWastes();
 
-        return $result;
+        return $results;
     }
 
     /**
@@ -29,36 +29,36 @@ class RecordsWasteController extends AbstractController
      */
     public function indexId(RecordsWasteRepository $recordsWastes, $id)
     {
-        $result = $recordsWastes->findOneRecodWaste($id);
+        $result = $recordsWastes->findOneRecordWaste($id);
 
         return $result;
     }
 
     /**
-     * @Route("/records-waste-multiplicateur/{nbJour}/{olympique}", name="records_waste_multiplicateur")
+     * @Route("/records-waste-multiplicateur/{numberDay}/{foreignerPeople}", name="records_waste_multiplicateur")
      * @param RecordsWasteRepository $recordsWastes
-     * @param $nbJour
-     * @param $olympique
+     * @param $numberDay
+     * @param $foreignerPeople
      * @return JsonResponse
      */
-    public function indexMulti(RecordsWasteRepository $recordsWastes, $nbJour, $olympique)
+    public function indexMulti(RecordsWasteRepository $recordsWastes, int $numberDay, string $foreignerPeople)
     {
-        $result = $recordsWastes->findAllRecordsWastesByMultiplicateur($nbJour, $olympique);
+        $result = $recordsWastes->findAllRecordsWastesByMultiplication($numberDay, $foreignerPeople);
 
         return $result;
     }
 
     /**
-     * @Route("/records-waste-multiplicateur/{nbJour}/{olympique}/{id}", name="record_waste_multiplicateur")
+     * @Route("/records-waste-multiplicateur/{numberDay}/{foreignerPeople}/{id}", name="record_waste_multiplicateur")
      * @param RecordsWasteRepository $recordsWastes
-     * @param $nbJour
-     * @param $olympique
+     * @param $numberDay
+     * @param $foreignerPeople
      * @param $id
      * @return JsonResponse
      */
-    public function indexIdMulti(RecordsWasteRepository $recordsWastes, $nbJour, $olympique, $id)
+    public function indexIdMulti(RecordsWasteRepository $recordsWastes, int $numberDay, string $foreignerPeople, int $id)
     {
-        $result = $recordsWastes->findOneRecodWasteByMultiplicateur($nbJour, $olympique, $id);
+        $result = $recordsWastes->findOneRecordWasteByMultiplication($numberDay, $foreignerPeople, $id);
 
         return $result;
     }

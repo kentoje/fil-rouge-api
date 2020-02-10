@@ -21,7 +21,7 @@ class RecordsWasteRepository extends ServiceEntityRepository
         parent::__construct($registry, RecordsWaste::class);
     }
 
-    public function findAllRecordsWastes()
+    public function findAllRecordsWastes(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -30,7 +30,7 @@ class RecordsWasteRepository extends ServiceEntityRepository
             return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
         }
 
-        foreach ( $results as $result) {
+        foreach ($results as $result) {
             $response[] = array(
                 'id' => $result->getId(),
                 'name' => $result->getName(),
@@ -41,9 +41,9 @@ class RecordsWasteRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-
-    public function findOneRecodWaste(int $id)
+    public function findOneRecordWaste(int $id): JsonResponse
     {
+        $response = array();
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
             ->setParameter('id', $id)
@@ -65,7 +65,7 @@ class RecordsWasteRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findAllRecordsWastesByMultiplicateur($nbJour, $olympique)
+    public function findAllRecordsWastesByMultiplication(int $numberDay, string $foreignerPeople): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -74,20 +74,20 @@ class RecordsWasteRepository extends ServiceEntityRepository
             return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
         }
 
-        if($olympique == "true"){
-            foreach ( $results as $result) {
+        if ($foreignerPeople === 'true'){
+            foreach ($results as $result) {
                 $response[] = array(
                     'id' => $result->getId(),
                     'name' => $result->getName(),
-                    'tons' => $result->getTons() * ($nbJour * 1.23),
+                    'tons' => $result->getTons() * ($numberDay * 1.23),
                 );
             }
-        } else if ($olympique == "false") {
-            foreach ( $results as $result) {
+        } else if ($foreignerPeople === 'false') {
+            foreach ($results as $result) {
                 $response[] = array(
                     'id' => $result->getId(),
                     'name' => $result->getName(),
-                    'tons' => $result->getTons() * $nbJour,
+                    'tons' => $result->getTons() * $numberDay,
                 );
             }
         }
@@ -95,8 +95,9 @@ class RecordsWasteRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneRecodWasteByMultiplicateur($nbJour, $olympique, int $id)
+    public function findOneRecordWasteByMultiplication(int $numberDay, string $foreignerPeople, int $id): JsonResponse
     {
+        $response = array();
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
             ->setParameter('id', $id)
@@ -108,20 +109,20 @@ class RecordsWasteRepository extends ServiceEntityRepository
             return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
         }
 
-        if($olympique == "true") {
+        if($foreignerPeople === "true") {
             foreach ($results as $result) {
                 $response = array(
                     'id' => $result->getId(),
                     'name' => $result->getName(),
-                    'tons' => $result->getTons() * $nbJour * 1.23,
+                    'tons' => $result->getTons() * $numberDay * 1.23,
                 );
             }
-        } else if ($olympique == "false") {
+        } else if ($foreignerPeople === "false") {
             foreach ($results as $result) {
                 $response = array(
                     'id' => $result->getId(),
                     'name' => $result->getName(),
-                    'tons' => $result->getTons() * $nbJour,
+                    'tons' => $result->getTons() * $numberDay,
                 );
             }
         }
