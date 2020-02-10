@@ -21,7 +21,7 @@ class ElectricterminalRepository extends ServiceEntityRepository
         parent::__construct($registry, Electricterminal::class);
     }
 
-    public function findAllTerminals()
+    public function findAllTerminals(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -49,7 +49,7 @@ class ElectricterminalRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneTerminal(int $id)
+    public function findOneTerminal(int $id): JsonResponse
     {
         $results = $this->createQueryBuilder('t')
             ->where('t.id = :id')

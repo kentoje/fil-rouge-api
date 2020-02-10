@@ -27,7 +27,7 @@ class ElectricterminalController extends AbstractController
      * @return JsonResponse
      * @param $id
      */
-    public function indexId(ElectricterminalRepository $electricterminalRepo, $id)
+    public function indexId(ElectricterminalRepository $electricterminalRepo, int $id)
     {
         $result = $electricterminalRepo->findOneTerminal($id);
 
