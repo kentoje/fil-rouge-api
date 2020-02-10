@@ -21,7 +21,7 @@ class MonumentsRepository extends ServiceEntityRepository
         parent::__construct($registry, Monuments::class);
     }
 
-    public function findAllMonuments()
+    public function findAllMonuments(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -44,7 +44,7 @@ class MonumentsRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneMonument(int $id)
+    public function findOneMonument(int $id): JsonResponse
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')

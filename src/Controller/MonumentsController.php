@@ -31,7 +31,7 @@ class MonumentsController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(MonumentsRepository $monumentsRepo, $id)
+    public function indexId(MonumentsRepository $monumentsRepo, int $id)
     {
         $result = $monumentsRepo->findOneMonument($id);
 
