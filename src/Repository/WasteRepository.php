@@ -21,7 +21,7 @@ class WasteRepository extends ServiceEntityRepository
         parent::__construct($registry, Waste::class);
     }
 
-    public function findAllWastes()
+    public function findAllWastes(): JsonResponse
     {
         $response = array();
         $results = $this->findAll();
@@ -43,8 +43,9 @@ class WasteRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
-    public function findOneWaste(int $id)
+    public function findOneWaste(int $id): JsonResponse
     {
+        $response = array();
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
             ->setParameter('id', $id)

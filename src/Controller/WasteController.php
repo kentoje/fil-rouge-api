@@ -27,7 +27,7 @@ class WasteController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(WasteRepository $waste, $id)
+    public function indexId(WasteRepository $waste, int $id)
     {
         $result = $waste->findOneWaste($id);
 
