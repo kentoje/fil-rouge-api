@@ -259,6 +259,7 @@ class MonumentsController extends AbstractController
                 'zipcode' => $result["zipcode"],
                 'sport' => $result['sport'],
                 'img_url' => $result['img_url'],
+                'nbTrilibs' => count($trilibs),
                 'nbBornes' =>   count($terminal),
                 'nbTrimobiles' => count($trimobiles),
                 'nbVelibs' => count($velibs),
