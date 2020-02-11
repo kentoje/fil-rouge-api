@@ -189,10 +189,10 @@ class MonumentsController extends AbstractController
         $response = array();
 
         foreach ($results as $result) {
-            $trilibs = $trilibDist->countTrilibDistByIdMonumentAndDist($result["id"],$dist);
-            $bornes = $elecDist->countTerminalDistByIdMonumentAndDist($result["id"],$dist);
-            $trimobiles = $trimobileDist->countTrimobileDistByIdMonumentAndDist($result["id"],$dist);
-            $velibs = $velibesDist->countTrilibDistByIdMonumentAndDist($result["id"],$dist);
+            $trilibs = $trilibDist->findTrilibDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
+            $terminal = $elecDist->findTerminalDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
+            $trimobiles = $trimobileDist->findTrimobileDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
+            $velibs = $velibesDist->findTrilibDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
 
             $response[] = array(
                 'id' => $result["id"],
@@ -204,10 +204,16 @@ class MonumentsController extends AbstractController
                 'zipcode' => $result["zipcode"],
                 'sport' => $result['sport'],
                 'img_url' => $result['img_url'],
-                'nbTrilibs' => $trilibs[0]['nb'],
-                'nbBornes' => $bornes[0]['nb'],
-                'nbTrimobiles' => $trimobiles[0]['nb'],
-                'nbVelibs' => $velibs[0]['nb'],
+                'nbTrilibs' => count($trilibs),
+                'nbBornes' =>   count($terminal),
+                'nbTrimobiles' => count($trimobiles),
+                'nbVelibs' => count($velibs),
+                'interets' => [
+                    'trimobile'=> $trimobiles,
+                    'trilib'=> $trilibs,
+                    'terminal'=> $terminal,
+                    'velib'=> $velibs
+                ]
             );
 
         }
@@ -238,10 +244,10 @@ class MonumentsController extends AbstractController
         $response = array();
 
         foreach ($results as $result) {
-            $trilibs = $trilibDist->countTrilibDistByIdMonumentAndDist($result["id"],$trilibDistParam);
-            $bornes = $elecDist->countTerminalDistByIdMonumentAndDist($result["id"],$borneDistParam);
-            $trimobiles = $trimobileDist->countTrimobileDistByIdMonumentAndDist($result["id"],$trimobileDistParam);
-            $velibs = $velibesDist->countTrilibDistByIdMonumentAndDist($result["id"],$velibDistParam);
+            $trilibs = $trilibDist->findTrilibDistByIdMonumentAndDistNoJsoned($result["id"],$trilibDistParam);
+            $terminal = $elecDist->findTerminalDistByIdMonumentAndDistNoJsoned($result["id"],$borneDistParam);
+            $trimobiles = $trimobileDist->findTrimobileDistByIdMonumentAndDistNoJsoned($result["id"],$trimobileDistParam);
+            $velibs = $velibesDist->findTrilibDistByIdMonumentAndDistNoJsoned($result["id"],$velibDistParam);
 
             $response[] = array(
                 'id' => $result["id"],
@@ -253,10 +259,15 @@ class MonumentsController extends AbstractController
                 'zipcode' => $result["zipcode"],
                 'sport' => $result['sport'],
                 'img_url' => $result['img_url'],
-                'nbTrilibs' => $trilibs[0]['nb'],
-                'nbBornes' => $bornes[0]['nb'],
-                'nbTrimobiles' => $trimobiles[0]['nb'],
-                'nbVelibs' => $velibs[0]['nb'],
+                'nbBornes' =>   count($terminal),
+                'nbTrimobiles' => count($trimobiles),
+                'nbVelibs' => count($velibs),
+                'interets' => [
+                    'trimobile'=> $trimobiles,
+                    'trilib'=> $trilibs,
+                    'terminal'=> $terminal,
+                    'velib'=> $velibs
+                ]
             );
 
         }
