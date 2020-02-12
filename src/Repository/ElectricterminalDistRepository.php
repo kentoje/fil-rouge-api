@@ -164,7 +164,6 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
     }
 
 
-
     // /**
     //  * @return ElectricterminalDistanceMonument[] Returns an array of ElectricterminalDistanceMonument objects
     //  */
