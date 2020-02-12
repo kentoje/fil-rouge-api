@@ -72,6 +72,34 @@ class TrilibRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
+    public function findMultipleTrilib($tabId): JsonResponse
+    {   
+        
+        $response = array();    
+        $results = $this->createQueryBuilder('t')
+            ->where('t.id in (:tabId)')
+            ->setParameter('tabId', explode(",", $tabId))
+            ->getQuery()
+            ->getResult()
+        ;
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
+        }
+        foreach ($results as $result) {
+            array_push($response,array(
+                'id' => $result->getId(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'wastetype' => $result->getWastetype(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+            ));
+            
+        }
+        return new JsonResponse($response);
+    }
     // /**
     //  * @return Trilib[] Returns an array of Trilib objects
     //  */

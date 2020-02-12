@@ -33,4 +33,17 @@ class TrilibController extends AbstractController
 
         return $result;
     }
+
+    /**
+     * @Route("/trilibs/{tabId}", name="trilibMany")
+     * @param TrilibRepository $trilibRepo
+     * @param $tabId
+     * @return JsonResponse
+     */
+    public function indexIdMany(TrilibRepository $trilibRepo, $tabId)
+    {
+        $result = $trilibRepo->findMultipleTrilib($tabId);
+
+        return $result;
+    }
 }

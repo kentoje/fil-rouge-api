@@ -33,4 +33,17 @@ class TrimobileController extends AbstractController
 
         return $result;
     }
+
+    /**
+     * @Route("/trimobiles/{tabId}", name="trilibMany")
+     * @param TrimobileRepository $trimobileRepo
+     * @param $tabId
+     * @return JsonResponse
+     */
+    public function indexIdMany(TrimobileRepository $trimobileRepo, $tabId)
+    {
+        $result = $trimobileRepo->findMultipleTrimobile($tabId);
+
+        return $result;
+    }
 }

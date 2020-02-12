@@ -75,6 +75,36 @@ class TrimobileRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
+    public function findMultipleTrimobile($tabId): JsonResponse
+    {
+        $response = array();    
+        $results = $this->createQueryBuilder('m')
+            ->where('m.id in (:id)')
+            ->setParameter('id', explode(",",$tabId))
+            ->getQuery()
+            ->getResult()
+        ;
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            array_push($response,array(
+                'id' => $result->getId(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'address' => $result->getAddress(),
+                'schedule' => $result->getSchedule(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'timeRange' => $result->getTimeRange(),
+                'addressSupplement' => $result->getAddressSupplement(),
+            ));
+        }
+        return new JsonResponse($response);
+    }
+
     // /**
     //  * @return Trimobile[] Returns an array of Trimobile objects
     //  */
