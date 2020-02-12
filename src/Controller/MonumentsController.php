@@ -190,9 +190,34 @@ class MonumentsController extends AbstractController
 
         foreach ($results as $result) {
             $trilibs = $trilibDist->findTrilibDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
-            $terminal = $elecDist->findTerminalDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
+            $terminals = $elecDist->findTerminalDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
             $trimobiles = $trimobileDist->findTrimobileDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
             $velibs = $velibesDist->findTrilibDistByIdMonumentAndDistNoJsoned($result["id"],$dist);
+
+            $interetsIds=[
+                "trilibs" => [],
+                "terminals" => [],
+                "trimobiles" => [],
+                "velibs" => [],
+            ];
+
+            foreach ($trilibs as $trilib) {
+                array_push($interetsIds['trilibs'], $trilib['id']);
+            }
+
+            foreach ($terminals as $terminal) {
+                array_push($interetsIds['terminals'], $terminal['id']);
+            }
+
+            foreach ($trimobiles as $trimobile) {
+                array_push($interetsIds['trimobiles'], $trimobile['id']);
+            }
+
+            foreach ($velibs as $velib) {
+                array_push($interetsIds['velibs'], $velib['id']);
+            }
+
+            // echo implode(",",$interetsIds['trilibs']);
 
             $response[] = array(
                 'id' => $result["id"],
@@ -204,16 +229,7 @@ class MonumentsController extends AbstractController
                 'zipcode' => $result["zipcode"],
                 'sport' => $result['sport'],
                 'img_url' => $result['img_url'],
-                'nbTrilibs' => count($trilibs),
-                'nbBornes' =>   count($terminal),
-                'nbTrimobiles' => count($trimobiles),
-                'nbVelibs' => count($velibs),
-                'interets' => [
-                    'trimobile'=> $trimobiles,
-                    'trilib'=> $trilibs,
-                    'terminal'=> $terminal,
-                    'velib'=> $velibs
-                ]
+                'interets' => $interetsIds
             );
 
         }
@@ -245,9 +261,34 @@ class MonumentsController extends AbstractController
 
         foreach ($results as $result) {
             $trilibs = $trilibDist->findTrilibDistByIdMonumentAndDistNoJsoned($result["id"],$trilibDistParam);
-            $terminal = $elecDist->findTerminalDistByIdMonumentAndDistNoJsoned($result["id"],$borneDistParam);
+            $terminals = $elecDist->findTerminalDistByIdMonumentAndDistNoJsoned($result["id"],$borneDistParam);
             $trimobiles = $trimobileDist->findTrimobileDistByIdMonumentAndDistNoJsoned($result["id"],$trimobileDistParam);
             $velibs = $velibesDist->findTrilibDistByIdMonumentAndDistNoJsoned($result["id"],$velibDistParam);
+
+            $interetsIds=[
+                "trilibs" => [],
+                "terminals" => [],
+                "trimobiles" => [],
+                "velibs" => [],
+            ];
+
+            foreach ($trilibs as $trilib) {
+                array_push($interetsIds['trilibs'], $trilib['id']);
+            }
+
+            foreach ($terminals as $terminal) {
+                array_push($interetsIds['terminals'], $terminal['id']);
+            }
+
+            foreach ($trimobiles as $trimobile) {
+                array_push($interetsIds['trimobiles'], $trimobile['id']);
+            }
+
+            foreach ($velibs as $velib) {
+                array_push($interetsIds['velibs'], $velib['id']);
+            }
+
+            // echo implode(",",$interetsIds['trilibs']);
 
             $response[] = array(
                 'id' => $result["id"],
@@ -259,17 +300,10 @@ class MonumentsController extends AbstractController
                 'zipcode' => $result["zipcode"],
                 'sport' => $result['sport'],
                 'img_url' => $result['img_url'],
-                'nbTrilibs' => count($trilibs),
-                'nbBornes' =>   count($terminal),
-                'nbTrimobiles' => count($trimobiles),
-                'nbVelibs' => count($velibs),
-                'interets' => [
-                    'trimobile'=> $trimobiles,
-                    'trilib'=> $trilibs,
-                    'terminal'=> $terminal,
-                    'velib'=> $velibs
-                ]
+                'interets' => $interetsIds
             );
+
+            
 
         }
         return new JsonResponse($response);
