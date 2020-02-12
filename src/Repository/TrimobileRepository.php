@@ -77,6 +77,9 @@ class TrimobileRepository extends ServiceEntityRepository
 
     public function findMultipleTrimobile($tabId): JsonResponse
     {
+        if($tabId === "null"){
+            return new JsonResponse([]);
+        }
         $response = array();    
         $results = $this->createQueryBuilder('m')
             ->where('m.id in (:id)')
@@ -107,6 +110,11 @@ class TrimobileRepository extends ServiceEntityRepository
 
     public function findMultipleTrimobilewithLimit($tabId,$limit): JsonResponse
     {
+
+        if($tabId === "null"){
+            return new JsonResponse([]);
+        }
+
         $response = array();    
         $results = $this->createQueryBuilder('m')
             ->where('m.id in (:id)')

@@ -74,7 +74,10 @@ class TrilibRepository extends ServiceEntityRepository
 
     public function findMultipleTrilib($tabId): JsonResponse
     {   
-        
+        if($tabId === "null"){
+            return new JsonResponse([]);
+        }
+
         $response = array();    
         $results = $this->createQueryBuilder('t')
             ->where('t.id in (:tabId)')
@@ -103,7 +106,10 @@ class TrilibRepository extends ServiceEntityRepository
 
     public function findMultipleTrilibLimit($tabId,$limit): JsonResponse
     {   
-        
+        if($tabId == "null"){
+            return new JsonResponse([]);
+        }
+
         $response = array();    
         $results = $this->createQueryBuilder('t')
             ->where('t.id in (:tabId)')
