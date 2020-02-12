@@ -35,7 +35,7 @@ class TrilibController extends AbstractController
     }
 
     /**
-     * @Route("/trilibs/{tabId}", name="trilibMany")
+     * @Route("/trilibs/{tabId}", name="trilibsMany")
      * @param TrilibRepository $trilibRepo
      * @param $tabId
      * @return JsonResponse

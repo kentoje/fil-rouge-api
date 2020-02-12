@@ -35,7 +35,7 @@ class TrimobileController extends AbstractController
     }
 
     /**
-     * @Route("/trimobiles/{tabId}", name="trilibMany")
+     * @Route("/trimobiles/{tabId}", name="trimobile")
      * @param TrimobileRepository $trimobileRepo
      * @param $tabId
      * @return JsonResponse
@@ -46,4 +46,5 @@ class TrimobileController extends AbstractController
 
         return $result;
     }
+
 }
