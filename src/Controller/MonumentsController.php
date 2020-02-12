@@ -202,22 +202,21 @@ class MonumentsController extends AbstractController
             ];
 
             foreach ($trilibs as $trilib) {
-                array_push($interetsIds['trilibs'], $trilib['id']);
+                array_push($interetsIds['trilibs'], $trilib['id_trilib']);
             }
 
             foreach ($terminals as $terminal) {
-                array_push($interetsIds['terminals'], $terminal['id']);
+                array_push($interetsIds['terminals'], $terminal['id_electricterminal']);
             }
 
             foreach ($trimobiles as $trimobile) {
-                array_push($interetsIds['trimobiles'], $trimobile['id']);
+                array_push($interetsIds['trimobiles'], $trimobile['id_trimobile']);
             }
 
             foreach ($velibs as $velib) {
-                array_push($interetsIds['velibs'], $velib['id']);
+                array_push($interetsIds['velibs'], $velib['id_velib']);
             }
 
-            // echo implode(",",$interetsIds['trilibs']);
 
             $response[] = array(
                 'id' => $result["id"],
@@ -277,19 +276,19 @@ class MonumentsController extends AbstractController
             ];
 
             foreach ($trilibs as $trilib) {
-                array_push($interetsIds['trilibs'], $trilib['id']);
+                array_push($interetsIds['trilibs'], $trilib['id_trilib']);
             }
 
             foreach ($terminals as $terminal) {
-                array_push($interetsIds['terminals'], $terminal['id']);
+                array_push($interetsIds['terminals'], $terminal['id_electricterminal']);
             }
 
             foreach ($trimobiles as $trimobile) {
-                array_push($interetsIds['trimobiles'], $trimobile['id']);
+                array_push($interetsIds['trimobiles'], $trimobile['id_trimobile']);
             }
 
             foreach ($velibs as $velib) {
-                array_push($interetsIds['velibs'], $velib['id']);
+                array_push($interetsIds['velibs'], $velib['id_velib']);
             }
 
             // echo implode(",",$interetsIds['trilibs']);
