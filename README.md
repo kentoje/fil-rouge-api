@@ -48,12 +48,14 @@
 * `/trilib-dist` -> Retourne toutes les distances entre les monuments et les trilibs.
 * `/trilib-dist/21` -> Retourne toutes les distances entre le monument qui a pour id `21` et tous les trilibs.
 * `/trilib-dist/21/9000` -> Retourne toutes les distances entre le monument qui a pour id `21` et les trilibs qui sont à moins de `9 000 mètres` du monument.
+* `/trilibs/{tabId}` -> retourne tout les trilibs si leurs id est dans le tableau `tabId`.
 
 ### Trimobiles
 * `/trimobile` -> Retourne tous les trimobiles.
 * `/trimobile-dist` -> Retourne toutes les distances entre les monuments et les trimobiles.
 * `/trimobile-dist/21` -> Retourne toutes les distances entre le monument qui a pour id `21` et tous les trimobiles.
 * `/trimobile-dist/21/6800` -> Retourne toutes les distances entre le monument qui a pour id `21` et les trimobiles qui sont à moins de `6 800 mètres` du monument.
+* `/trimobiles/{tabId}` -> retourne tout les trimobiles si leurs id est dans le tableau `tabId`.
 
 ### Velibs
 * `/velib` -> Retourne tous les velibs.
