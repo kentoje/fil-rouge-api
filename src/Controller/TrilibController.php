@@ -46,4 +46,18 @@ class TrilibController extends AbstractController
 
         return $result;
     }
+
+    /**
+     * @Route("/trilibs/{tabId}/{limit}", name="trilibsManyLimit")
+     * @param TrilibRepository $trilibRepo
+     * @param $tabId
+     * @param $limit
+     * @return JsonResponse
+     */
+    public function indexIdManyLimit(TrilibRepository $trilibRepo, $tabId,$limit)
+    {
+        $result = $trilibRepo->findMultipleTrilibLimit($tabId,$limit);
+
+        return $result;
+    }
 }

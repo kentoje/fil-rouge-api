@@ -35,7 +35,7 @@ class TrimobileController extends AbstractController
     }
 
     /**
-     * @Route("/trimobiles/{tabId}", name="trimobile")
+     * @Route("/trimobiles/{tabId}", name="trimobileMany")
      * @param TrimobileRepository $trimobileRepo
      * @param $tabId
      * @return JsonResponse
@@ -43,6 +43,20 @@ class TrimobileController extends AbstractController
     public function indexIdMany(TrimobileRepository $trimobileRepo, $tabId)
     {
         $result = $trimobileRepo->findMultipleTrimobile($tabId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/trimobiles/{tabId}/{limit}", name="trimobileManyLimit")
+     * @param TrimobileRepository $trimobileRepo
+     * @param $tabId
+     * @param $limit
+     * @return JsonResponse
+     */
+    public function indexIdManyLimit(TrimobileRepository $trimobileRepo, $tabId, $limit)
+    {
+        $result = $trimobileRepo->findMultipleTrimobilewithLimit($tabId,$limit);
 
         return $result;
     }
