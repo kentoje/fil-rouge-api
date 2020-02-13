@@ -35,7 +35,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/country_ranking/", name="rankingCountry")
+     * @Route("/country-ranking/", name="rankingCountry")
      * @param UserRepository $user
      * @return JsonResponse
      */
