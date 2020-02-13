@@ -7,11 +7,13 @@
 - Virgil Limongi
 - Tristan Lemire
 
+
 ## 💻 Installation 💻
 * Suivre l'installation de la base de données -> https://github.com/TristanLemire/HETIC_filrouge_create_db
 * Mettez-vous à la racine du projet et exécuter la commande : `composer install`
 * Lancez l'api avec la commande : `./bin/console server:run`
 * Vous pouvez maintenant aller sur http://127.0.0.1:8000
+
 
 ## Liste des routes disponibles:
 
@@ -32,10 +34,12 @@
 
 *`/monument-all-dist/{trilibDistParam}/{borneDistParam}/{trimobileDistParam}/{velibDistParam}` -> Retourne tous les monuments avec le nombre de point d'intérêt avec des distances pour chaque point d'intérêt.
 
+
 ### 🗑️Déchets
 * `/waste` -> Retourne tous les déchets.
 
 * `/waste/1` -> Retourne le déchet qui a pour id `1`.
+
 
 ### 🚯 Enregistrements Déchets
 * `/records-waste` -> Retourne tous les enregistrements des déchets.
@@ -50,6 +54,7 @@
 
 * `/records-waste-multiplicateur/4/true/5` -> Retourne l'enregistrement de déchet qui a pour id `5` multiplié pour `4` jours et pour la population Olympique (grâce au `true`).
 
+
 ### ⚡ Bornes électriques
 * `/electricterminal` -> Retourne toutes les bornes électriques.
 
@@ -58,6 +63,7 @@
 * `/electricterminal-dist/21` -> Retourne toutes les distances entre le monument qui a pour id `21` et toutes les bornes électriques.
 
 * `/electricterminal-dist/21/5900` -> Retourne toutes les distances entre le monument qui a pour id `21` et les bornes électriques qui sont à moins de `5 900 mètres` du monument.
+
 
 ### 🚮 Trilibs
 * `/trilib` -> Retourne tous les trilibs.
@@ -70,6 +76,7 @@
 
 * `/trilibs/{tabId}` -> retourne tout les trilibs si leurs id est dans le tableau `tabId`, exemple `/trilibs/1,4,10`retourne les trilibs qui ont pour id 1 4 et 10.
 
+
 ### 🚚 Trimobiles
 * `/trimobile` -> Retourne tous les trimobiles.
 
@@ -81,6 +88,7 @@
 
 * `/trimobiles/{tabId}` -> retourne tout les trimobiles si leurs id est dans le tableau `tabId`, exemple `/trimobiles/1,4,10` retourne les trimobiles qui ont pour id 1 4 et 10.
 
+
 ### 🚲 Velibs
 * `/velib` -> Retourne tous les velibs.
 
@@ -90,18 +98,22 @@
 
 * `/velib-dist/21/1000` -> Retourne toutes les distances entre le monument qui a pour id `21` et les velibs qui sont à moins de `1 000 mètres` du monument.
 
+
 ### 🙎 Utilisateur
 * `/user` -> Retourne tous les utilisateurs.
 
 * `/user/1` -> Retourne l'utilisateur qui a pour id `1`. 
 
+
 ### 🏆 Classement des pays
 * `/country_ranking/` -> Retourne le classement des pays.
+
 
 ### 🌍 Pays
 * `/country` -> Retourne tous les pays.
 
 * `/country/1` -> Retourne le pays qui a pour id `1`. 
+
 
 ## 🙂 Commandes utiles 🙂
 * Mapper sur la base de données -> `./bin/console doctrine:mapping:import "App\Entity" annotation --path=src/Entity`
