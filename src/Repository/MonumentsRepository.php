@@ -307,7 +307,6 @@ class MonumentsRepository extends ServiceEntityRepository
 
         foreach ($monuments as $index => $monument) {
             $monumentId = $monument->getId();
-
             $response[] = array(
                 'id' => $monument->getId(),
                 'name' => $monument->getName(),
@@ -318,6 +317,10 @@ class MonumentsRepository extends ServiceEntityRepository
                 'zipcode' => $monument->getZipcode(),
                 'sport' => $monument->getSport(),
                 'img_url' => $monument->getImgUrl(),
+                'nbTrilibs' => 0,
+                'nbTrimobiles' => 0,
+                'nbElectricTerms' => 0,
+                'nbVelibs' => 0,
                 'interests' => array(),
             );
 
@@ -331,15 +334,19 @@ class MonumentsRepository extends ServiceEntityRepository
                     switch ($innerKey) {
                         case 'trilibs':
                             $nameProp = 'id_trilib';
+                            $countVariable = "nbTrilibs";
                             break;
                         case 'electric_terms':
                             $nameProp = 'id_electricterminal';
+                            $countVariable = "nbElectricTerms";
                             break;
                         case 'trimobiles':
                             $nameProp = 'id_trimobile';
+                            $countVariable = "nbTrimobiles";
                             break;
                         case 'velibs':
                             $nameProp = 'id_velib';
+                            $countVariable = "nbVelibs";
                             break;
                     }
 
@@ -347,6 +354,7 @@ class MonumentsRepository extends ServiceEntityRepository
                         $idItem = $id[$nameProp];
                         array_push($response[$index]['interests'][$innerKey], (int) $idItem);
                     }
+                    $response[$index][$countVariable] =  count($response[$index]['interests'][$innerKey]);
                 } catch (\Throwable $e) {
                     echo $e->getMessage();
                 }
@@ -383,6 +391,10 @@ class MonumentsRepository extends ServiceEntityRepository
                 'zipcode' => $monument->getZipcode(),
                 'sport' => $monument->getSport(),
                 'img_url' => $monument->getImgUrl(),
+                'nbTrilibs' => 0,
+                'nbTrimobiles' => 0,
+                'nbElectricTerms' => 0,
+                'nbVelibs' => 0,
                 'interests' => array(),
             );
 
@@ -421,15 +433,19 @@ class MonumentsRepository extends ServiceEntityRepository
                     switch ($innerKey) {
                         case 'trilibs':
                             $nameProp = 'id_trilib';
+                            $countVariable = "nbTrilibs";
                             break;
                         case 'electric_terms':
                             $nameProp = 'id_electricterminal';
+                            $countVariable = "nbElectricTerms";
                             break;
                         case 'trimobiles':
                             $nameProp = 'id_trimobile';
+                            $countVariable = "nbTrimobiles";
                             break;
                         case 'velibs':
                             $nameProp = 'id_velib';
+                            $countVariable = "nbVelibs";
                             break;
                     }
 
@@ -437,6 +453,7 @@ class MonumentsRepository extends ServiceEntityRepository
                         $idItem = $id[$nameProp];
                         array_push($response[$index]['interests'][$innerKey], (int) $idItem);
                     }
+                    $response[$index][$countVariable] =  count($response[$index]['interests'][$innerKey]);
                 } catch (\Throwable $e) {
                     echo $e->getMessage();
                 }
