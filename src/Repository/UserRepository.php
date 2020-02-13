@@ -24,21 +24,28 @@ class UserRepository extends ServiceEntityRepository
     public function findAllUsers(): JsonResponse
     {
         $response = array();
-        $results = $this->findAll();
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sqlQueries = 'SELECT user.id, user.first_name, user.last_name, user.email, user.password, user.score, country.name as country FROM user INNER JOIN country ON user.id_country = country.id;';
+
+        $stmt = $conn->prepare($sqlQueries);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
 
         if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
         }
 
         foreach ($results as $result) {
             $response[] = array(
-                'id' => $result->getId(),
-                'first_name' => $result->getFirstName(),
-                'last_name' => $result->getLastName(),
-                'email' => $result->getEmail(),
-                'password' => $result->getPassword(),
-                'score' => $result->getScore(),
-                'country' => $result->getCountry(),
+                'id' => $result['id'],
+                'first_name' => $result['first_name'],
+                'last_name' => $result['last_name'],
+                'email' => $result['email'],
+                'password' => $result['password'],
+                'score' => $result['score'],
+                'country' => $result['country'],
             );
         }
         return new JsonResponse($response);
@@ -46,26 +53,29 @@ class UserRepository extends ServiceEntityRepository
 
     public function findOneUser(int $id): JsonResponse
     {
-        $results = $this->createQueryBuilder('m')
-            ->where('m.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getResult()
-        ;
+        $response = array();
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sqlQueries = 'SELECT user.id, user.first_name, user.last_name, user.email, user.password, user.score, country.name as country FROM user INNER JOIN country ON user.id_country = country.id where user.id = :id;';
+
+        $stmt = $conn->prepare($sqlQueries);
+        $stmt->execute(['id' => $id]);
+        $results = $stmt->fetchAll();
 
         if (!$results) {
             return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
         }
 
         foreach ($results as $result) {
-            $response = array(
-                'id' => $result->getId(),
-                'first_name' => $result->getFirstName(),
-                'last_name' => $result->getLastName(),
-                'email' => $result->getEmail(),
-                'password' => $result->getPassword(),
-                'score' => $result->getScore(),
-                'country' => $result->getCountry(),
+            $response[] = array(
+                'id' => $result['id'],
+                'first_name' => $result['first_name'],
+                'last_name' => $result['last_name'],
+                'email' => $result['email'],
+                'password' => $result['password'],
+                'score' => $result['score'],
+                'country' => $result['country'],
             );
         }
         return new JsonResponse($response);
