@@ -22,13 +22,13 @@
 
 * `/monument/1` -> Retourne le monument qui a pour id `1`. 
 
-* `/monument-dist-all/21/8000`-> Retourne le nombre de chaque points d'intérêt à `8000` mètres du monument qui a pour id `21`.
+* `/monument-dist-all/20/8000`-> Retourne le nombre de chaque points d'intérêt à `8000` mètres du monument qui a pour id `20`.
 
-* `/monument-dist-all-choice/{id}/{distTrilibs}/{distElecs}/{distTrimobile}/{distVelibe}` -> Retourne le nombre de chaque point d'intérêt du monument qui a pour id `21`, mais vous pouvez choisir la distance pour chaque type de point d'intérêt.
+* `/monument-dist-all-choice/{id}/{distTrilibs}/{distElecs}/{distTrimobile}/{distVelibe}` -> Retourne le nombre de chaque point d'intérêt du monument qui a pour id `20`, mais vous pouvez choisir la distance pour chaque type de point d'intérêt.
 
-* `/monument-all/21/8000`-> Retourne tous les points d'intérêt à `8000` mètres du monument qui a pour id `21`.
+* `/monument-all/20/8000`-> Retourne tous les points d'intérêt à `8000` mètres du monument qui a pour id `20`.
 
-* `/monument-all-choice/{id}/{distTrilibs}/{distElecs}/{distTrimobile}/{distVelibe}` -> Retourne tous les points d'intérêt du monument qui a pour id `21`, mais vous pouvez choisir la distance pour chaque type de point d'intérêt.
+* `/monument-all-choice/{id}/{distTrilibs}/{distElecs}/{distTrimobile}/{distVelibe}` -> Retourne tous les points d'intérêt du monument qui a pour id `20`, mais vous pouvez choisir la distance pour chaque type de point d'intérêt.
 
 *`/monument-all-dist/{dist}` ->  Retourne tous les monuments avec le nombre de point d'intérêt.
 
