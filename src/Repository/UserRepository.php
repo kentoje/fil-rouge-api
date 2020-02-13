@@ -71,6 +71,34 @@ class UserRepository extends ServiceEntityRepository
         return new JsonResponse($response);
     }
 
+    public function getCountryRanking(): JsonResponse
+    {
+
+        $response = array();
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sqlQueries = 'SELECT country.name AS country, SUM(user.score)/COUNT(user.id) AS scores FROM user INNER JOIN country ON user.id_country = country.id GROUP BY country.name ORDER BY scores DESC;';
+
+        $stmt = $conn->prepare($sqlQueries);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $key => $result) {
+             array_push($response, [
+                'ranking' => $key+1,
+                'country' => $result['country'],
+                'score' => $result['scores']]
+            );
+        }
+
+        return new JsonResponse($response);
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

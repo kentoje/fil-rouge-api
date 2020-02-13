@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="user", indexes={@ORM\Index(name="user_country_FK", columns={"id_country"})})
  * @ORM\Entity
  */
 class User
@@ -57,11 +57,14 @@ class User
     private $score;
 
     /**
-     * @var string
+     * @var \Country
      *
-     * @ORM\Column(name="country", type="string", length=30, nullable=false)
+     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_country", referencedColumnName="id")
+     * })
      */
-    private $country;
+    private $idCountry;
 
     public function getId(): ?int
     {
@@ -128,14 +131,14 @@ class User
         return $this;
     }
 
-    public function getCountry(): ?string
+    public function getIdCountry(): ?Country
     {
-        return $this->country;
+        return $this->idCountry;
     }
 
-    public function setCountry(string $country): self
+    public function setIdCountry(?Country $idCountry): self
     {
-        $this->country = $country;
+        $this->idCountry = $idCountry;
 
         return $this;
     }

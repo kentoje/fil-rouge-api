@@ -33,4 +33,16 @@ class UserController extends AbstractController
 
         return $result;
     }
+
+    /**
+     * @Route("/country_ranking/", name="rankingCountry")
+     * @param UserRepository $user
+     * @return JsonResponse
+     */
+    public function indexRanking(UserRepository $user)
+    {
+        $result = $user->getCountryRanking();
+
+        return $result;
+    }
 }
