@@ -14,7 +14,7 @@
 * Lancez l'api avec la commande : `./bin/console server:run`
 * Vous pouvez maintenant aller sur http://127.0.0.1:8000
 
-```Documentation de l'API : [ici !](https://greenparis.docs.apiary.io)```
+**Documentation de l'API : [ici !](https://greenparis.docs.apiary.io)**
 
 ## Liste des routes disponibles :
 
