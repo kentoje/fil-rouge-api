@@ -14,8 +14,9 @@
 * Lancez l'api avec la commande : `./bin/console server:run`
 * Vous pouvez maintenant aller sur http://127.0.0.1:8000
 
+Documentation de l'API : [ici !](https://greenparis.docs.apiary.io)
 
-## Liste des routes disponibles:
+## Liste des routes disponibles :
 
 ### 🏛️Monuments
 * `/monument` -> Retourne tous les monuments.
@@ -106,7 +107,7 @@
 
 
 ### 🏆 Classement des pays
-* `/country_ranking/` -> Retourne le classement des pays.
+* `/country-ranking/` -> Retourne le classement des pays.
 
 
 ### 🌍 Pays
