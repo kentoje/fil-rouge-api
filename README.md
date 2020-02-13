@@ -63,6 +63,17 @@
 * `/velib-dist/21` -> Retourne toutes les distances entre le monument qui a pour id `21` et tous les velibs.
 * `/velib-dist/21/1000` -> Retourne toutes les distances entre le monument qui a pour id `21` et les velibs qui sont à moins de `1 000 mètres` du monument.
 
+### Utilisateur
+* `/user` -> Retourne tous les utilisateurs.
+* `/user/1` -> Retourne l'utilisateur qui a pour id `1`. 
+
+### Classement des pays
+* `/country_ranking/` -> Retourne le classement des pays.
+
+### Pays
+* `/country` -> Retourne tous les pays.
+* `/country/1` -> Retourne le pays qui a pour id `1`. 
+
 ## Commandes utiles
 * Mapper sur la base de données -> `./bin/console doctrine:mapping:import "App\Entity" annotation --path=src/Entity`
 * Créer une migration -> `./bin/console make:migration`
