@@ -107,7 +107,7 @@
 
 
 ### 🏆 Classement des pays
-* `/country-ranking/` -> Retourne le classement des pays.
+* `/country-ranking` -> Retourne le classement des pays.
 
 
 ### 🌍 Pays
