@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\ElectricterminalDistanceMonument;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Query\Expr;
 
 /**
@@ -22,29 +20,15 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
         parent::__construct($registry, ElectricterminalDistanceMonument::class);
     }
 
-    public function findAllTerminalsDist():JsonResponse
+    public function findAllTerminalsDist(): array
     {
-        $response = array();
         $results = $this->findAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'distance_m' => $result->getDistanceKm(),
-                'id_electricterminal' => $result->getIdElectricterminal()->getId(),
-                'id_monuments' => $result->getIdMonuments()->getId(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findTerminalDistByIdMonument(int $id_monument): JsonResponse
+    public function findTerminalDistByIdMonument(int $id_monument): array
     {
-        $response = array();
 
         $results = $this->createQueryBuilder('e')
             ->innerJoin(
@@ -57,24 +41,11 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'distance_m' => $result->getDistanceKm(),
-                'id_electricterminal' => $result->getIdElectricterminal()->getId(),
-                'id_monuments' => $result->getIdMonuments()->getId(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findTerminalDistByIdMonumentAndDist(int $id_monument, int $dist): JsonResponse
+    public function findTerminalDistByIdMonumentAndDist(int $id_monument, int $dist): array
     {
-        $response = array();
         $results = $this->createQueryBuilder('e')
             ->innerJoin(
                 'e.idMonuments',
@@ -88,81 +59,8 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'distance_m' => $result->getDistanceKm(),
-                'id_electricterminal' => $result->getIdElectricterminal()->getId(),
-                'id_monuments' => $result->getIdMonuments()->getId(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
-
-    public function countTerminalDistByIdMonumentAndDist(int $id_monument, $dist)
-    {
-        $response = array();
-        $results = $this->createQueryBuilder('e')
-            ->innerJoin(
-                'e.idMonuments',
-                'm',
-                Expr\Join::WITH,
-                'm.id = ' . $id_monument
-            )
-            ->where('e.distanceKm <= :dist')
-            ->setParameter('dist', (string) $dist)
-            ->orderBy('e.distanceKm')
-            ->getQuery()
-            ->getResult();
-
-        if (!$results) {
-            $response[] = array(
-                'nb' => 0
-            );
-            return $response;
-        }
-
-            $response[] = array(
-                'nb' => count($results)
-            );
-        return $response;
-    }
-
-    public function findTerminalDistByIdMonumentAndDistNoJsoned(int $id_monument, $dist)
-    {
-        $response = array();
-        $results = $this->createQueryBuilder('e')
-            ->innerJoin(
-                'e.idMonuments',
-                'm',
-                Expr\Join::WITH,
-                'm.id = ' . $id_monument
-            )
-            ->where('e.distanceKm <= :dist')
-            ->setParameter('dist', (string) $dist)
-            ->orderBy('e.distanceKm')
-            ->getQuery()
-            ->getResult();
-
-        if (!$results) {
-            $response = [];
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'distance_m' => $result->getDistanceKm(),
-                'id_electricterminal' => $result->getIdElectricterminal()->getId(),
-                'id_monuments' => $result->getIdMonuments()->getId(),
-            );
-        }
-        return $response;
-    }
-
 
     // /**
     //  * @return ElectricterminalDistanceMonument[] Returns an array of ElectricterminalDistanceMonument objects
