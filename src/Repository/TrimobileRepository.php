@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\Trimobile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Trimobile|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,32 +19,14 @@ class TrimobileRepository extends ServiceEntityRepository
         parent::__construct($registry, Trimobile::class);
     }
 
-    public function findAllTrimobiles(): JsonResponse
+    public function findAllTrimobiles(): array
     {
-        $response = array();
         $results = $this->findAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-                'address' => $result->getAddress(),
-                'schedule' => $result->getSchedule(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'timeRange' => $result->getTimeRange(),
-                'addressSupplement' => $result->getAddressSupplement(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findOneTrimobile(int $id): JsonResponse
+    public function findOneTrimobile(int $id): array
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
@@ -55,32 +35,12 @@ class TrimobileRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response = array(
-                'id' => $result->getId(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-                'address' => $result->getAddress(),
-                'schedule' => $result->getSchedule(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'timeRange' => $result->getTimeRange(),
-                'addressSupplement' => $result->getAddressSupplement(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findMultipleTrimobile($tabId): JsonResponse
+    public function findMultipleTrimobile($tabId): array
     {
-        if($tabId === "null"){
-            return new JsonResponse([]);
-        }
-        $response = array();    
+   
         $results = $this->createQueryBuilder('m')
             ->where('m.id in (:id)')
             ->setParameter('id', explode(",",$tabId))
@@ -88,34 +48,12 @@ class TrimobileRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            array_push($response,array(
-                'id' => $result->getId(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-                'address' => $result->getAddress(),
-                'schedule' => $result->getSchedule(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'timeRange' => $result->getTimeRange(),
-                'addressSupplement' => $result->getAddressSupplement(),
-            ));
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findMultipleTrimobilewithLimit($tabId,$limit): JsonResponse
+    public function findMultipleTrimobilewithLimit($tabId,$limit): array
     {
 
-        if($tabId === "null"){
-            return new JsonResponse([]);
-        }
-
-        $response = array();    
         $results = $this->createQueryBuilder('m')
             ->where('m.id in (:id)')
             ->setParameter('id', explode(",",$tabId))
@@ -124,24 +62,7 @@ class TrimobileRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            array_push($response,array(
-                'id' => $result->getId(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-                'address' => $result->getAddress(),
-                'schedule' => $result->getSchedule(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'timeRange' => $result->getTimeRange(),
-                'addressSupplement' => $result->getAddressSupplement(),
-            ));
-        }
-        return new JsonResponse($response);
+        return $results;
     }
     
 

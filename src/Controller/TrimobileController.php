@@ -6,6 +6,7 @@ use App\Repository\TrimobileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class TrimobileController extends AbstractController
 {
@@ -14,11 +15,28 @@ class TrimobileController extends AbstractController
      * @param TrimobileRepository $trimobileRepo
      * @return JsonResponse
      */
-    public function index(TrimobileRepository $trimobileRepo)
+    public function index(TrimobileRepository $trimobileRepo): JsonResponse
     {
         $results = $trimobileRepo->findAllTrimobiles();
 
-        return $results;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'address' => $result->getAddress(),
+                'schedule' => $result->getSchedule(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'timeRange' => $result->getTimeRange(),
+                'addressSupplement' => $result->getAddressSupplement(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -27,9 +45,28 @@ class TrimobileController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(TrimobileRepository $trimobileRepo, int $id)
+    public function indexId(TrimobileRepository $trimobileRepo, int $id): JsonResponse
     {
-        $result = $trimobileRepo->findOneTrimobile($id);
+        $results = $trimobileRepo->findOneTrimobile($id);
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'address' => $result->getAddress(),
+                'schedule' => $result->getSchedule(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'timeRange' => $result->getTimeRange(),
+                'addressSupplement' => $result->getAddressSupplement(),
+            );
+        }
+        return new JsonResponse($response);
 
         return $result;
     }
@@ -40,11 +77,33 @@ class TrimobileController extends AbstractController
      * @param $tabId
      * @return JsonResponse
      */
-    public function indexIdMany(TrimobileRepository $trimobileRepo, $tabId)
+    public function indexIdMany(TrimobileRepository $trimobileRepo, $tabId): JsonResponse
     {
-        $result = $trimobileRepo->findMultipleTrimobile($tabId);
+        if($tabId === "null"){
+            return new JsonResponse([]);
+        }
+        $response = array(); 
 
-        return $result;
+        $results = $trimobileRepo->findMultipleTrimobile($tabId);
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            array_push($response,array(
+                'id' => $result->getId(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'address' => $result->getAddress(),
+                'schedule' => $result->getSchedule(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'timeRange' => $result->getTimeRange(),
+                'addressSupplement' => $result->getAddressSupplement(),
+            ));
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -54,11 +113,34 @@ class TrimobileController extends AbstractController
      * @param $limit
      * @return JsonResponse
      */
-    public function indexIdManyLimit(TrimobileRepository $trimobileRepo, $tabId, $limit)
+    public function indexIdManyLimit(TrimobileRepository $trimobileRepo, $tabId, $limit): JsonResponse
     {
-        $result = $trimobileRepo->findMultipleTrimobilewithLimit($tabId,$limit);
+        if($tabId === "null"){
+            return new JsonResponse([]);
+        }
 
-        return $result;
+        $response = array(); 
+
+        $results = $trimobileRepo->findMultipleTrimobilewithLimit($tabId,$limit);
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            array_push($response,array(
+                'id' => $result->getId(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'address' => $result->getAddress(),
+                'schedule' => $result->getSchedule(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'timeRange' => $result->getTimeRange(),
+                'addressSupplement' => $result->getAddressSupplement(),
+            ));
+        }
+        return new JsonResponse($response);
     }
 
 }
