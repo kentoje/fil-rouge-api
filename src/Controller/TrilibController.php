@@ -6,6 +6,7 @@ use App\Repository\TrilibRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class TrilibController extends AbstractController
 {
@@ -14,11 +15,26 @@ class TrilibController extends AbstractController
      * @param TrilibRepository $trilibRepo
      * @return JsonResponse
      */
-    public function index(TrilibRepository $trilibRepo)
+    public function index(TrilibRepository $trilibRepo): JsonResponse
     {
         $results = $trilibRepo->findAllTrilibs();
 
-        return $results;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'wastetype' => $result->getWastetype(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -27,11 +43,26 @@ class TrilibController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(TrilibRepository $trilibRepo, int $id)
+    public function indexId(TrilibRepository $trilibRepo, int $id): JsonResponse
     {
-        $result = $trilibRepo->findOneTrilib($id);
+        $results = $trilibRepo->findOneTrilib($id);
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'wastetype' => $result->getWastetype(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -40,11 +71,32 @@ class TrilibController extends AbstractController
      * @param $tabId
      * @return JsonResponse
      */
-    public function indexIdMany(TrilibRepository $trilibRepo, $tabId)
+    public function indexIdMany(TrilibRepository $trilibRepo, $tabId): JsonResponse
     {
-        $result = $trilibRepo->findMultipleTrilib($tabId);
+        if($tabId === "null"){
+            return new JsonResponse([]);
+        }
+        
+        $response = array();
 
-        return $result;
+        $results = $trilibRepo->findMultipleTrilib($tabId);
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
+        }
+        foreach ($results as $result) {
+            array_push($response,array(
+                'id' => $result->getId(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'wastetype' => $result->getWastetype(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+            ));
+            
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -54,10 +106,31 @@ class TrilibController extends AbstractController
      * @param $limit
      * @return JsonResponse
      */
-    public function indexIdManyLimit(TrilibRepository $trilibRepo, $tabId,$limit)
+    public function indexIdManyLimit(TrilibRepository $trilibRepo, $tabId,$limit): JsonResponse
     {
-        $result = $trilibRepo->findMultipleTrilibLimit($tabId,$limit);
+        if($tabId == "null"){
+            return new JsonResponse([]);
+        }
 
-        return $result;
+        $response = array();   
+
+        $results = $trilibRepo->findMultipleTrilibLimit($tabId,$limit);
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
+        }
+        foreach ($results as $result) {
+            array_push($response,array(
+                'id' => $result->getId(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'wastetype' => $result->getWastetype(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+            ));
+            
+        }
+        return new JsonResponse($response);
     }
 }

@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\Trilib;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Trilib|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,32 +19,15 @@ class TrilibRepository extends ServiceEntityRepository
         parent::__construct($registry, Trilib::class);
     }
 
-    public function findAllTrilibs(): JsonResponse
+    public function findAllTrilibs(): array
     {
-        $response = array();
         $results = $this->findAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'latitude' => $result->getLatitude(),
-                'longitude' => $result->getLongitude(),
-                'wastetype' => $result->getWastetype(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findOneTrilib(int $id): JsonResponse
+    public function findOneTrilib(int $id): array
     {
-        $response = array();
         $results = $this->createQueryBuilder('t')
             ->where('t.id = :id')
             ->setParameter('id', $id)
@@ -54,31 +35,13 @@ class TrilibRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response = array(
-                'id' => $result->getId(),
-                'latitude' => $result->getLatitude(),
-                'longitude' => $result->getLongitude(),
-                'wastetype' => $result->getWastetype(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findMultipleTrilib($tabId): JsonResponse
+    public function findMultipleTrilib($tabId): array
     {   
-        if($tabId === "null"){
-            return new JsonResponse([]);
-        }
 
-        $response = array();    
+  
         $results = $this->createQueryBuilder('t')
             ->where('t.id in (:tabId)')
             ->setParameter('tabId', explode(",", $tabId))
@@ -86,31 +49,12 @@ class TrilibRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
-        }
-        foreach ($results as $result) {
-            array_push($response,array(
-                'id' => $result->getId(),
-                'latitude' => $result->getLatitude(),
-                'longitude' => $result->getLongitude(),
-                'wastetype' => $result->getWastetype(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-            ));
-            
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findMultipleTrilibLimit($tabId,$limit): JsonResponse
+    public function findMultipleTrilibLimit($tabId,$limit): array
     {   
-        if($tabId == "null"){
-            return new JsonResponse([]);
-        }
-
-        $response = array();    
+        
         $results = $this->createQueryBuilder('t')
             ->where('t.id in (:tabId)')
             ->setParameter('tabId', explode(",", $tabId))
@@ -119,22 +63,7 @@ class TrilibRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
-        }
-        foreach ($results as $result) {
-            array_push($response,array(
-                'id' => $result->getId(),
-                'latitude' => $result->getLatitude(),
-                'longitude' => $result->getLongitude(),
-                'wastetype' => $result->getWastetype(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-            ));
-            
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
     // /**
