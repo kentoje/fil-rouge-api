@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\RecordsWasteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RecordsWasteController extends AbstractController
@@ -14,11 +15,23 @@ class RecordsWasteController extends AbstractController
      * @param RecordsWasteRepository $recordsWastesRepo
      * @return JsonResponse
      */
-    public function index(RecordsWasteRepository $recordsWastesRepo)
+    public function index(RecordsWasteRepository $recordsWastesRepo): JsonResponse
     {
         $results = $recordsWastesRepo->findAllRecordsWastes();
 
-        return $results;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'name' => $result->getName(),
+                'tons' => $result->getTons(),
+            );
+        }
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -27,11 +40,22 @@ class RecordsWasteController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(RecordsWasteRepository $recordsWastes, $id)
+    public function indexId(RecordsWasteRepository $recordsWastes, int $id): JsonResponse
     {
-        $result = $recordsWastes->findOneRecordWaste($id);
+        $results = $recordsWastes->findOneRecordWaste($id);
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'name' => $result->getName(),
+                'tons' => $result->getTons(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -41,9 +65,33 @@ class RecordsWasteController extends AbstractController
      * @param $foreignerPeople
      * @return JsonResponse
      */
-    public function indexMulti(RecordsWasteRepository $recordsWastes, int $numberDay, string $foreignerPeople)
+    public function indexMulti(RecordsWasteRepository $recordsWastes, int $numberDay, string $foreignerPeople): JsonResponse
     {
-        $result = $recordsWastes->findAllRecordsWastesByMultiplication($numberDay, $foreignerPeople);
+        $results = $recordsWastes->findAllRecordsWastesByMultiplication();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        if ($foreignerPeople === 'true'){
+            foreach ($results as $result) {
+                $response[] = array(
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'tons' => $result->getTons() * ($numberDay * 1.23),
+                );
+            }
+        } else if ($foreignerPeople === 'false') {
+            foreach ($results as $result) {
+                $response[] = array(
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'tons' => $result->getTons() * $numberDay,
+                );
+            }
+        }
+
+        return new JsonResponse($response);
 
         return $result;
     }
@@ -56,9 +104,33 @@ class RecordsWasteController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexIdMulti(RecordsWasteRepository $recordsWastes, int $numberDay, string $foreignerPeople, int $id)
+    public function indexIdMulti(RecordsWasteRepository $recordsWastes, int $numberDay, string $foreignerPeople, int $id): JsonResponse
     {
-        $result = $recordsWastes->findOneRecordWasteByMultiplication($numberDay, $foreignerPeople, $id);
+        $results = $recordsWastes->findOneRecordWasteByMultiplication($id);
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
+        }
+
+        if($foreignerPeople === "true") {
+            foreach ($results as $result) {
+                $response = array(
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'tons' => $result->getTons() * $numberDay * 1.23,
+                );
+            }
+        } else if ($foreignerPeople === "false") {
+            foreach ($results as $result) {
+                $response = array(
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'tons' => $result->getTons() * $numberDay,
+                );
+            }
+        }
+
+        return new JsonResponse($response);
 
         return $result;
     }

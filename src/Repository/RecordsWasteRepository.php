@@ -5,8 +5,7 @@ namespace App\Repository;
 use App\Entity\RecordsWaste;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * @method RecordsWaste|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,29 +20,15 @@ class RecordsWasteRepository extends ServiceEntityRepository
         parent::__construct($registry, RecordsWaste::class);
     }
 
-    public function findAllRecordsWastes(): JsonResponse
+    public function findAllRecordsWastes(): array
     {
-        $response = array();
         $results = $this->findAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'name' => $result->getName(),
-                'tons' => $result->getTons(),
-            );
-        }
-
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findOneRecordWaste(int $id): JsonResponse
+    public function findOneRecordWaste(int $id): array
     {
-        $response = array();
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
             ->setParameter('id', $id)
@@ -51,53 +36,18 @@ class RecordsWasteRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response = array(
-                'id' => $result->getId(),
-                'name' => $result->getName(),
-                'tons' => $result->getTons(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findAllRecordsWastesByMultiplication(int $numberDay, string $foreignerPeople): JsonResponse
+    public function findAllRecordsWastesByMultiplication(): array
     {
-        $response = array();
         $results = $this->findAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        if ($foreignerPeople === 'true'){
-            foreach ($results as $result) {
-                $response[] = array(
-                    'id' => $result->getId(),
-                    'name' => $result->getName(),
-                    'tons' => $result->getTons() * ($numberDay * 1.23),
-                );
-            }
-        } else if ($foreignerPeople === 'false') {
-            foreach ($results as $result) {
-                $response[] = array(
-                    'id' => $result->getId(),
-                    'name' => $result->getName(),
-                    'tons' => $result->getTons() * $numberDay,
-                );
-            }
-        }
-
-        return new JsonResponse($response);
+       return $results;
     }
 
-    public function findOneRecordWasteByMultiplication(int $numberDay, string $foreignerPeople, int $id): JsonResponse
+    public function findOneRecordWasteByMultiplication(int $id): array
     {
-        $response = array();
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
             ->setParameter('id', $id)
@@ -105,29 +55,7 @@ class RecordsWasteRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
-        }
-
-        if($foreignerPeople === "true") {
-            foreach ($results as $result) {
-                $response = array(
-                    'id' => $result->getId(),
-                    'name' => $result->getName(),
-                    'tons' => $result->getTons() * $numberDay * 1.23,
-                );
-            }
-        } else if ($foreignerPeople === "false") {
-            foreach ($results as $result) {
-                $response = array(
-                    'id' => $result->getId(),
-                    'name' => $result->getName(),
-                    'tons' => $result->getTons() * $numberDay,
-                );
-            }
-        }
-
-        return new JsonResponse($response);
+       return $results;
     }
 
 
