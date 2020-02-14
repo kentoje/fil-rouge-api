@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
@@ -14,11 +15,26 @@ class UserController extends AbstractController
      * @param UserRepository $usersRepo
      * @return JsonResponse
      */
-    public function index(UserRepository $usersRepo)
+    public function index(UserRepository $usersRepo): JsonResponse
     {
-        $result = $usersRepo->findAllUsers();
+        $results = $usersRepo->findAllUsers();
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result['id'],
+                'first_name' => $result['first_name'],
+                'last_name' => $result['last_name'],
+                'email' => $result['email'],
+                'password' => $result['password'],
+                'score' => $result['score'],
+                'country' => $result['country'],
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -27,11 +43,26 @@ class UserController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(UserRepository $user, int $id)
+    public function indexId(UserRepository $user, int $id): JsonResponse
     {
-        $result = $user->findOneUser($id);
+        $results = $user->findOneUser($id);
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result['id'],
+                'first_name' => $result['first_name'],
+                'last_name' => $result['last_name'],
+                'email' => $result['email'],
+                'password' => $result['password'],
+                'score' => $result['score'],
+                'country' => $result['country'],
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -39,10 +70,24 @@ class UserController extends AbstractController
      * @param UserRepository $user
      * @return JsonResponse
      */
-    public function indexRanking(UserRepository $user)
+    public function indexRanking(UserRepository $user): JsonResponse
     {
-        $result = $user->getCountryRanking();
+        $response = array();
 
-        return $result;
+        $results = $user->getCountryRanking();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $key => $result) {
+            array_push($response, [
+                'ranking' => $key+1,
+                'country' => $result['country'],
+                'score' => $result['scores']]
+            );
+        }
+
+        return new JsonResponse($response);
     }
 }

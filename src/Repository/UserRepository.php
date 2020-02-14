@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,9 +19,8 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function findAllUsers(): JsonResponse
+    public function findAllUsers(): array
     {
-        $response = array();
 
         $conn = $this->getEntityManager()->getConnection();
         
@@ -33,27 +30,11 @@ class UserRepository extends ServiceEntityRepository
         $stmt->execute();
         $results = $stmt->fetchAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result['id'],
-                'first_name' => $result['first_name'],
-                'last_name' => $result['last_name'],
-                'email' => $result['email'],
-                'password' => $result['password'],
-                'score' => $result['score'],
-                'country' => $result['country'],
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findOneUser(int $id): JsonResponse
+    public function findOneUser(int $id): array
     {
-        $response = array();
 
         $conn = $this->getEntityManager()->getConnection();
         
@@ -63,29 +44,11 @@ class UserRepository extends ServiceEntityRepository
         $stmt->execute(['id' => $id]);
         $results = $stmt->fetchAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result['id'],
-                'first_name' => $result['first_name'],
-                'last_name' => $result['last_name'],
-                'email' => $result['email'],
-                'password' => $result['password'],
-                'score' => $result['score'],
-                'country' => $result['country'],
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function getCountryRanking(): JsonResponse
+    public function getCountryRanking(): array
     {
-
-        $response = array();
-
         $conn = $this->getEntityManager()->getConnection();
         
         $sqlQueries = 'SELECT country.name AS country, SUM(user.score)/COUNT(user.id) AS scores FROM user INNER JOIN country ON user.id_country = country.id GROUP BY country.name ORDER BY scores DESC;';
@@ -94,19 +57,7 @@ class UserRepository extends ServiceEntityRepository
         $stmt->execute();
         $results = $stmt->fetchAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $key => $result) {
-             array_push($response, [
-                'ranking' => $key+1,
-                'country' => $result['country'],
-                'score' => $result['scores']]
-            );
-        }
-
-        return new JsonResponse($response);
+        return $results;
     }
 
     // /**
