@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\Velib;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Velib|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,30 +19,14 @@ class VelibRepository extends ServiceEntityRepository
         parent::__construct($registry, Velib::class);
     }
 
-    public function findAllVelibs(): JsonResponse
+    public function findAllVelibs(): array
     {
-        $response = array();
         $results = $this->findAll();
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'state' => $result->getState(),
-                'freedock' => $result->getFreedock(),
-                'creditCard' => $result->getCreditCard(),
-                'stationName' => $result->getStationName(),
-                'latitude' => $result->getLatitude(),
-                'longitude' => $result->getLongitude(),
-                'bikeAvailable' => $result->getBikeAvailable(),
-            );
-        }
-        return new JsonResponse($response);
+        
+        return $results;
     }
 
-    public function findOneVelib(int $id): JsonResponse
+    public function findOneVelib(int $id): array
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
@@ -53,23 +35,7 @@ class VelibRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any velib'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response = array(
-                'id' => $result->getId(),
-                'state' => $result->getState(),
-                'freedock' => $result->getFreedock(),
-                'creditCard' => $result->getCreditCard(),
-                'stationName' => $result->getStationName(),
-                'latitude' => $result->getLatitude(),
-                'longitude' => $result->getLongitude(),
-                'bikeAvailable' => $result->getBikeAvailable(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
     // /**
