@@ -6,6 +6,7 @@ use App\Repository\ElectricterminalRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ElectricterminalController extends AbstractController
 {
@@ -14,11 +15,32 @@ class ElectricterminalController extends AbstractController
      * @param ElectricterminalRepository $electricterminalRepo
      * @return JsonResponse
      */
-    public function index(ElectricterminalRepository $electricterminalRepo)
-    {
+    public function index(ElectricterminalRepository $electricterminalRepo): JsonResponse
+    {   
+        $response = array();
         $results = $electricterminalRepo->findAllTerminals();
 
-        return $results;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'schedule' => $result->getSchedule(),
+                'aftersalesPhone' => $result->getAftersalesPhone(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'electricType' => $result->getElectricType(),
+                'connectorType' => $result->getConnectorType(),
+                'city' => $result->getCity(),
+                'address' => $result->getAddress(),
+                'zipcode' => $result->getZipcode(),
+                'watt' => $result->getWatt(),
+                'stationName' => $result->getStationName(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -27,10 +49,30 @@ class ElectricterminalController extends AbstractController
      * @return JsonResponse
      * @param $id
      */
-    public function indexId(ElectricterminalRepository $electricterminalRepo, int $id)
+    public function indexId(ElectricterminalRepository $electricterminalRepo, int $id): JsonResponse
     {
-        $result = $electricterminalRepo->findOneTerminal($id);
+        $results = $electricterminalRepo->findOneTerminal($id);
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'schedule' => $result->getSchedule(),
+                'aftersalesPhone' => $result->getAftersalesPhone(),
+                'latitude' => $result->getLatitude(),
+                'longitude' => $result->getLongitude(),
+                'electricType' => $result->getElectricType(),
+                'connectorType' => $result->getConnectorType(),
+                'city' => $result->getCity(),
+                'address' => $result->getAddress(),
+                'zipcode' => $result->getZipcode(),
+                'watt' => $result->getWatt(),
+                'stationName' => $result->getStationName(),
+            );
+        }
+        return new JsonResponse($response);
     }
 }

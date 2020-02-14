@@ -6,7 +6,6 @@ use App\Entity\Electricterminal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Electricterminal|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,35 +20,14 @@ class ElectricterminalRepository extends ServiceEntityRepository
         parent::__construct($registry, Electricterminal::class);
     }
 
-    public function findAllTerminals(): JsonResponse
+    public function findAllTerminals(): array
     {
-        $response = array();
         $results = $this->findAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'schedule' => $result->getSchedule(),
-                'aftersalesPhone' => $result->getAftersalesPhone(),
-                'latitude' => $result->getLatitude(),
-                'longitude' => $result->getLongitude(),
-                'electricType' => $result->getElectricType(),
-                'connectorType' => $result->getConnectorType(),
-                'city' => $result->getCity(),
-                'address' => $result->getAddress(),
-                'zipcode' => $result->getZipcode(),
-                'watt' => $result->getWatt(),
-                'stationName' => $result->getStationName(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findOneTerminal(int $id): JsonResponse
+    public function findOneTerminal(int $id): array
     {
         $results = $this->createQueryBuilder('t')
             ->where('t.id = :id')
@@ -58,27 +36,7 @@ class ElectricterminalRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any electric terminal'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response = array(
-                'id' => $result->getId(),
-                'schedule' => $result->getSchedule(),
-                'aftersalesPhone' => $result->getAftersalesPhone(),
-                'latitude' => $result->getLatitude(),
-                'longitude' => $result->getLongitude(),
-                'electricType' => $result->getElectricType(),
-                'connectorType' => $result->getConnectorType(),
-                'city' => $result->getCity(),
-                'address' => $result->getAddress(),
-                'zipcode' => $result->getZipcode(),
-                'watt' => $result->getWatt(),
-                'stationName' => $result->getStationName(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
     // /**
