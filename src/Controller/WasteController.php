@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\WasteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class WasteController extends AbstractController
@@ -14,11 +15,25 @@ class WasteController extends AbstractController
      * @param WasteRepository $wastesRepo
      * @return JsonResponse
      */
-    public function index(WasteRepository $wastesRepo)
+    public function index(WasteRepository $wastesRepo): JsonResponse
     {
-        $result = $wastesRepo->findAllWastes();
+        $results = $wastesRepo->findAllWastes();
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ( $results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'name' => $result->getName(),
+                'degradation_time' => $result->getDegradationTime(),
+                'trash_color' => $result->getTrashColor(),
+                'img_url' => $result->getImgUrl(),
+            );
+        }
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -27,10 +42,23 @@ class WasteController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(WasteRepository $waste, int $id)
+    public function indexId(WasteRepository $waste, int $id): JsonResponse
     {
-        $result = $waste->findOneWaste($id);
+        $results = $waste->findOneWaste($id);
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'name' => $result->getName(),
+                'degradation_time' => $result->getDegradationTime(),
+                'trash_color' => $result->getTrashColor(),
+                'img_url' => $result->getImgUrl(),
+            );
+        }
+        return new JsonResponse($response);
     }
 }

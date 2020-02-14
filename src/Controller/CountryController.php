@@ -54,8 +54,6 @@ class CountryController extends AbstractController
                 'name' => $result->getName(),
             );
         }
-        return new JsonResponse($response);
-
-        return $results;
+        return new JsonResponse($response);        
     }
 }
