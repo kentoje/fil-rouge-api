@@ -2,14 +2,11 @@
 
 namespace App\Controller;
 
-use App\Repository\ElectricterminalDistRepository;
 use App\Repository\MonumentsRepository;
-use App\Repository\TrilibDistRepository;
-use App\Repository\TrimobileDistRepository;
-use App\Repository\VelibDistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class MonumentsController extends AbstractController
 {
@@ -18,11 +15,28 @@ class MonumentsController extends AbstractController
      * @param MonumentsRepository $monumentsRepo
      * @return JsonResponse
      */
-    public function index(MonumentsRepository $monumentsRepo)
+    public function index(MonumentsRepository $monumentsRepo): JsonResponse
     {
         $results = $monumentsRepo->findAllMonuments();
 
-        return $results;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'name' => $result->getName(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'sport' => $result->getSport(),
+                'img_url' => $result->getImgUrl(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -31,11 +45,28 @@ class MonumentsController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(MonumentsRepository $monumentsRepo, int $id)
+    public function indexId(MonumentsRepository $monumentsRepo, int $id): JsonResponse
     {
-        $result = $monumentsRepo->findOneMonument($id);
+        $results = $monumentsRepo->findOneMonument($id);
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any monument'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response = array(
+                'id' => $result->getId(),
+                'name' => $result->getName(),
+                'longitude' => $result->getLongitude(),
+                'latitude' => $result->getLatitude(),
+                'address' => $result->getAddress(),
+                'city' => $result->getCity(),
+                'zipcode' => $result->getZipcode(),
+                'sport' => $result->getSport(),
+                'img_url' => $result->getImgUrl(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -45,11 +76,23 @@ class MonumentsController extends AbstractController
      * @param int $dist
      * @return JsonResponse
      */
-    public function indexIdDistAll(MonumentsRepository $monumentsRepo, int $id, int $dist)
+    public function indexIdDistAll(MonumentsRepository $monumentsRepo, int $id, int $dist): JsonResponse
     {
-        $result = $monumentsRepo->getCountOfInterestsByIdAndDist($id, $dist);
+        $response = $monumentsRepo->getCountOfInterestsByIdAndDist($id, $dist);
 
-        return $result;
+        if (!$response) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        $flattenArray = array();
+        $multiDimensionArray = array($response);
+
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($multiDimensionArray));
+        foreach ($iterator as $key => $value) {
+            $flattenArray[$key] = (int) $value;
+        }
+
+        return new JsonResponse($flattenArray);
     }
 
     /**
@@ -62,11 +105,23 @@ class MonumentsController extends AbstractController
      * @param int $distVelib
      * @return JsonResponse
      */
-    public function indexIdDistAllChoice(MonumentsRepository $monumentsRepo, int $id, int $distTrilibs, int $distElecs, int $distTrimobile, int $distVelib)
+    public function indexIdDistAllChoice(MonumentsRepository $monumentsRepo, int $id, int $distTrilibs, int $distElecs, int $distTrimobile, int $distVelib): JsonResponse
     {
-        $result = $monumentsRepo->getCountOfInterestsByIdAndMultipleDist($id, $distTrilibs, $distElecs, $distTrimobile, $distVelib);
+        $response = $monumentsRepo->getCountOfInterestsByIdAndMultipleDist($id, $distTrilibs, $distElecs, $distTrimobile, $distVelib);
 
-        return $result;
+        if (!$response) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        $flattenArray = array();
+        $multiDimensionArray = array($response);
+
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($multiDimensionArray));
+        foreach ($iterator as $key => $value) {
+            $flattenArray[$key] = (int) $value;
+        }
+
+        return new JsonResponse($flattenArray);
     }
 
     /**
@@ -76,11 +131,15 @@ class MonumentsController extends AbstractController
      * @param int $dist
      * @return JsonResponse
      */
-    public function indexIdAll(MonumentsRepository $monumentsRepo, int $id, int $dist)
+    public function indexIdAll(MonumentsRepository $monumentsRepo, int $id, int $dist): JsonResponse
     {
-        $result = $monumentsRepo->getInterestsByIdAndDist($id, $dist);
+        $response = $monumentsRepo->getInterestsByIdAndDist($id, $dist);
 
-        return $result;
+        if (!$response) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -93,12 +152,16 @@ class MonumentsController extends AbstractController
      * @param int $distVelib
      * @return JsonResponse
      */
-    public function indexIdAllChoice(MonumentsRepository $monumentsRepo, int $id, int $distTrilibs, int $distElecs, int $distTrimobile, int $distVelib)
+    public function indexIdAllChoice(MonumentsRepository $monumentsRepo, int $id, int $distTrilibs, int $distElecs, int $distTrimobile, int $distVelib): JsonResponse
     {
 
-        $result = $monumentsRepo->getInterestsByIdAndMultipleDist($id, $distTrilibs, $distElecs, $distTrimobile, $distVelib);
+        $response = $monumentsRepo->getInterestsByIdAndMultipleDist($id, $distTrilibs, $distElecs, $distTrimobile, $distVelib);
 
-        return $result;
+        if (!$response) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -107,11 +170,15 @@ class MonumentsController extends AbstractController
      * @param $dist
      * @return JsonResponse
      */
-    public function indexIdAllMonument(MonumentsRepository $monumentsRepo, int $dist)
+    public function indexIdAllMonument(MonumentsRepository $monumentsRepo, int $dist): JsonResponse
     {
-        $result = $monumentsRepo->findAllMonumentsAndTheirInterests($dist);
+        $response = $monumentsRepo->findAllMonumentsAndTheirInterests($dist);
 
-        return $result;
+        if (!$response) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -123,10 +190,14 @@ class MonumentsController extends AbstractController
      * @param $velibDistParam
      * @return JsonResponse
      */
-    public function indexIdAllMonumentDist(MonumentsRepository $monumentsRepo, int $trilibDistParam, int $elecsDistParam, int $trimobileDistParam, int $velibDistParam)
+    public function indexIdAllMonumentDist(MonumentsRepository $monumentsRepo, int $trilibDistParam, int $elecsDistParam, int $trimobileDistParam, int $velibDistParam): JsonResponse
     {
-        $result = $monumentsRepo->findAllMonumentsAndTheirInterestsMultipleDist($trilibDistParam, $elecsDistParam, $trimobileDistParam, $velibDistParam);
+        $response = $monumentsRepo->findAllMonumentsAndTheirInterestsMultipleDist($trilibDistParam, $elecsDistParam, $trimobileDistParam, $velibDistParam);
 
-        return $result;
+        if (!$response) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+        
+        return new JsonResponse($response);
     }
 }

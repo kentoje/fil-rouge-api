@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\Monuments;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method Monuments|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,32 +19,14 @@ class MonumentsRepository extends ServiceEntityRepository
         parent::__construct($registry, Monuments::class);
     }
 
-    public function findAllMonuments(): JsonResponse
+    public function findAllMonuments(): array
     {
-        $response = array();
         $results = $this->findAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'name' => $result->getName(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-                'sport' => $result->getSport(),
-                'img_url' => $result->getImgUrl(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findOneMonument(int $id): JsonResponse
+    public function findOneMonument(int $id): array
     {
         $results = $this->createQueryBuilder('m')
             ->where('m.id = :id')
@@ -55,52 +35,10 @@ class MonumentsRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any monument'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response = array(
-                'id' => $result->getId(),
-                'name' => $result->getName(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-                'sport' => $result->getSport(),
-                'img_url' => $result->getImgUrl(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findAllMonumentsNoJsoned()
-    {
-        $response = array();
-        $results = $this->findAll();
-
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'name' => $result->getName(),
-                'longitude' => $result->getLongitude(),
-                'latitude' => $result->getLatitude(),
-                'address' => $result->getAddress(),
-                'city' => $result->getCity(),
-                'zipcode' => $result->getZipcode(),
-                'sport' => $result->getSport(),
-                'img_url' => $result->getImgUrl(),
-            );
-        }
-        return $response;
-    }
-
-    public function getCountOfInterestsByIdAndDist(int $id, int $dist): JsonResponse
+    public function getCountOfInterestsByIdAndDist(int $id, int $dist): array
     {
         $response = array();
 
@@ -124,22 +62,10 @@ class MonumentsRepository extends ServiceEntityRepository
             }
         }
 
-        if (!$response) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        $flattenArray = array();
-        $multiDimensionArray = array($response);
-
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($multiDimensionArray));
-        foreach ($iterator as $key => $value) {
-            $flattenArray[$key] = (int) $value;
-        }
-
-        return new JsonResponse($flattenArray);
+        return $response;
     }
 
-    public function getCountOfInterestsByIdAndMultipleDist(int $id, int $distTrilibs, int $distElecs, int $distTrimobile, int $distVelib): JsonResponse
+    public function getCountOfInterestsByIdAndMultipleDist(int $id, int $distTrilibs, int $distElecs, int $distTrimobile, int $distVelib): array
     {
         $response = array();
 
@@ -189,22 +115,10 @@ class MonumentsRepository extends ServiceEntityRepository
             }
         }
 
-        if (!$response) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        $flattenArray = array();
-        $multiDimensionArray = array($response);
-
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($multiDimensionArray));
-        foreach ($iterator as $key => $value) {
-            $flattenArray[$key] = (int) $value;
-        }
-
-        return new JsonResponse($flattenArray);
+        return $response;
     }
 
-    public function getInterestsByIdAndDist(int $id, int $dist): JsonResponse
+    public function getInterestsByIdAndDist(int $id, int $dist): array
     {
         $response = array();
 
@@ -228,14 +142,10 @@ class MonumentsRepository extends ServiceEntityRepository
             }
         }
 
-        if (!$response) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        return new JsonResponse($response);
+        return $response;
     }
 
-    public function getInterestsByIdAndMultipleDist(int $id, int $distTrilibs, int $distElecs, int $distTrimobile, int $distVelib): JsonResponse
+    public function getInterestsByIdAndMultipleDist(int $id, int $distTrilibs, int $distElecs, int $distTrimobile, int $distVelib): array
     {
         $response = array();
 
@@ -284,14 +194,10 @@ class MonumentsRepository extends ServiceEntityRepository
             }
         }
 
-        if (!$response) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        return new JsonResponse($response);
+       return $response;
     }
 
-    public function findAllMonumentsAndTheirInterests(int $dist): JsonResponse
+    public function findAllMonumentsAndTheirInterests(int $dist): array
     {
         $response = array();
         $monuments = $this->findAll();
@@ -361,10 +267,10 @@ class MonumentsRepository extends ServiceEntityRepository
             }
         }
 
-        return new JsonResponse($response);
+        return $response;
     }
 
-    public function findAllMonumentsAndTheirInterestsMultipleDist(int $trilibDistParam, int  $elecsDistParam, int  $trimobileDistParam, int  $velibDistParam): JsonResponse
+    public function findAllMonumentsAndTheirInterestsMultipleDist(int $trilibDistParam, int  $elecsDistParam, int  $trimobileDistParam, int  $velibDistParam): array
     {
         $response = array();
         $monuments = $this->findAll();
@@ -460,7 +366,7 @@ class MonumentsRepository extends ServiceEntityRepository
             }
         }
 
-        return new JsonResponse($response);
+        return $response;
     }
 
     // /**
