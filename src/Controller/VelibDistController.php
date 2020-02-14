@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\VelibDistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class VelibDistController extends AbstractController
@@ -14,11 +15,23 @@ class VelibDistController extends AbstractController
      * @param VelibDistRepository $VelibDistRepo
      * @return JsonResponse
      */
-    public function index(VelibDistRepository $VelibDistRepo)
+    public function index(VelibDistRepository $VelibDistRepo): JsonResponse
     {
-        $result = $VelibDistRepo->findAllVelibDist();
+        $results = $VelibDistRepo->findAllVelibDist();
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_km' => $result->getDistanceKm(),
+                'id_velib' => $result->getIdVelib()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -27,11 +40,23 @@ class VelibDistController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(VelibDistRepository $VelibDistRepo, int $id)
+    public function indexId(VelibDistRepository $VelibDistRepo, int $id): JsonResponse
     {
-        $result = $VelibDistRepo->findTrilibDistByIdMonument($id);
+        $results = $VelibDistRepo->findTrilibDistByIdMonument($id);
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_km' => $result->getDistanceKm(),
+                'id_velib' => $result->getIdVelib()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
          /**
@@ -41,9 +66,23 @@ class VelibDistController extends AbstractController
      * @param $dist
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexIdDist(VelibDistRepository $VelibDistRepo, int $id, int $dist)
+    public function indexIdDist(VelibDistRepository $VelibDistRepo, int $id, int $dist): JsonResponse
     {
-        $result = $VelibDistRepo->findTrilibDistByIdMonumentAndDist($id, $dist);
+        $results = $VelibDistRepo->findTrilibDistByIdMonumentAndDist($id, $dist);
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_m' => $result->getDistanceKm(),
+                'id_velib' => $result->getIdVelib()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
+        }
+        return new JsonResponse($response);
 
         return $result;
     }
