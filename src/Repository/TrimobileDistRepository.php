@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\TrimobileDistanceMonument;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Query\Expr;
 
 /**
@@ -22,30 +20,15 @@ class TrimobileDistRepository extends ServiceEntityRepository
         parent::__construct($registry, TrimobileDistanceMonument::class);
     }
 
-    public function findAllTrimobileDist(): JsonResponse
+    public function findAllTrimobileDist(): array
     {
-        $response = array();
         $results = $this->findAll();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'distance_km' => $result->getDistanceKm(),
-                'id_trimobile' => $result->getIdTrimobile()->getId(),
-                'id_monuments' => $result->getIdMonuments()->getId(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findTrimobileDistByIdMonument(int $id_monument): JsonResponse
+    public function findTrimobileDistByIdMonument(int $id_monument): array
     {
-        $response = array();
-
         $results = $this->createQueryBuilder('t')
             ->innerJoin(
                 't.idMonuments',
@@ -57,24 +40,11 @@ class TrimobileDistRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'distance_km' => $result->getDistanceKm(),
-                'id_trimobile' => $result->getIdTrimobile()->getId(),
-                'id_monuments' => $result->getIdMonuments()->getId(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findTrimobileDistByIdMonumentAndDist(int $id_monument, int $dist): JsonResponse
+    public function findTrimobileDistByIdMonumentAndDist(int $id_monument, int $dist): array
     {
-        $response = array();
         $results = $this->createQueryBuilder('t')
             ->innerJoin(
                 't.idMonuments',
@@ -88,79 +58,7 @@ class TrimobileDistRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'distance_m' => $result->getDistanceKm(),
-                'id_trimobile' => $result->getIdTrimobile()->getId(),
-                'id_monuments' => $result->getIdMonuments()->getId(),
-            );
-        }
-        return new JsonResponse($response);
-    }
-
-    public function countTrimobileDistByIdMonumentAndDist(int $id_monument, $dist)
-    {
-        $response = array();
-        $results = $this->createQueryBuilder('t')
-            ->innerJoin(
-                't.idMonuments',
-                'm',
-                Expr\Join::WITH,
-                'm.id = ' . $id_monument
-            )
-            ->where('t.distanceKm <= :dist')
-            ->setParameter('dist', (string) $dist)
-            ->orderBy('t.distanceKm')
-            ->getQuery()
-            ->getResult();
-
-        if (!$results) {
-            $response[] = array(
-                'nb' => 0
-            );
-            return $response;
-        }
-
-        $response[] = array(
-            'nb' => count($results)
-        );
-        return $response;
-    }
-
-    public function findTrimobileDistByIdMonumentAndDistNoJsoned(int $id_monument, $dist)
-    {
-        $response = array();
-        $results = $this->createQueryBuilder('t')
-            ->innerJoin(
-                't.idMonuments',
-                'm',
-                Expr\Join::WITH,
-                'm.id = ' . $id_monument
-            )
-            ->where('t.distanceKm <= :dist')
-            ->setParameter('dist', (string) $dist)
-            ->orderBy('t.distanceKm')
-            ->getQuery()
-            ->getResult();
-
-        if (!$results) {
-            $response = [];
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'distance_m' => $result->getDistanceKm(),
-                'id_trimobile' => $result->getIdTrimobile()->getId(),
-                'id_monuments' => $result->getIdMonuments()->getId(),
-            );
-        }
-        return $response;
+        return $results;
     }
 
     // /**

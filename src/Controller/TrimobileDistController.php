@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\TrimobileDistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TrimobileDistController extends AbstractController
@@ -14,11 +15,23 @@ class TrimobileDistController extends AbstractController
      * @param TrimobileDistRepository $trimobileDistRepo
      * @return JsonResponse
      */
-    public function index(TrimobileDistRepository $trimobileDistRepo)
+    public function index(TrimobileDistRepository $trimobileDistRepo): JsonResponse
     {
-        $result = $trimobileDistRepo->findAllTrimobileDist();
+        $results = $trimobileDistRepo->findAllTrimobileDist();
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_km' => $result->getDistanceKm(),
+                'id_trimobile' => $result->getIdTrimobile()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
     /**
@@ -27,11 +40,23 @@ class TrimobileDistController extends AbstractController
      * @param $id
      * @return JsonResponse
      */
-    public function indexId(TrimobileDistRepository $trimobileDistRepo, int $id)
+    public function indexId(TrimobileDistRepository $trimobileDistRepo, int $id): JsonResponse
     {
-        $result = $trimobileDistRepo->findTrimobileDistByIdMonument($id);
+        $results = $trimobileDistRepo->findTrimobileDistByIdMonument($id);
 
-        return $result;
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_km' => $result->getDistanceKm(),
+                'id_trimobile' => $result->getIdTrimobile()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
+        }
+        return new JsonResponse($response);
     }
 
      /**
@@ -41,9 +66,23 @@ class TrimobileDistController extends AbstractController
      * @param $dist
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexIdDist(TrimobileDistRepository $trimobileDistRepo, int $id, int $dist)
+    public function indexIdDist(TrimobileDistRepository $trimobileDistRepo, int $id, int $dist): JsonResponse
     {
-        $result = $trimobileDistRepo->findTrimobileDistByIdMonumentAndDist($id, $dist);
+        $results = $trimobileDistRepo->findTrimobileDistByIdMonumentAndDist($id, $dist);
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $result) {
+            $response[] = array(
+                'id' => $result->getId(),
+                'distance_m' => $result->getDistanceKm(),
+                'id_trimobile' => $result->getIdTrimobile()->getId(),
+                'id_monuments' => $result->getIdMonuments()->getId(),
+            );
+        }
+        return new JsonResponse($response);
 
         return $result;
     }
