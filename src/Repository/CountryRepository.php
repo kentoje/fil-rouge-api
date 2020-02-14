@@ -6,7 +6,6 @@ use App\Entity\Country;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Query\Expr;
 
 /**
@@ -22,25 +21,14 @@ class CountryRepository extends ServiceEntityRepository
         parent::__construct($registry, Country::class);
     }
 
-    public function findAllCountry(): JsonResponse
+    public function findAllCountry(): array
     {
-        $response = array();
+
         $results = $this->findAll();
-
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'name' => $result->getName(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
-    public function findOneCountry(int $id): JsonResponse
+    public function findOneCountry(int $id): array
     {
         $results = $this->createQueryBuilder('c')
             ->where('c.id = :id')
@@ -49,17 +37,7 @@ class CountryRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any electric terminal'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($results as $result) {
-            $response[] = array(
-                'id' => $result->getId(),
-                'name' => $result->getName(),
-            );
-        }
-        return new JsonResponse($response);
+        return $results;
     }
 
     // /**
