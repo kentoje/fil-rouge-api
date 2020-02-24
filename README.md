@@ -13,7 +13,7 @@
 * Mettez-vous à la racine du projet et exécuter la commande : `composer install`
 * Créez un fichier `.env.local` à la racine du projet
 * Copiez le contenu du fichier `.env` et collez le dans votre fichier `.env.local`
-* Modifiez la variable d'environnement ```DATABASE_URL``` avec votre user et votre mot de passe (`mysql://<user>:<password>@127.0.0.1:3306/filrouge`)
+* Modifiez la variable d'environnement ```DATABASE_URL``` dans le fichier `.env.local` avec votre user et votre mot de passe (`mysql://<user>:<password>@127.0.0.1:3306/filrouge`)
 * Lancez l'api avec la commande : `./bin/console server:run` ou `symfony serve -d`
 * Vous pouvez maintenant aller sur `http://127.0.0.1:8000`
 
@@ -110,7 +110,8 @@
 
 
 ### 🏆 Classement des pays
-* `/country-ranking` -> Retourne le classement des pays.
+* `/country-ranking` -> Retourne le classement des pays par moyenne des participations.
+* `/country-ranking-not-average` -> Retourne le classement des pays par nombres participations.
 
 
 ### 🌍 Pays

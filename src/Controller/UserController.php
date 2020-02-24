@@ -84,7 +84,35 @@ class UserController extends AbstractController
             array_push($response, [
                 'ranking' => $key+1,
                 'country' => $result['country'],
-                'score' => $result['scores']]
+                'score' => $result['scores'],
+                'img_url' => $result['img_url']]
+            );
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/country-ranking-not-average/", name="rankingCountryNotAverage")
+     * @param UserRepository $user
+     * @return JsonResponse
+     */
+    public function indexRankingNotAverage(UserRepository $user): JsonResponse
+    {
+        $response = array();
+
+        $results = $user->getCountryRankingNotAverage();
+
+        if (!$results) {
+            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($results as $key => $result) {
+            array_push($response, [
+                'ranking' => $key+1,
+                'country' => $result['country'],
+                'score' => $result['scores'],
+                'img_url' => $result['img_url']]
             );
         }
 

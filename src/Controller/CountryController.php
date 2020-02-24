@@ -29,6 +29,7 @@ class CountryController extends AbstractController
             $response[] = array(
                 'id' => $result->getId(),
                 'name' => $result->getName(),
+                'img_url' => $result->getImgUrl(),
             );
         }
         return new JsonResponse($response);
@@ -52,6 +53,7 @@ class CountryController extends AbstractController
             $response[] = array(
                 'id' => $result->getId(),
                 'name' => $result->getName(),
+                'img_url' => $result->getImgUrl(),
             );
         }
         return new JsonResponse($response);        

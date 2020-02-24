@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Country
  *
  * @ORM\Table(name="country")
- * @ORM\Entity(repositoryClass="App\Repository\CountryRepository")
+ * @ORM\Entity
  */
 class Country
 {
@@ -28,6 +28,13 @@ class Country
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="img_url", type="string", length=50, nullable=false)
+     */
+    private $imgUrl;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -41,6 +48,18 @@ class Country
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getImgUrl(): ?string
+    {
+        return $this->imgUrl;
+    }
+
+    public function setImgUrl(string $imgUrl): self
+    {
+        $this->imgUrl = $imgUrl;
 
         return $this;
     }

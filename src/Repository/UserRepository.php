@@ -51,7 +51,20 @@ class UserRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
         
-        $sqlQueries = 'SELECT country.name AS country, SUM(user.score)/COUNT(user.id) AS scores FROM user INNER JOIN country ON user.id_country = country.id GROUP BY country.name ORDER BY scores DESC;';
+        $sqlQueries = 'SELECT country.name AS country, country.img_url ,SUM(user.score)/COUNT(user.id) AS scores FROM user INNER JOIN country ON user.id_country = country.id GROUP BY country.name, country.img_url ORDER BY scores DESC;';
+
+        $stmt = $conn->prepare($sqlQueries);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+
+        return $results;
+    }
+
+    public function getCountryRankingNotAverage(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sqlQueries = 'SELECT country.name AS country, country.img_url ,SUM(user.score) AS scores FROM user INNER JOIN country ON user.id_country = country.id GROUP BY country.name, country.img_url ORDER BY scores DESC;';
 
         $stmt = $conn->prepare($sqlQueries);
         $stmt->execute();
