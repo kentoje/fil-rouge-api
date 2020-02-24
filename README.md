@@ -11,8 +11,11 @@
 ## 💻 Installation 💻
 * Suivre l'installation de la base de données -> https://github.com/TristanLemire/HETIC_filrouge_create_db
 * Mettez-vous à la racine du projet et exécuter la commande : `composer install`
-* Lancez l'api avec la commande : `./bin/console server:run`
-* Vous pouvez maintenant aller sur http://127.0.0.1:8000
+* Créez un fichier `.env.local` à la racine du projet
+* Copiez le contenu du fichier `.env` et collez le dans votre fichier `.env.local`
+* Modifiez la variable d'environnement ```DATABASE_URL``` avec votre user et votre mot de passe (`mysql://<user>:<password>@127.0.0.1:3306/filrouge`)
+* Lancez l'api avec la commande : `./bin/console server:run` ou `symfony serve -d`
+* Vous pouvez maintenant aller sur `http://127.0.0.1:8000`
 
 **Documentation de l'API : [ici !](https://greenparis.docs.apiary.io)**
 
