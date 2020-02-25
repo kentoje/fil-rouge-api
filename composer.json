@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "abraham/twitteroauth": "^1.1",
         "nelmio/cors-bundle": "^2.0",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/console": "4.3.*",

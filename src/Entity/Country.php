@@ -31,9 +31,16 @@ class Country
     /**
      * @var string
      *
-     * @ORM\Column(name="img_url", type="string", length=50, nullable=false)
+     * @ORM\Column(name="img_url", type="string", length=100, nullable=false)
      */
     private $imgUrl;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="flag", type="string", length=100, nullable=true)
+     */
+    private $flag;
 
     public function getId(): ?int
     {
@@ -60,6 +67,18 @@ class Country
     public function setImgUrl(string $imgUrl): self
     {
         $this->imgUrl = $imgUrl;
+
+        return $this;
+    }
+
+    public function getFlag(): ?string
+    {
+        return $this->flag;
+    }
+
+    public function setFlag(?string $flag): self
+    {
+        $this->flag = $flag;
 
         return $this;
     }

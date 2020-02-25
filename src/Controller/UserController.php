@@ -85,7 +85,8 @@ class UserController extends AbstractController
                 'ranking' => $key+1,
                 'country' => $result['country'],
                 'score' => $result['scores'],
-                'img_url' => $result['img_url']]
+                'img_url' => $result['img_url'],
+                'flag' => $result['flag']]
             );
         }
 
@@ -112,7 +113,8 @@ class UserController extends AbstractController
                 'ranking' => $key+1,
                 'country' => $result['country'],
                 'score' => $result['scores'],
-                'img_url' => $result['img_url']]
+                'img_url' => $result['img_url'],
+                'flag' => $result['flag']]
             );
         }
 
