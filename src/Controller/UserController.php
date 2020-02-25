@@ -85,6 +85,7 @@ class UserController extends AbstractController
                 'ranking' => $key+1,
                 'country' => $result['country'],
                 'score' => $result['scores'],
+                'scoresNotAverage' => $result['scoresNotAverage'],
                 'img_url' => $result['img_url'],
                 'flag' => $result['flag']]
             );

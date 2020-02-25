@@ -9,9 +9,6 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Dotenv\Dotenv;
 
-$dotenv = new Dotenv();
-$dotenv->load('./.env.local');
-
 class TwitterCommand extends Command
 {
     // the name of the command (the part after "bin/console")
@@ -31,7 +28,10 @@ class TwitterCommand extends Command
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    {   
+        $dotenv = new Dotenv();
+        $dotenv->load('./.env.local');
+
         define('CONSUMER_KEY', getenv('CONSUMER_KEY'));
         define('CONSUMER_SECRET', getenv('CONSUMER_SECRET'));
     
