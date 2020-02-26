@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\TrilibRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,16 +14,15 @@ class TrilibController extends AbstractController
     /**
      * @Route("/trilib", name="trilibs")
      * @param TrilibRepository $trilibRepo
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function index(TrilibRepository $trilibRepo): JsonResponse
+    public function index(TrilibRepository $trilibRepo, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $trilibRepo->findAllTrilibs();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -41,17 +41,16 @@ class TrilibController extends AbstractController
     /**
      * @Route("/trilib/{id}", name="trilib")
      * @param TrilibRepository $trilibRepo
-     * @param $id
+     * @param JsonMessage $jsonMessage
+     * @param int $id
      * @return JsonResponse
      */
-    public function indexId(TrilibRepository $trilibRepo, int $id): JsonResponse
+    public function indexId(TrilibRepository $trilibRepo, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $trilibRepo->findOneTrilib($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any trilib'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response = array(

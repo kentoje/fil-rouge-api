@@ -3,26 +3,25 @@
 namespace App\Controller;
 
 use App\Repository\CountryRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class CountryController extends AbstractController
 {
     /**
      * @Route("/country", name="country")
      * @param CountryRepository $countryRepo
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function index(CountryRepository $countryRepo): JsonResponse
+    public function index(CountryRepository $countryRepo, JsonMessage $jsonMessage): JsonResponse
     {   
         $response = array();
         $results = $countryRepo->findAllCountry();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -37,17 +36,16 @@ class CountryController extends AbstractController
     /**
      * @Route("/country/{id}", name="countryID")
      * @param CountryRepository $countryRepo
-     * @param $id
+     * @param JsonMessage $jsonMessage
+     * @param int $id
      * @return JsonResponse
      */
-    public function indexId(CountryRepository $countryRepo,int $id): JsonResponse
+    public function indexId(CountryRepository $countryRepo, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $countryRepo->findOneCountry($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(

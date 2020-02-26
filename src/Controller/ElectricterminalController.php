@@ -3,26 +3,25 @@
 namespace App\Controller;
 
 use App\Repository\ElectricterminalRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class ElectricterminalController extends AbstractController
 {
     /**
      * @Route("/electricterminal", name="electricterminals")
      * @param ElectricterminalRepository $electricterminalRepo
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function index(ElectricterminalRepository $electricterminalRepo): JsonResponse
+    public function index(ElectricterminalRepository $electricterminalRepo, JsonMessage $jsonMessage): JsonResponse
     {   
         $response = array();
         $results = $electricterminalRepo->findAllTerminals();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -46,17 +45,16 @@ class ElectricterminalController extends AbstractController
     /**
      * @Route("/electricterminal/{id}", name="electricterminal")
      * @param ElectricterminalRepository $electricterminalRepo
+     * @param JsonMessage $jsonMessage
+     * @param int $id
      * @return JsonResponse
-     * @param $id
      */
-    public function indexId(ElectricterminalRepository $electricterminalRepo, int $id): JsonResponse
+    public function indexId(ElectricterminalRepository $electricterminalRepo, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $electricterminalRepo->findOneTerminal($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response = array(

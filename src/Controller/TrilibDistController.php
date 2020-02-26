@@ -3,26 +3,25 @@
 namespace App\Controller;
 
 use App\Repository\TrilibDistRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class TrilibDistController extends AbstractController
 {
     /**
      * @Route("/trilib-dist", name="trilib_distances")
      * @param TrilibDistRepository $trilibDistRepository
+     * @param JsonMessage $jsonMessage
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function index(TrilibDistRepository $trilibDistRepository): JsonResponse
+    public function index(TrilibDistRepository $trilibDistRepository, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $trilibDistRepository->findAllTrilibDist();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -38,17 +37,16 @@ class TrilibDistController extends AbstractController
     /**
      * @Route("/trilib-dist/{id}", name="trilib_distance")
      * @param TrilibDistRepository $trilibDistRepository
-     * @param $id
+     * @param JsonMessage $jsonMessage
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexId(TrilibDistRepository $trilibDistRepository, int $id): JsonResponse
+    public function indexId(TrilibDistRepository $trilibDistRepository, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $trilibDistRepository->findTrilibDistByIdMonument($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -64,18 +62,17 @@ class TrilibDistController extends AbstractController
     /**
      * @Route("/trilib-dist/{id}/{dist}", name="trilib_distance2")
      * @param TrilibDistRepository $trilibDistRepository
-     * @param $id
-     * @param $dist
+     * @param JsonMessage $jsonMessage
+     * @param int $id
+     * @param int $dist
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexIdDist(TrilibDistRepository $trilibDistRepository, int $id, int $dist): JsonResponse
+    public function indexIdDist(TrilibDistRepository $trilibDistRepository, JsonMessage $jsonMessage, int $id, int $dist): JsonResponse
     {
         $response = array();
         $results = $trilibDistRepository->findTrilibDistByIdMonumentAndDist($id, $dist);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(

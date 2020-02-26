@@ -3,26 +3,25 @@
 namespace App\Controller;
 
 use App\Repository\VelibRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class VelibController extends AbstractController
 {
     /**
      * @Route("/velib", name="velibs")
      * @param VelibRepository $velibsRepo
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function index(VelibRepository $velibsRepo): JsonResponse
+    public function index(VelibRepository $velibsRepo, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $velibsRepo->findAllVelibs();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -42,17 +41,16 @@ class VelibController extends AbstractController
     /**
      * @Route("/velib/{id}", name="velib")
      * @param VelibRepository $velibsRepo
-     * @param $id
+     * @param JsonMessage $jsonMessage
+     * @param int $id
      * @return JsonResponse
      */
-    public function indexId(VelibRepository $velibsRepo, int $id): JsonResponse
+    public function indexId(VelibRepository $velibsRepo, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $velibsRepo->findOneVelib($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any velib'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response = array(

@@ -3,26 +3,25 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/user", name="users")
      * @param UserRepository $usersRepo
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function index(UserRepository $usersRepo): JsonResponse
+    public function index(UserRepository $usersRepo, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $usersRepo->findAllUsers();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -41,17 +40,16 @@ class UserController extends AbstractController
     /**
      * @Route("/user/{id}", name="user")
      * @param UserRepository $user
-     * @param $id
+     * @param JsonMessage $jsonMessage
+     * @param int $id
      * @return JsonResponse
      */
-    public function indexId(UserRepository $user, int $id): JsonResponse
+    public function indexId(UserRepository $user, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $user->findOneUser($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -70,16 +68,15 @@ class UserController extends AbstractController
     /**
      * @Route("/country-ranking/", name="rankingCountry")
      * @param UserRepository $user
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function indexRanking(UserRepository $user): JsonResponse
+    public function indexRanking(UserRepository $user, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $user->getCountryRanking();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $key => $result) {
             array_push($response, [
@@ -98,16 +95,15 @@ class UserController extends AbstractController
     /**
      * @Route("/country-ranking-not-average/", name="rankingCountryNotAverage")
      * @param UserRepository $user
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function indexRankingNotAverage(UserRepository $user): JsonResponse
+    public function indexRankingNotAverage(UserRepository $user, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $user->getCountryRankingNotAverage();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any user'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $key => $result) {
             array_push($response, [

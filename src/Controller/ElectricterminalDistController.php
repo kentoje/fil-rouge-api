@@ -3,26 +3,25 @@
 namespace App\Controller;
 
 use App\Repository\ElectricterminalDistRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class ElectricterminalDistController extends AbstractController
 {
     /**
      * @Route("/electricterminal-dist", name="electricterminal_distances")
      * @param ElectricterminalDistRepository $electricterminalDistRepo
+     * @param JsonMessage $jsonMessage
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function index(ElectricterminalDistRepository $electricterminalDistRepo): JsonResponse
+    public function index(ElectricterminalDistRepository $electricterminalDistRepo, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $electricterminalDistRepo->findAllTerminalsDist();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -41,14 +40,12 @@ class ElectricterminalDistController extends AbstractController
      * @param $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexId(ElectricterminalDistRepository $electricterminalDistRepo, int $id): JsonResponse
+    public function indexId(ElectricterminalDistRepository $electricterminalDistRepo, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $electricterminalDistRepo->findTerminalDistByIdMonument($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -68,14 +65,12 @@ class ElectricterminalDistController extends AbstractController
      * @param $dist
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexIdDist(ElectricterminalDistRepository $electricterminalDistRepo, int $id, int $dist): JsonResponse
+    public function indexIdDist(ElectricterminalDistRepository $electricterminalDistRepo, JsonMessage $jsonMessage, int $id, int $dist): JsonResponse
     {
         $response = array();
         $results = $electricterminalDistRepo->findTerminalDistByIdMonumentAndDist($id,$dist);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(

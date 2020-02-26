@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\TrimobileRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,16 +14,15 @@ class TrimobileController extends AbstractController
     /**
      * @Route("/trimobile", name="trimobiles")
      * @param TrimobileRepository $trimobileRepo
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function index(TrimobileRepository $trimobileRepo): JsonResponse
+    public function index(TrimobileRepository $trimobileRepo, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $trimobileRepo->findAllTrimobiles();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response[] = array(
@@ -43,17 +43,16 @@ class TrimobileController extends AbstractController
     /**
      * @Route("/trimobile/{id}", name="trimobile")
      * @param TrimobileRepository $trimobileRepo
-     * @param $id
+     * @param JsonMessage $jsonMessage
+     * @param int $id
      * @return JsonResponse
      */
-    public function indexId(TrimobileRepository $trimobileRepo, int $id): JsonResponse
+    public function indexId(TrimobileRepository $trimobileRepo, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $trimobileRepo->findOneTrimobile($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any tri mobile'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response = array(

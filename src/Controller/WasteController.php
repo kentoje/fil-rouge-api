@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\WasteRepository;
+use App\Service\JsonMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class WasteController extends AbstractController
@@ -13,16 +13,15 @@ class WasteController extends AbstractController
     /**
      * @Route("/waste", name="wastes")
      * @param WasteRepository $wastesRepo
+     * @param JsonMessage $jsonMessage
      * @return JsonResponse
      */
-    public function index(WasteRepository $wastesRepo): JsonResponse
+    public function index(WasteRepository $wastesRepo, JsonMessage $jsonMessage): JsonResponse
     {
         $response = array();
         $results = $wastesRepo->findAllWastes();
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ( $results as $result) {
             $response[] = array(
@@ -40,17 +39,16 @@ class WasteController extends AbstractController
     /**
      * @Route("/waste/{id}", name="waste")
      * @param WasteRepository $waste
-     * @param $id
+     * @param JsonMessage $jsonMessage
+     * @param int $id
      * @return JsonResponse
      */
-    public function indexId(WasteRepository $waste, int $id): JsonResponse
+    public function indexId(WasteRepository $waste, JsonMessage $jsonMessage, int $id): JsonResponse
     {
         $response = array();
         $results = $waste->findOneWaste($id);
 
-        if (!$results) {
-            return new JsonResponse(['message' => 'This id does not match any waste'], Response::HTTP_NOT_FOUND);
-        }
+        $jsonMessage->getEmptyDataMessage($results);
 
         foreach ($results as $result) {
             $response = array(
