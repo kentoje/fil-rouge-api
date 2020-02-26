@@ -21,7 +21,9 @@ class UserController extends AbstractController
         $response = array();
         $results = $usersRepo->findAllUsers();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -49,7 +51,9 @@ class UserController extends AbstractController
         $response = array();
         $results = $user->findOneUser($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -76,7 +80,9 @@ class UserController extends AbstractController
         $response = array();
         $results = $user->getCountryRanking();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $key => $result) {
             array_push($response, [
@@ -103,7 +109,9 @@ class UserController extends AbstractController
         $response = array();
         $results = $user->getCountryRankingNotAverage();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $key => $result) {
             array_push($response, [

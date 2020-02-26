@@ -21,7 +21,9 @@ class TrilibDistController extends AbstractController
         $response = array();
         $results = $trilibDistRepository->findAllTrilibDist();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -46,7 +48,9 @@ class TrilibDistController extends AbstractController
         $response = array();
         $results = $trilibDistRepository->findTrilibDistByIdMonument($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -72,7 +76,9 @@ class TrilibDistController extends AbstractController
         $response = array();
         $results = $trilibDistRepository->findTrilibDistByIdMonumentAndDist($id, $dist);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(

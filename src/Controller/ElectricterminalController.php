@@ -21,7 +21,9 @@ class ElectricterminalController extends AbstractController
         $response = array();
         $results = $electricterminalRepo->findAllTerminals();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -54,7 +56,9 @@ class ElectricterminalController extends AbstractController
         $response = array();
         $results = $electricterminalRepo->findOneTerminal($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response = array(

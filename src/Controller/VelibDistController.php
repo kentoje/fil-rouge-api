@@ -21,7 +21,9 @@ class VelibDistController extends AbstractController
         $response = array();
         $results = $VelibDistRepo->findAllVelibDist();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -46,7 +48,9 @@ class VelibDistController extends AbstractController
         $response = array();
         $results = $VelibDistRepo->findTrilibDistByIdMonument($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -72,7 +76,9 @@ class VelibDistController extends AbstractController
         $response = array();
         $results = $VelibDistRepo->findTrilibDistByIdMonumentAndDist($id, $dist);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(

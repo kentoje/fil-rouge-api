@@ -21,7 +21,9 @@ class TrimobileDistController extends AbstractController
         $response = array();
         $results = $trimobileDistRepo->findAllTrimobileDist();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -46,7 +48,9 @@ class TrimobileDistController extends AbstractController
         $response = array();
         $results = $trimobileDistRepo->findTrimobileDistByIdMonument($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -72,7 +76,9 @@ class TrimobileDistController extends AbstractController
         $response = array();
         $results = $trimobileDistRepo->findTrimobileDistByIdMonumentAndDist($id, $dist);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(

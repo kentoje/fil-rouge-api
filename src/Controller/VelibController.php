@@ -21,7 +21,9 @@ class VelibController extends AbstractController
         $response = array();
         $results = $velibsRepo->findAllVelibs();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -50,7 +52,9 @@ class VelibController extends AbstractController
         $response = array();
         $results = $velibsRepo->findOneVelib($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response = array(

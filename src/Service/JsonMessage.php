@@ -7,10 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class JsonMessage
 {
-    public function getEmptyDataMessage($result)
+    public function getEmptyDataMessage()
     {
-        if (!$result) {
-            return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
-        }
+        return new JsonResponse(['message' => 'The response does not contain any data.'], Response::HTTP_NOT_FOUND);
     }
 }

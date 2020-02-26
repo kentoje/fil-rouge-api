@@ -21,7 +21,9 @@ class CountryController extends AbstractController
         $response = array();
         $results = $countryRepo->findAllCountry();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -45,7 +47,9 @@ class CountryController extends AbstractController
         $response = array();
         $results = $countryRepo->findOneCountry($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(

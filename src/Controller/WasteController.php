@@ -21,7 +21,9 @@ class WasteController extends AbstractController
         $response = array();
         $results = $wastesRepo->findAllWastes();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ( $results as $result) {
             $response[] = array(
@@ -48,7 +50,9 @@ class WasteController extends AbstractController
         $response = array();
         $results = $waste->findOneWaste($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response = array(

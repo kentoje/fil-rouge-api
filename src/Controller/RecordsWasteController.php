@@ -21,7 +21,9 @@ class RecordsWasteController extends AbstractController
         $response = array();
         $results = $recordsWastesRepo->findAllRecordsWastes();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -47,7 +49,9 @@ class RecordsWasteController extends AbstractController
         $response = array();
         $results = $recordsWastes->findOneRecordWaste($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response = array(
@@ -73,7 +77,9 @@ class RecordsWasteController extends AbstractController
         $response = array();
         $results = $recordsWastes->findAllRecordsWastesByMultiplication();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         if ($foreignerPeople === 'true'){
             foreach ($results as $result) {
@@ -113,7 +119,9 @@ class RecordsWasteController extends AbstractController
         $response = array();
         $results = $recordsWastes->findOneRecordWasteByMultiplication($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         if($foreignerPeople === "true") {
             foreach ($results as $result) {

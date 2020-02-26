@@ -21,7 +21,9 @@ class ElectricterminalDistController extends AbstractController
         $response = array();
         $results = $electricterminalDistRepo->findAllTerminalsDist();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -45,7 +47,9 @@ class ElectricterminalDistController extends AbstractController
         $response = array();
         $results = $electricterminalDistRepo->findTerminalDistByIdMonument($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -70,7 +74,9 @@ class ElectricterminalDistController extends AbstractController
         $response = array();
         $results = $electricterminalDistRepo->findTerminalDistByIdMonumentAndDist($id,$dist);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(

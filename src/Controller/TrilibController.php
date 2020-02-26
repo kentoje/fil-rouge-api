@@ -22,7 +22,9 @@ class TrilibController extends AbstractController
         $response = array();
         $results = $trilibRepo->findAllTrilibs();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -50,7 +52,9 @@ class TrilibController extends AbstractController
         $response = array();
         $results = $trilibRepo->findOneTrilib($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response = array(

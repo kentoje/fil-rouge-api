@@ -21,7 +21,9 @@ class MonumentsController extends AbstractController
         $response = array();
         $results = $monumentsRepo->findAllMonuments();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -51,7 +53,9 @@ class MonumentsController extends AbstractController
         $response = array();
         $results = $monumentsRepo->findOneMonument($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response = array(
@@ -81,7 +85,9 @@ class MonumentsController extends AbstractController
     {
         $response = $monumentsRepo->getCountOfInterestsByIdAndDist($id, $dist);
 
-        $jsonMessage->getEmptyDataMessage($response);
+        if (!$response) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         $flattenArray = array();
         $multiDimensionArray = array($response);
@@ -109,7 +115,9 @@ class MonumentsController extends AbstractController
     {
         $response = $monumentsRepo->getCountOfInterestsByIdAndMultipleDist($id, $distTrilibs, $distElecs, $distTrimobile, $distVelib);
 
-        $jsonMessage->getEmptyDataMessage($response);
+        if (!$response) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         $flattenArray = array();
         $multiDimensionArray = array($response);
@@ -134,7 +142,9 @@ class MonumentsController extends AbstractController
     {
         $response = $monumentsRepo->getInterestsByIdAndDist($id, $dist);
 
-        $jsonMessage->getEmptyDataMessage($response);
+        if (!$response) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         return new JsonResponse($response);
     }
@@ -155,7 +165,9 @@ class MonumentsController extends AbstractController
 
         $response = $monumentsRepo->getInterestsByIdAndMultipleDist($id, $distTrilibs, $distElecs, $distTrimobile, $distVelib);
 
-        $jsonMessage->getEmptyDataMessage($response);
+        if (!$response) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         return new JsonResponse($response);
     }
@@ -171,7 +183,9 @@ class MonumentsController extends AbstractController
     {
         $response = $monumentsRepo->findAllMonumentsAndTheirInterests($dist);
 
-        $jsonMessage->getEmptyDataMessage($response);
+        if (!$response) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         return new JsonResponse($response);
     }
@@ -190,7 +204,9 @@ class MonumentsController extends AbstractController
     {
         $response = $monumentsRepo->findAllMonumentsAndTheirInterestsMultipleDist($trilibDistParam, $elecsDistParam, $trimobileDistParam, $velibDistParam);
 
-        $jsonMessage->getEmptyDataMessage($response);
+        if (!$response) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
         
         return new JsonResponse($response);
     }

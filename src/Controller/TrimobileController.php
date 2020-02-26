@@ -22,7 +22,9 @@ class TrimobileController extends AbstractController
         $response = array();
         $results = $trimobileRepo->findAllTrimobiles();
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response[] = array(
@@ -52,7 +54,9 @@ class TrimobileController extends AbstractController
         $response = array();
         $results = $trimobileRepo->findOneTrimobile($id);
 
-        $jsonMessage->getEmptyDataMessage($results);
+        if (!$results) {
+            return $jsonMessage->getEmptyDataMessage();
+        }
 
         foreach ($results as $result) {
             $response = array(
