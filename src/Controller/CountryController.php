@@ -18,7 +18,6 @@ class CountryController extends AbstractController
     public function index(CountryRepository $countryRepo): JsonResponse
     {   
         $response = array();
-
         $results = $countryRepo->findAllCountry();
 
         if (!$results) {
@@ -43,6 +42,7 @@ class CountryController extends AbstractController
      */
     public function indexId(CountryRepository $countryRepo,int $id): JsonResponse
     {
+        $response = array();
         $results = $countryRepo->findOneCountry($id);
 
         if (!$results) {

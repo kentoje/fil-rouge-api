@@ -17,6 +17,7 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $usersRepo): JsonResponse
     {
+        $response = array();
         $results = $usersRepo->findAllUsers();
 
         if (!$results) {
@@ -45,6 +46,7 @@ class UserController extends AbstractController
      */
     public function indexId(UserRepository $user, int $id): JsonResponse
     {
+        $response = array();
         $results = $user->findOneUser($id);
 
         if (!$results) {
@@ -73,7 +75,6 @@ class UserController extends AbstractController
     public function indexRanking(UserRepository $user): JsonResponse
     {
         $response = array();
-
         $results = $user->getCountryRanking();
 
         if (!$results) {
@@ -82,7 +83,7 @@ class UserController extends AbstractController
 
         foreach ($results as $key => $result) {
             array_push($response, [
-                'ranking' => $key+1,
+                'ranking' => $key + 1,
                 'country' => $result['country'],
                 'score' => $result['scores'],
                 'scoresNotAverage' => $result['scoresNotAverage'],
@@ -102,7 +103,6 @@ class UserController extends AbstractController
     public function indexRankingNotAverage(UserRepository $user): JsonResponse
     {
         $response = array();
-
         $results = $user->getCountryRankingNotAverage();
 
         if (!$results) {
@@ -111,7 +111,7 @@ class UserController extends AbstractController
 
         foreach ($results as $key => $result) {
             array_push($response, [
-                'ranking' => $key+1,
+                'ranking' => $key + 1,
                 'country' => $result['country'],
                 'score' => $result['scores'],
                 'img_url' => $result['img_url'],

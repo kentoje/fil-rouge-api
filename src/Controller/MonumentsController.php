@@ -17,6 +17,7 @@ class MonumentsController extends AbstractController
      */
     public function index(MonumentsRepository $monumentsRepo): JsonResponse
     {
+        $response = array();
         $results = $monumentsRepo->findAllMonuments();
 
         if (!$results) {
@@ -47,6 +48,7 @@ class MonumentsController extends AbstractController
      */
     public function indexId(MonumentsRepository $monumentsRepo, int $id): JsonResponse
     {
+        $response = array();
         $results = $monumentsRepo->findOneMonument($id);
 
         if (!$results) {

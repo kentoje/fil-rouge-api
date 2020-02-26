@@ -17,6 +17,7 @@ class TrilibDistController extends AbstractController
      */
     public function index(TrilibDistRepository $trilibDistRepository): JsonResponse
     {
+        $response = array();
         $results = $trilibDistRepository->findAllTrilibDist();
 
         if (!$results) {
@@ -42,6 +43,7 @@ class TrilibDistController extends AbstractController
      */
     public function indexId(TrilibDistRepository $trilibDistRepository, int $id): JsonResponse
     {
+        $response = array();
         $results = $trilibDistRepository->findTrilibDistByIdMonument($id);
 
         if (!$results) {
@@ -68,6 +70,7 @@ class TrilibDistController extends AbstractController
      */
     public function indexIdDist(TrilibDistRepository $trilibDistRepository, int $id, int $dist): JsonResponse
     {
+        $response = array();
         $results = $trilibDistRepository->findTrilibDistByIdMonumentAndDist($id, $dist);
 
         if (!$results) {

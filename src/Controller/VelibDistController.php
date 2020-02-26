@@ -17,6 +17,7 @@ class VelibDistController extends AbstractController
      */
     public function index(VelibDistRepository $VelibDistRepo): JsonResponse
     {
+        $response = array();
         $results = $VelibDistRepo->findAllVelibDist();
 
         if (!$results) {
@@ -42,6 +43,7 @@ class VelibDistController extends AbstractController
      */
     public function indexId(VelibDistRepository $VelibDistRepo, int $id): JsonResponse
     {
+        $response = array();
         $results = $VelibDistRepo->findTrilibDistByIdMonument($id);
 
         if (!$results) {
@@ -68,6 +70,7 @@ class VelibDistController extends AbstractController
      */
     public function indexIdDist(VelibDistRepository $VelibDistRepo, int $id, int $dist): JsonResponse
     {
+        $response = array();
         $results = $VelibDistRepo->findTrilibDistByIdMonumentAndDist($id, $dist);
 
         if (!$results) {
@@ -83,7 +86,5 @@ class VelibDistController extends AbstractController
             );
         }
         return new JsonResponse($response);
-
-        return $result;
     }
 }

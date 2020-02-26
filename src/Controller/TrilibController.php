@@ -17,6 +17,7 @@ class TrilibController extends AbstractController
      */
     public function index(TrilibRepository $trilibRepo): JsonResponse
     {
+        $response = array();
         $results = $trilibRepo->findAllTrilibs();
 
         if (!$results) {
@@ -45,6 +46,7 @@ class TrilibController extends AbstractController
      */
     public function indexId(TrilibRepository $trilibRepo, int $id): JsonResponse
     {
+        $response = array();
         $results = $trilibRepo->findOneTrilib($id);
 
         if (!$results) {

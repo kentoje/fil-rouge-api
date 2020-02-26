@@ -17,6 +17,7 @@ class VelibController extends AbstractController
      */
     public function index(VelibRepository $velibsRepo): JsonResponse
     {
+        $response = array();
         $results = $velibsRepo->findAllVelibs();
 
         if (!$results) {
@@ -46,6 +47,7 @@ class VelibController extends AbstractController
      */
     public function indexId(VelibRepository $velibsRepo, int $id): JsonResponse
     {
+        $response = array();
         $results = $velibsRepo->findOneVelib($id);
 
         if (!$results) {

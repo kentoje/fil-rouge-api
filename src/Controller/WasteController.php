@@ -17,6 +17,7 @@ class WasteController extends AbstractController
      */
     public function index(WasteRepository $wastesRepo): JsonResponse
     {
+        $response = array();
         $results = $wastesRepo->findAllWastes();
 
         if (!$results) {
@@ -44,6 +45,7 @@ class WasteController extends AbstractController
      */
     public function indexId(WasteRepository $waste, int $id): JsonResponse
     {
+        $response = array();
         $results = $waste->findOneWaste($id);
 
         if (!$results) {

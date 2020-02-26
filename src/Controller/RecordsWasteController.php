@@ -17,6 +17,7 @@ class RecordsWasteController extends AbstractController
      */
     public function index(RecordsWasteRepository $recordsWastesRepo): JsonResponse
     {
+        $response = array();
         $results = $recordsWastesRepo->findAllRecordsWastes();
 
         if (!$results) {
@@ -43,6 +44,7 @@ class RecordsWasteController extends AbstractController
      */
     public function indexId(RecordsWasteRepository $recordsWastes, int $id): JsonResponse
     {
+        $response = array();
         $results = $recordsWastes->findOneRecordWaste($id);
 
         if (!$results) {
@@ -69,6 +71,7 @@ class RecordsWasteController extends AbstractController
      */
     public function indexMulti(RecordsWasteRepository $recordsWastes, int $numberDay, string $foreignerPeople): JsonResponse
     {
+        $response = array();
         $results = $recordsWastes->findAllRecordsWastesByMultiplication();
 
         if (!$results) {
@@ -97,8 +100,6 @@ class RecordsWasteController extends AbstractController
         }
 
         return new JsonResponse($response);
-
-        return $result;
     }
 
     /**
@@ -111,6 +112,7 @@ class RecordsWasteController extends AbstractController
      */
     public function indexIdMulti(RecordsWasteRepository $recordsWastes, int $numberDay, string $foreignerPeople, int $id): JsonResponse
     {
+        $response = array();
         $results = $recordsWastes->findOneRecordWasteByMultiplication($id);
 
         if (!$results) {
@@ -138,7 +140,5 @@ class RecordsWasteController extends AbstractController
         }
 
         return new JsonResponse($response);
-
-        return $result;
     }
 }

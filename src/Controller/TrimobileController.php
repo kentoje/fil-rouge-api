@@ -17,6 +17,7 @@ class TrimobileController extends AbstractController
      */
     public function index(TrimobileRepository $trimobileRepo): JsonResponse
     {
+        $response = array();
         $results = $trimobileRepo->findAllTrimobiles();
 
         if (!$results) {
@@ -47,6 +48,7 @@ class TrimobileController extends AbstractController
      */
     public function indexId(TrimobileRepository $trimobileRepo, int $id): JsonResponse
     {
+        $response = array();
         $results = $trimobileRepo->findOneTrimobile($id);
 
         if (!$results) {
@@ -67,8 +69,6 @@ class TrimobileController extends AbstractController
             );
         }
         return new JsonResponse($response);
-
-        return $result;
     }
 
     /**
@@ -142,5 +142,4 @@ class TrimobileController extends AbstractController
         }
         return new JsonResponse($response);
     }
-
 }

@@ -17,6 +17,7 @@ class ElectricterminalDistController extends AbstractController
      */
     public function index(ElectricterminalDistRepository $electricterminalDistRepo): JsonResponse
     {
+        $response = array();
         $results = $electricterminalDistRepo->findAllTerminalsDist();
 
         if (!$results) {
@@ -42,6 +43,7 @@ class ElectricterminalDistController extends AbstractController
      */
     public function indexId(ElectricterminalDistRepository $electricterminalDistRepo, int $id): JsonResponse
     {
+        $response = array();
         $results = $electricterminalDistRepo->findTerminalDistByIdMonument($id);
 
         if (!$results) {
@@ -68,6 +70,7 @@ class ElectricterminalDistController extends AbstractController
      */
     public function indexIdDist(ElectricterminalDistRepository $electricterminalDistRepo, int $id, int $dist): JsonResponse
     {
+        $response = array();
         $results = $electricterminalDistRepo->findTerminalDistByIdMonumentAndDist($id,$dist);
 
         if (!$results) {

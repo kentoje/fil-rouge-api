@@ -51,6 +51,7 @@ class ElectricterminalController extends AbstractController
      */
     public function indexId(ElectricterminalRepository $electricterminalRepo, int $id): JsonResponse
     {
+        $response = array();
         $results = $electricterminalRepo->findOneTerminal($id);
 
         if (!$results) {

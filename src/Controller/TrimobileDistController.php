@@ -17,6 +17,7 @@ class TrimobileDistController extends AbstractController
      */
     public function index(TrimobileDistRepository $trimobileDistRepo): JsonResponse
     {
+        $response = array();
         $results = $trimobileDistRepo->findAllTrimobileDist();
 
         if (!$results) {
@@ -42,6 +43,7 @@ class TrimobileDistController extends AbstractController
      */
     public function indexId(TrimobileDistRepository $trimobileDistRepo, int $id): JsonResponse
     {
+        $response = array();
         $results = $trimobileDistRepo->findTrimobileDistByIdMonument($id);
 
         if (!$results) {
@@ -68,6 +70,7 @@ class TrimobileDistController extends AbstractController
      */
     public function indexIdDist(TrimobileDistRepository $trimobileDistRepo, int $id, int $dist): JsonResponse
     {
+        $response = array();
         $results = $trimobileDistRepo->findTrimobileDistByIdMonumentAndDist($id, $dist);
 
         if (!$results) {
@@ -83,7 +86,5 @@ class TrimobileDistController extends AbstractController
             );
         }
         return new JsonResponse($response);
-
-        return $result;
     }
 }
