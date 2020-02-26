@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Electricterminal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method Electricterminal|null find($id, $lockMode = null, $lockVersion = null)
@@ -38,33 +37,4 @@ class ElectricterminalRepository extends ServiceEntityRepository
 
         return $results;
     }
-
-    // /**
-    //  * @return Electricterminal[] Returns an array of Electricterminal objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Electricterminal
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

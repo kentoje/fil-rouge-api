@@ -61,33 +61,4 @@ class ElectricterminalDistRepository extends ServiceEntityRepository
 
         return $results;
     }
-
-    // /**
-    //  * @return ElectricterminalDistanceMonument[] Returns an array of ElectricterminalDistanceMonument objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ElectricterminalDistanceMonument
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

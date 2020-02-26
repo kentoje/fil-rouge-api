@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\Country;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\Query\Expr;
 
 /**
  * @method Country|null find($id, $lockMode = null, $lockVersion = null)
@@ -39,33 +37,4 @@ class CountryRepository extends ServiceEntityRepository
 
         return $results;
     }
-
-    // /**
-    //  * @return Country[] Returns an array of Country objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Country
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
