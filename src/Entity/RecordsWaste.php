@@ -35,6 +35,13 @@ class RecordsWaste
      */
     private $tons;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_recyclabe", type="boolean", nullable=false)
+     */
+    private $isRecyclabe;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +67,18 @@ class RecordsWaste
     public function setTons(int $tons): self
     {
         $this->tons = $tons;
+
+        return $this;
+    }
+
+    public function getIsRecyclabe(): ?bool
+    {
+        return $this->isRecyclabe;
+    }
+
+    public function setIsRecyclabe(bool $isRecyclabe): self
+    {
+        $this->isRecyclabe = $isRecyclabe;
 
         return $this;
     }

@@ -28,6 +28,7 @@ class RecordsWasteController extends AbstractController
                 'id' => $result->getId(),
                 'name' => $result->getName(),
                 'tons' => $result->getTons(),
+                'is_recyclabe' => $result->getIsRecyclabe(),
             );
         }
 
@@ -53,6 +54,7 @@ class RecordsWasteController extends AbstractController
                 'id' => $result->getId(),
                 'name' => $result->getName(),
                 'tons' => $result->getTons(),
+                'is_recyclabe' => $result->getIsRecyclabe(),
             );
         }
         return new JsonResponse($response);
@@ -79,6 +81,7 @@ class RecordsWasteController extends AbstractController
                     'id' => $result->getId(),
                     'name' => $result->getName(),
                     'tons' => $result->getTons() * ($numberDay * 1.23),
+                    'is_recyclabe' => $result->getIsRecyclabe(),
                 );
             }
         } else if ($foreignerPeople === 'false') {
@@ -87,6 +90,8 @@ class RecordsWasteController extends AbstractController
                     'id' => $result->getId(),
                     'name' => $result->getName(),
                     'tons' => $result->getTons() * $numberDay,
+
+                    'is_recyclabe' => $result->getIsRecyclabe(),
                 );
             }
         }
@@ -118,6 +123,7 @@ class RecordsWasteController extends AbstractController
                     'id' => $result->getId(),
                     'name' => $result->getName(),
                     'tons' => $result->getTons() * $numberDay * 1.23,
+                    'is_recyclabe' => $result->getIsRecyclabe(),
                 );
             }
         } else if ($foreignerPeople === "false") {
@@ -126,6 +132,7 @@ class RecordsWasteController extends AbstractController
                     'id' => $result->getId(),
                     'name' => $result->getName(),
                     'tons' => $result->getTons() * $numberDay,
+                    'is_recyclabe' => $result->getIsRecyclabe(),
                 );
             }
         }
