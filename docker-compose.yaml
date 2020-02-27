@@ -20,9 +20,7 @@ services:
     volumes:
       - .:/var/www/html
       - /var/www/html/database
-      # does not work as intended
       - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf
-      # does not work as intended
       - cache:/var/www/html/var/cache
       - log:/var/www/html/var/log
     ports:
@@ -34,7 +32,6 @@ services:
     container_name: fil-rouge-mysql
     image: mysql:5.7
     restart: on-failure
-#    docker container exec -i fil-rouge-mysql bash -c 'exec mysql -uroot -prootroot' < ./database/DB.sql
     env_file:
       - ./docker/env/.env.mysql
     volumes:

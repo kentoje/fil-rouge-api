@@ -131,7 +131,7 @@
 ### 🏆 Classement des pays
 
 - `/country-ranking` -> Retourne le classement des pays par moyenne des participations.
-- `/country-ranking-not-average` -> Retourne le classement des pays par nombres participations.
+- `/country-ranking-not-average` -> Retourne le classement des pays par nombre de participations.
 
 ### 🌍 Pays
 

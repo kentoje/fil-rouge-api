@@ -70,7 +70,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/country-ranking/", name="rankingCountry")
+     * @Route("/country-ranking", name="rankingCountry")
      * @param UserRepository $user
      * @param JsonMessage $jsonMessage
      * @return JsonResponse
@@ -99,7 +99,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/country-ranking-not-average/", name="rankingCountryNotAverage")
+     * @Route("/country-ranking-not-average", name="rankingCountryNotAverage")
      * @param UserRepository $user
      * @param JsonMessage $jsonMessage
      * @return JsonResponse
