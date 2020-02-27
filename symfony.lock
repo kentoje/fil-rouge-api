@@ -363,7 +363,7 @@
         "version": "v4.3.6"
     },
     "twig/twig": {
-        "version": "v2.12.4"
+        "version": "v2.12.5"
     },
     "zendframework/zend-code": {
         "version": "3.4.0"
