@@ -39,8 +39,8 @@ services:
       - ./docker/env/.env.mysql
     volumes:
       - database:/var/lib/mysql
-    ports:
-      - '3307:3306'
+    expose:
+      - '3306'
     networks:
       - backend
     depends_on:
