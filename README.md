@@ -5,6 +5,9 @@
 - Kento Monthubert
 - Tristan Lemire
 
+## Rendu demandé
+https://github.com/kentoje/fil-rouge-api/blob/master/Rendu/rendu-back-monthubert-lemire-groupe9.pdf
+
 ## 🐳 Installation Docker 🐳
 
 - Clonez le projet
