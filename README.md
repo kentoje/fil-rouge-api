@@ -1,11 +1,8 @@
 # fil-rouge-api
 
-## 💪 Équipe Groupe 9
+## 💪 Équipe Groupe 9 - Back
 
-- Amandine Donat-filliod
 - Kento Monthubert
-- Thomas Evano
-- Virgil Limongi
 - Tristan Lemire
 
 ## 🐳 Installation Docker 🐳
