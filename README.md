@@ -8,6 +8,9 @@
 ## Rendu demandé
 https://github.com/kentoje/fil-rouge-api/blob/master/Rendu/rendu-back-monthubert-lemire-groupe9.pdf
 
+## Base de données
+https://github.com/TristanLemire/HETIC_filrouge_create_db
+
 ## 🐳 Installation Docker 🐳
 
 - Clonez le projet
@@ -25,7 +28,7 @@ https://github.com/kentoje/fil-rouge-api/blob/master/Rendu/rendu-back-monthubert
 
 - Clonez le projet
 - Placez-vous à la racine du projet
-- Suivre l'installation de la base de données -> `https://github.com/TristanLemire/HETIC_filrouge_create_db`
+- Suivre l'installation de la base de données -> https://github.com/TristanLemire/HETIC_filrouge_create_db
 - Mettez-vous à la racine du projet et exécutez la commande : `composer install`
 - Créez un fichier `.env.local` à la racine du projet
 - Copiez le contenu du fichier `.env` et collez le dans votre fichier `.env.local`
