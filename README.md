@@ -39,7 +39,7 @@ https://github.com/TristanLemire/HETIC_filrouge_create_db
 - Vous pouvez maintenant aller sur `http://127.0.0.1:8000`
 
 **Documentation de l'API : [ici !](https://greenparis.docs.apiary.io)**
-**Twitter de projet: [ici !](https://twitter.com/MarvelousBot)**
+**Twitter du projet: [ici !](https://twitter.com/MarvelousBot)**
 
 ## Liste des routes disponibles :
 
